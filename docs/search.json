@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "topics/r_lesson.html",
+    "href": "topics/r_lesson.html",
+    "title": "R Lesson",
+    "section": "",
+    "text": "R: Intro to Remote Sensing\nThis lesson presents a basic R script for analyzing data.\nDownload R Script\n\n\nx &lt;- seq(0, 10, by = 0.1)\ny &lt;- sin(x)\nplot(x, y, type=\"l\", main=\"Sine Wave\")\n\n\n\n\n\n\n\n\n\nWatch the video below:"
+  },
+  {
+    "objectID": "notebooks/intro_python.html",
+    "href": "notebooks/intro_python.html",
+    "title": "Remote Sensing Lessons",
+    "section": "",
+    "text": "import numpy as np\nimport matplotlib.pyplot as plt\nx = np.linspace(0, 10, 100)\ny = np.sin(x)\nplt.plot(x, y)\nplt.title('Sine Wave')\nplt.show()"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome",
+    "section": "",
+    "text": "Welcome to Remote Sensing Lessons\nThis site provides interactive tutorials in Python and R using real-world remote sensing data.\nChoose a lesson from the navigation bar to get started."
+  },
+  {
+    "objectID": "topics/python_lesson.html",
+    "href": "topics/python_lesson.html",
+    "title": "Python Lesson",
+    "section": "",
+    "text": "Python: Intro to Remote Sensing\nIn this lesson, you will run and explore the following Python notebook.\nLaunch in Binder\nDownload Notebook\n\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nx = np.linspace(0, 10, 100)\ny = np.sin(x)\n\nplt.plot(x, y)\nplt.title(\"Sine Wave\")\nplt.show()\n\nWatch the video below:"
+  }
+]
