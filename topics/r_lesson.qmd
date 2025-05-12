@@ -1,0 +1,21 @@
+---
+title: "R Lesson"
+format: html
+---
+
+# R: Intro to Remote Sensing
+
+This lesson presents a basic R script for analyzing data.
+
+[Download R Script](../notebooks/intro_r.R)
+
+::: {.cell}
+```{r}
+x <- seq(0, 10, by = 0.1)
+y <- sin(x)
+plot(x, y, type="l", main="Sine Wave")
+```
+:::
+
+Watch the video below:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>

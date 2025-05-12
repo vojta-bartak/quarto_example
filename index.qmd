@@ -1,0 +1,10 @@
+---
+title: "Welcome"
+format: html
+---
+
+# Welcome to Remote Sensing Lessons
+
+This site provides interactive tutorials in Python and R using real-world remote sensing data.
+
+Choose a lesson from the navigation bar to get started.

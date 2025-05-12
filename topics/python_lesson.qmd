@@ -1,0 +1,29 @@
+---
+title: "Python Lesson"
+format: html
+---
+
+# Python: Intro to Remote Sensing
+
+In this lesson, you will run and explore the following Python notebook.
+
+[Launch in Binder](https://mybinder.org/v2/gh/yourusername/your-repo/HEAD?filepath=notebooks/intro_python.ipynb)
+
+[Download Notebook](../notebooks/intro_python.ipynb)
+
+::: {.cell execution_count=1}
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+
+plt.plot(x, y)
+plt.title("Sine Wave")
+plt.show()
+```
+:::
+
+Watch the video below:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe> 
