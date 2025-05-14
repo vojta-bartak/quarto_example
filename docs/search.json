@@ -4,14 +4,14 @@
     "href": "topics/r_lesson.html",
     "title": "R Lesson",
     "section": "",
-    "text": "R: Intro to Remote Sensing\nThis lesson presents a basic R script for analyzing data.\nDownload R Script\n\n\nx &lt;- seq(0, 10, by = 0.1)\ny &lt;- sin(x)\nplot(x, y, type=\"l\", main=\"Sine Wave\")\n\n\n\n\n\n\n\n\n\nWatch the video below:"
+    "text": "R: Intro to Remote Sensing\nThis lesson presents a basic R script for analyzing data.\nLaunch in Binder Download R Script\n\n\n# Generate 100 random numbers from normal distribution\nx &lt;- rnorm(100)\nsummary(x)\n\n    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. \n-2.66486 -0.79909 -0.00526  0.03334  0.85453  2.51486 \n\n# Plot histogram\nhist(x, main = \"Histogram of x\", col = \"skyblue\", border = \"white\")\n\n\n\n\n\n\n\n\n\nWatch the video below:"
   },
   {
-    "objectID": "notebooks/intro_python.html",
-    "href": "notebooks/intro_python.html",
-    "title": "Sine function",
+    "objectID": "notebooks/r_analysis.html",
+    "href": "notebooks/r_analysis.html",
+    "title": "Simple Data Analysis in R",
     "section": "",
-    "text": "Run the following code to see the sine function.\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nx = np.linspace(0, 10, 100)\ny = np.sin(x)\nplt.plot(x, y)\nplt.title('Sine Wave')\nplt.show()"
+    "text": "This notebook demonstrates a basic data analysis in R using randomly generated data. We’ll compute the summary and plot a histogram.\n\n# Generate 100 random numbers from normal distribution\nx &lt;- rnorm(100)\nsummary(x)\n\n\n# Plot histogram\nhist(x, main = \"Histogram of x\", col = \"skyblue\", border = \"white\")"
   },
   {
     "objectID": "index.html",
@@ -19,6 +19,13 @@
     "title": "Welcome",
     "section": "",
     "text": "Welcome to Remote Sensing Lessons\nThis site provides interactive tutorials in Python and R using real-world remote sensing data.\nChoose a lesson from the navigation bar to get started."
+  },
+  {
+    "objectID": "notebooks/intro_python.html",
+    "href": "notebooks/intro_python.html",
+    "title": "Sine function",
+    "section": "",
+    "text": "Run the following code to see the sine function.\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nx = np.linspace(0, 10, 100)\ny = np.sin(x)\nplt.plot(x, y)\nplt.title('Sine Wave')\nplt.show()"
   },
   {
     "objectID": "topics/python_lesson.html",

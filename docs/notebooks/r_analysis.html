@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>R Lesson – Remote Sensing Lessons</title>
+<title>Simple Data Analysis in R – Remote Sensing Lessons</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -132,7 +132,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Python Lesson</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../topics/r_lesson.html" aria-current="page"> 
+    <a class="nav-link" href="../topics/r_lesson.html"> 
 <span class="menu-text">R Lesson</span></a>
   </li>  
 </ul>
@@ -152,7 +152,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">R Lesson</h1>
+<h1 class="title">Simple Data Analysis in R</h1>
 </div>
 
 
@@ -169,34 +169,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="r-intro-to-remote-sensing" class="level1">
-<h1>R: Intro to Remote Sensing</h1>
-<p>This lesson presents a basic R script for analyzing data.</p>
-<p><a href="https://mybinder.org/v2/gh/vojta-bartak/quarto_example/master?urlpath=lab/tree/notebooks/r_analysis.ipynb">Launch in Binder</a> <a href="../notebooks/intro_r.R">Download R Script</a></p>
-<div class="cell">
-<div class="cell">
+<p>This notebook demonstrates a basic data analysis in R using randomly generated data. We’ll compute the summary and plot a histogram.</p>
+<div id="cell-2" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate 100 random numbers from normal distribution</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
--2.66486 -0.79909 -0.00526  0.03334  0.85453  2.51486 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot histogram</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x, <span class="at">main =</span> <span class="st">"Histogram of x"</span>, <span class="at">col =</span> <span class="st">"skyblue"</span>, <span class="at">border =</span> <span class="st">"white"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="r_lesson_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div id="cell-3" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot histogram</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x, <span class="at">main =</span> <span class="st">"Histogram of x"</span>, <span class="at">col =</span> <span class="st">"skyblue"</span>, <span class="at">border =</span> <span class="st">"white"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-</div>
-</div>
-<p>Watch the video below: <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen=""></iframe></p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
