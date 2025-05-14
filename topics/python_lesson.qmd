@@ -7,7 +7,7 @@ format: html
 
 In this lesson, you will run and explore the following Python notebook.
 
-[Launch in Binder](https://mybinder.org/v2/gh/yourusername/your-repo/HEAD?filepath=notebooks/intro_python.ipynb)
+[Launch in Binder](https://mybinder.org/v2/gh/vojta-bartak/quarto_example/85c6c7bca6f576e5ce1696cce06fd5b39ca3ea53?filepath=notebooks/intro_python.ipynb)
 
 [Download Notebook](../notebooks/intro_python.ipynb)
 
