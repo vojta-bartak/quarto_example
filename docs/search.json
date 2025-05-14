@@ -9,9 +9,9 @@
   {
     "objectID": "notebooks/intro_python.html",
     "href": "notebooks/intro_python.html",
-    "title": "Remote Sensing Lessons",
+    "title": "Sine function",
     "section": "",
-    "text": "import numpy as np\nimport matplotlib.pyplot as plt\nx = np.linspace(0, 10, 100)\ny = np.sin(x)\nplt.plot(x, y)\nplt.title('Sine Wave')\nplt.show()"
+    "text": "Run the following code to see the sine function.\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nx = np.linspace(0, 10, 100)\ny = np.sin(x)\nplt.plot(x, y)\nplt.title('Sine Wave')\nplt.show()"
   },
   {
     "objectID": "index.html",
