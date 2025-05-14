@@ -1,6 +1,8 @@
 ---
 title: "R Lesson"
 format: html
+execute:
+  results: "markup"
 ---
 
 # R: Intro to Remote Sensing
@@ -8,6 +10,7 @@ format: html
 This lesson presents a basic R script for analyzing data.
 
 [Launch in Binder](https://mybinder.org/v2/gh/vojta-bartak/quarto_example/master?urlpath=lab/tree/notebooks/r_analysis.ipynb)
+
 [Download R Script](../notebooks/intro_r.R)
 
 ::: {.cell}
