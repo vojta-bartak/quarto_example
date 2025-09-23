@@ -12,6 +12,10 @@ website:
         href: topics/python_lesson.qmd
       - text: "R Lesson"
         href: topics/r_lesson.qmd
+      - text: "Hyperspectral"
+        href: topics/hyperspectral_tutorial.qmd
 
-resources:
-  - notebooks/**
+format:
+  html:
+    theme: cosmo
+    toc: true
