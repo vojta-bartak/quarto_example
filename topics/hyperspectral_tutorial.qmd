@@ -1,6 +1,6 @@
 ---
 title: "Hyperspectral Data Analysis Tutorial: From Spectral Reflectance to Plant Classification"
-author: "Your Name"
+author: "Giorgi Kozhoridze"
 date: today
 format:
   html:
@@ -65,7 +65,7 @@ First, we load our hyperspectral dataset and examine its structure:
 data <- read.csv("SamplesForWorkshop.csv")
 
 # Inspect the basic structure
-head(data)
+head(data[,1:21])
 colnames(data)
 ```
 
@@ -76,9 +76,11 @@ The dataset contains:
 
 -   **Month**: Sampling time (March, July)
 -   **Group**: Plant functional groups (Deciduous, Evergreen)\
--   **Class**: Specific plant classes (SP0, SP1, SP2)
--   **Biomarkers**: Chemical measurements (Chla, Chlb, C, Antho, Cellulose, Wax)
+-   **Class**: Plant species (SP0, SP1, SP2)
+-   **Biomarkers**: Chemical measurements in leaves: Chlorophylus A, Chlorophylus B, Carotenoids, Anthocyanins, Cellulose, Wax)
 -   **Spectral bands**: Reflectance values at different wavelengths (X400, X401, ..., X2400)
+
+For more details about the dataset, including measurement units, see [Kozhoridze et al. (2016)](https://doi.org/10.1016/j.rse.2016.08.024).
 :::
 
 ### Data Type Conversion
@@ -128,7 +130,7 @@ print(table(data$Class, data$Group, data$Month))
 
 ### Comparing Biomarkers Across Groups
 
-Create comprehensive visualizations to compare biomarker levels across different plant groups and classes:
+Create comprehensive visualizations to compare biomarker levels across different plant species and traits:
 
 ```{r biomarker-comparison}
 #| label: biomarker-boxplots
@@ -159,7 +161,7 @@ ggplot(df_long, aes(x = Group, y = Value, fill = Class)) +
 Each biomarker represents different plant physiological processes:
 
 -   **Chla/Chlb**: Chlorophyll content (photosynthetic capacity)
--   **C**: Carbon content (structural components)
+-   **C**: Carotenoid content (accessory pigments for light harvesting and photoprotection)
 -   **Antho**: Anthocyanin content (stress response pigments)
 -   **Cellulose**: Structural carbohydrates
 -   **Wax**: Protective leaf surface compounds
@@ -223,7 +225,13 @@ This section explores how spectral signatures relate to biomarker concentrations
 
 ### Creating High/Low Groups Based on Quantiles
 
-For each biomarker, we'll create a function to analyze spectral differences:
+::: callout-note
+## Quantile-Based Biomarker Grouping
+
+To identify samples with distinctly high versus low biomarker concentrations, we use the 75th percentile (third quartile) as a threshold within each sampling month. Samples with biomarker values at or above the 75th percentile are classified as "High" (representing the top 25% of samples), while all remaining samples are classified as "Low" (bottom 75%). This approach ensures we're comparing the most extreme cases - plants with genuinely elevated biomarker levels against the majority with typical or lower concentrations - making spectral differences more pronounced and biologically meaningful.
+:::
+
+The following function implements this quantile-based approach to analyze spectral differences between high and low biomarker groups:
 
 ```{r spectral-analysis-function}
 #| label: spectral-analysis-func
@@ -301,7 +309,8 @@ for(biomarker in biomarkers) {
 Different biomarkers create distinct spectral patterns:
 
 -   **Chlorophyll**: Strong absorption around 680 nm (red) and 430 nm (blue)
--   **Anthocyanins**: Absorption in green-yellow region (500-600 nm)\
+-   **Carotenoids**: Absorption around 480 nm (blue) and 500-550 nm (green), with reflectance peak around 550 nm (yellow)
+-   **Anthocyanins**: Absorption in green-yellow region (500-600 nm)
 -   **Cellulose**: Absorption features in near-infrared (1400-1500 nm, 1900-2000 nm)
 -   **Wax**: Affects overall reflectance levels, especially in near-infrared
 :::
@@ -312,7 +321,15 @@ Different biomarkers create distinct spectral patterns:
 
 We'll use Partial Least Squares Discriminant Analysis (PLS-DA) to classify plant samples based on their spectral signatures.
 
+::: callout-info
+## What is PLS-DA?
+
+Partial Least Squares Discriminant Analysis (PLS-DA) is a supervised classification technique that combines dimensionality reduction with discriminant analysis, making it particularly well-suited for high-dimensional data like hyperspectral datasets. Unlike traditional discriminant analysis methods that can fail when the number of variables exceeds the number of samples, PLS-DA first projects the data onto a lower-dimensional space of latent variables (components) that maximize the covariance between the predictor variables (spectral bands) and the class labels. This projection simultaneously reduces noise, handles multicollinearity among spectral bands, and identifies the most discriminative spectral features. The method then performs classification in this reduced space, making it robust for datasets with hundreds or thousands of correlated variables and relatively few samples - a common scenario in remote sensing applications.
+:::
+
 #### Data Preparation for Classification
+
+We now extract spectral data columns, scale them separately for each month to ensure equal variance across wavelengths, then combine the standardized data with class labels to create a machine learning-ready dataset.
 
 ```{r ml-data-prep}
 #| label: ml-data-preparation
@@ -339,6 +356,10 @@ Scaling ensures that all spectral bands contribute equally to the analysis, prev
 :::
 
 #### PLS-DA Function
+
+This function applies the mixOmics::plsda() function to fit a PLS-DA model with 3 components, makes self-predictions on the training data, calculates accuracy metrics, and visualizes class separation in the first two component space.
+
+The key point is that it uses plsda(X, Y, ncomp = 3) from the mixOmics package to perform the core discriminant analysis, then extracts predictions and component scores from the resulting model object for evaluation and plotting.
 
 ```{r plsda-function}
 #| label: plsda-function
@@ -409,12 +430,23 @@ combined_plot <- march_res$plot + july_res$plot + plot_layout(ncol = 2)
 print(combined_plot)
 ```
 
-::: callout-note
-## Interpreting PLS-DA Results
+::: {.callout-note}
+## Interpreting PLS-DA Component Plots
+
+Accuracy metrics evaluate the overall classification success:
 
 -   **Overall Accuracy (OA)**: Percentage of correctly classified samples
 -   **Kappa coefficient**: Agreement between predicted and actual classes, corrected for chance
--   **Scatter plot**: Shows how well classes separate in the reduced dimensional space
+
+The PLS-DA scatter plot shows classification results projected onto the first two discriminant components, revealing how well spectral signatures separate plant classes:
+
+- **Tight clusters** (like SP1-green and SP2-blue) indicate classes with distinct, consistent spectral signatures
+- **Dispersed patterns** (like SP0-red) suggest greater within-class spectral variability
+- **Component axes** represent the most discriminative spectral directions: Component 1 typically provides primary class separation, while Component 2 refines distinctions between remaining classes
+- **Elliptical boundaries** show 95% confidence regions; limited overlap indicates successful spectral discrimination
+- **High accuracy metrics** (OA=93.3%, Kappa=89.6%) confirm that the model found reliable spectral features distinguishing the classes
+
+This visualization helps assess both model performance and the underlying spectral separability of your plant classes.
 :::
 
 ### Variable Importance Analysis (VIP Scores)
@@ -549,7 +581,7 @@ data$VI_Wax <- VI_Wax
 These indices are designed to enhance specific plant properties while reducing the effects of:
 
 -   Atmospheric conditions
--   Soil background\
+-   Soil background
 -   Illumination variations
 -   Noise in individual spectral bands
 :::
@@ -723,8 +755,8 @@ For more robust model evaluation, implement proper cross-validation:
 # Example of k-fold cross-validation for PLS-DA
 perform_cv_plsda <- function(data, k_folds = 5) {
   # Prepare data
-  spec_cols <- grep("^X\\d{3,4}$", names(data))
-  X <- as.matrix(data[, spec_cols])
+  ind_cols <- grep("VI", names(data))
+  X <- as.matrix(data[, ind_cols])
   Y <- factor(data$Class)
   
   # Create folds
@@ -739,7 +771,7 @@ perform_cv_plsda <- function(data, k_folds = 5) {
     
     # Predict on test set
     pred <- predict(plsda_model, X[test_idx, ])
-    pred_class <- pred$class[, 2]  # Use component 2
+    pred_class <- pred$class$max.dist[, 2]  # Use component 2
     
     # Calculate metrics
     cm <- confusionMatrix(factor(pred_class, levels = levels(Y)), Y[test_idx])
@@ -755,355 +787,17 @@ perform_cv_plsda <- function(data, k_folds = 5) {
 }
 
 # Example usage (uncomment to run)
-# march_data <- subset(Class_Data_Scaled, Month == "March")
-# cv_results <- perform_cv_plsda(march_data)
-# print(paste("Mean CV Accuracy:", round(mean(cv_results$accuracy), 3)))
+march_data <- subset(Class_Data_Scaled, Month == "March")
+cv_results <- perform_cv_plsda(march_data)
+print(paste("Mean CV Accuracy:", round(mean(cv_results$accuracy), 3)))
 ```
 
-### Alternative Machine Learning Methods
+::: {.callout-info}
+## Why Cross-Validation Matters
 
-```{r alternative-methods}
-#| label: alternative-ml-methods
-#| eval: true
+Cross-validation prevents overly optimistic performance estimates by testing models on data they haven't seen during training. The earlier classification results used the same data for both training and testing (self-prediction), which typically inflates accuracy metrics since models can memorize training patterns rather than learn generalizable features. K-fold cross-validation splits data into multiple train-test partitions, providing more realistic estimates of how well the model will perform on new, unseen samples - the true test of a classification algorithm's practical utility.
+:::
 
-# Random Forest example
-library(randomForest)
-
-run_random_forest <- function(data, month) {
-  df <- subset(data, Month == month)
-  spec_cols <- grep("^X\\d{3,4}$", names(df))
-  
-  X <- df[, spec_cols]
-  Y <- factor(df$Class)
-  
-  # Train Random Forest
-  rf_model <- randomForest(x = X, y = Y, ntree = 500, importance = TRUE)
-  
-  # Get predictions
-  predictions <- predict(rf_model, X)
-  
-  # Calculate accuracy
-  cm <- confusionMatrix(predictions, Y)
-  
-  # Variable importance
-  importance_scores <- importance(rf_model, type = 1)
-  
-  return(list(
-    model = rf_model,
-    accuracy = cm$overall["Accuracy"],
-    kappa = cm$overall["Kappa"],
-    importance = importance_scores
-  ))
-}
-
-# Support Vector Machine example
-library(e1071)
-
-run_svm <- function(data, month) {
-  df <- subset(data, Month == month)
-  spec_cols <- grep("^X\\d{3,4}$", names(df))
-  
-  # Combine features and response
-  svm_data <- cbind(df[, spec_cols], Class = factor(df$Class))
-  
-  # Train SVM with RBF kernel
-  svm_model <- svm(Class ~ ., data = svm_data, kernel = "radial", 
-                   cost = 1, gamma = 1/ncol(df[, spec_cols]))
-  
-  # Get predictions
-  predictions <- predict(svm_model, svm_data[, -ncol(svm_data)])
-  
-  # Calculate accuracy
-  cm <- confusionMatrix(predictions, svm_data$Class)
-  
-  return(list(
-    model = svm_model,
-    accuracy = cm$overall["Accuracy"],
-    kappa = cm$overall["Kappa"]
-  ))
-}
-```
-
-### Feature Selection Techniques
-
-```{r feature-selection}
-#| label: feature-selection-methods
-#| eval: true
-
-# Recursive Feature Elimination
-library(caret)
-
-perform_rfe <- function(data, month) {
-  df <- subset(data, Month == month)
-  spec_cols <- grep("^X\\d{3,4}$", names(df))
-  
-  X <- df[, spec_cols]
-  Y <- factor(df$Class)
-  
-  # Define control for RFE
-  control <- rfeControl(
-    functions = rfFuncs,  # Random Forest functions
-    method = "cv",        # Cross-validation
-    number = 5            # 5-fold CV
-  )
-  
-  # Perform RFE
-  rfe_results <- rfe(
-    x = X, 
-    y = Y,
-    sizes = c(5, 10, 20, 50, 100),  # Different numbers of features to try
-    rfeControl = control
-  )
-  
-  return(rfe_results)
-}
-
-# Correlation-based feature selection
-select_features_by_correlation <- function(data, threshold = 0.9) {
-  spec_cols <- grep("^X\\d{3,4}$", names(data))
-  spectral_data <- data[, spec_cols]
-  
-  # Calculate correlation matrix
-  cor_matrix <- cor(spectral_data, use = "complete.obs")
-  
-  # Find highly correlated features
-  high_cor <- findCorrelation(cor_matrix, cutoff = threshold)
-  
-  # Return indices of features to keep
-  keep_features <- setdiff(1:ncol(spectral_data), high_cor)
-  
-  return(list(
-    keep_indices = keep_features,
-    removed_indices = high_cor,
-    keep_names = names(spectral_data)[keep_features]
-  ))
-}
-```
-
-### Time Series Analysis
-
-For datasets with temporal components:
-
-```{r time-series-analysis}
-#| label: time-series-methods
-#| eval: true
-
-# Analyze temporal changes in spectral signatures
-analyze_temporal_changes <- function(data) {
-  # Calculate spectral differences between months
-  march_data <- subset(data, Month == "March")
-  july_data <- subset(data, Month == "July")
-  
-  spec_cols <- grep("^X\\d{3,4}$", names(data))
-  
-  # Calculate mean spectra for each month and class
-  temporal_analysis <- data %>%
-    select(Month, Class, all_of(spec_cols)) %>%
-    pivot_longer(cols = all_of(spec_cols), 
-                 names_to = "Wavelength", 
-                 values_to = "Reflectance") %>%
-    mutate(Wavelength = as.numeric(str_remove(Wavelength, "^X"))) %>%
-    group_by(Month, Class, Wavelength) %>%
-    summarise(MeanReflectance = mean(Reflectance, na.rm = TRUE), .groups = "drop") %>%
-    pivot_wider(names_from = Month, values_from = MeanReflectance) %>%
-    mutate(Difference = July - March,
-           PercentChange = (July - March) / March * 100)
-  
-  return(temporal_analysis)
-}
-
-# Visualize temporal changes
-plot_temporal_changes <- function(temporal_data) {
-  ggplot(temporal_data, aes(x = Wavelength, y = Difference, color = Class)) +
-    geom_line(linewidth = 1) +
-    geom_hline(yintercept = 0, linetype = "dashed", alpha = 0.5) +
-    theme_minimal() +
-    labs(
-      title = "Temporal Changes in Spectral Reflectance (July - March)",
-      x = "Wavelength (nm)",
-      y = "Reflectance Difference",
-      color = "Plant Class"
-    ) +
-    facet_wrap(~ Class, scales = "free_y")
-}
-```
-
-### Model Interpretation and Explainability
-
-```{r model-interpretation}
-#| label: model-interpretation
-#| eval: true
-
-# SHAP values for model interpretation (conceptual example)
-library(shapr)
-
-explain_plsda_predictions <- function(model, data, sample_indices = 1:5) {
-  # This is a conceptual example - actual implementation would depend on 
-  # adapting SHAP or LIME for PLS-DA models
-  
-  # Extract model components
-  loadings <- model$loadings
-  scores <- model$scores
-  
-  # Calculate contribution of each wavelength to the prediction
-  # This is simplified - full implementation would be more complex
-  contributions <- map_dfr(sample_indices, function(i) {
-    sample_scores <- scores[i, ]
-    wavelength_contributions <- abs(loadings[, 1:2] %*% sample_scores[1:2])
-    
-    tibble(
-      sample = i,
-      wavelength = as.numeric(str_remove(names(wavelength_contributions), "^X")),
-      contribution = as.numeric(wavelength_contributions)
-    )
-  })
-  
-  return(contributions)
-}
-
-# Plot feature contributions
-plot_feature_importance <- function(contributions, top_n = 20) {
-  top_features <- contributions %>%
-    group_by(wavelength) %>%
-    summarise(mean_contribution = mean(abs(contribution)), .groups = "drop") %>%
-    arrange(desc(mean_contribution)) %>%
-    head(top_n)
-  
-  ggplot(top_features, aes(x = reorder(factor(wavelength), mean_contribution), 
-                          y = mean_contribution)) +
-    geom_col(fill = "steelblue") +
-    coord_flip() +
-    theme_minimal() +
-    labs(
-      title = paste("Top", top_n, "Most Important Wavelengths"),
-      x = "Wavelength (nm)",
-      y = "Mean Absolute Contribution"
-    )
-}
-```
-
-### Integration with Remote Sensing Data
-
-```{r remote-sensing-integration}
-#| label: remote-sensing-methods
-#| eval: true
-
-# Example of applying models to satellite/airborne data
-# This would typically involve raster data processing
-
-library(terra)
-library(raster)
-
-# Function to apply trained model to raster data
-apply_model_to_raster <- function(raster_data, trained_model, band_names) {
-  # This is a conceptual example for hyperspectral raster processing
-  
-  # Extract values
-  raster_values <- values(raster_data)
-  
-  # Remove NA values
-  complete_cases <- complete.cases(raster_values)
-  clean_data <- raster_values[complete_cases, ]
-  
-  # Ensure column names match training data
-  colnames(clean_data) <- band_names
-  
-  # Apply preprocessing (scaling) - would need to save scaling parameters from training
-  # scaled_data <- scale(clean_data, center = training_means, scale = training_sds)
-  
-  # Make predictions
-  # predictions <- predict(trained_model, scaled_data)
-  
-  # Create output raster
-  # output_raster <- raster_data[[1]]  # Use first band as template
-  # values(output_raster)[complete_cases] <- predictions
-  
-  # return(output_raster)
-}
-
-# Validation with ground truth data
-validate_remote_sensing_predictions <- function(predictions, ground_truth) {
-  # Extract values at ground truth locations
-  predicted_values <- extract(predictions, ground_truth[, c("x", "y")])
-  actual_values <- ground_truth$class
-  
-  # Calculate accuracy metrics
-  confusion_matrix <- confusionMatrix(
-    factor(predicted_values), 
-    factor(actual_values)
-  )
-  
-  return(confusion_matrix)
-}
-```
-
-### Advanced Visualization Techniques
-
-```{r advanced-visualization}
-#| label: advanced-viz
-#| eval: true
-
-# 3D visualization of spectral-temporal space
-library(plotly)
-
-create_3d_spectral_plot <- function(data) {
-  # Prepare data for 3D plotting
-  plot_data <- data %>%
-    select(Month, Class, contains("X")) %>%
-    # Use PCA to reduce to 3 dimensions for visualization
-    {
-      spec_cols <- grep("^X\\d{3,4}$", names(.))
-      pca_result <- prcomp(.[, spec_cols], scale = TRUE)
-      cbind(.[, 1:2], as.data.frame(pca_result$x[, 1:3]))
-    }
-  
-  # Create 3D plot
-  plot_ly(plot_data, 
-          x = ~PC1, y = ~PC2, z = ~PC3,
-          color = ~Class, symbol = ~Month,
-          type = "scatter3d", mode = "markers") %>%
-    layout(
-      title = "3D Spectral Space Visualization",
-      scene = list(
-        xaxis = list(title = "PC1"),
-        yaxis = list(title = "PC2"),
-        zaxis = list(title = "PC3")
-      )
-    )
-}
-
-# Interactive spectral signature plot
-create_interactive_spectra <- function(data) {
-  # Prepare long format data
-  spec_data <- data %>%
-    select(Month, Class, contains("X")) %>%
-    pivot_longer(cols = contains("X"), names_to = "Wavelength", values_to = "Reflectance") %>%
-    mutate(Wavelength = as.numeric(str_remove(Wavelength, "^X"))) %>%
-    group_by(Month, Class, Wavelength) %>%
-    summarise(
-      MeanReflectance = mean(Reflectance, na.rm = TRUE),
-      SD = sd(Reflectance, na.rm = TRUE),
-      .groups = "drop"
-    )
-  
-  # Create interactive plot
-  p <- ggplot(spec_data, aes(x = Wavelength, y = MeanReflectance, 
-                            color = Class, linetype = Month)) +
-    geom_line(size = 1) +
-    geom_ribbon(aes(ymin = MeanReflectance - SD, ymax = MeanReflectance + SD,
-                    fill = Class), alpha = 0.2, linetype = 0) +
-    theme_minimal() +
-    labs(
-      title = "Interactive Spectral Signatures",
-      x = "Wavelength (nm)",
-      y = "Reflectance",
-      color = "Plant Class",
-      linetype = "Month"
-    )
-  
-  ggplotly(p, tooltip = c("x", "y", "colour", "linetype"))
-}
-```
 
 ## Conclusion
 
@@ -1117,7 +811,7 @@ The integration of multiple analytical approaches—from basic statistical compa
 To further develop your hyperspectral analysis skills:
 
 -   **Cross-validation**: Implement robust validation strategies with your own datasets
--   **Alternative algorithms**: Experiment with Random Forest, SVM, or deep learning approaches\
+-   **Alternative algorithms**: Experiment with Random Forest, SVM, or deep learning approaches
 -   **Feature selection**: Apply dimensionality reduction techniques to optimize model performance
 -   **Temporal analysis**: Explore how spectral signatures change over time or growing seasons
 -   **Scale integration**: Connect lab measurements to field and satellite observations
