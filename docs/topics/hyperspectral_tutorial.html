@@ -3900,7 +3900,7 @@ vertical-align: -.125em;
  <span class="dropdown-text">Intro</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../topics/hyperspectral_theory.qmd">
+    <a class="dropdown-item" href="../topics/hyperspectral_theory.html">
  <span class="dropdown-text">Theory</span></a>
   </li>  
         <li>
@@ -3925,43 +3925,43 @@ vertical-align: -.125em;
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
-  <li><a href="#part-1-data-preparation-and-exploration" id="toc-part-1-data-preparation-and-exploration" class="nav-link" data-scroll-target="#part-1-data-preparation-and-exploration">Part 1: Data Preparation and Exploration</a>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">1</span> Overview</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites"><span class="header-section-number">2</span> Prerequisites</a></li>
+  <li><a href="#part-1-data-preparation-and-exploration" id="toc-part-1-data-preparation-and-exploration" class="nav-link" data-scroll-target="#part-1-data-preparation-and-exploration"><span class="header-section-number">3</span> Part 1: Data Preparation and Exploration</a>
   <ul class="collapse">
-  <li><a href="#loading-and-inspecting-the-data" id="toc-loading-and-inspecting-the-data" class="nav-link" data-scroll-target="#loading-and-inspecting-the-data">Loading and Inspecting the Data</a></li>
-  <li><a href="#data-type-conversion" id="toc-data-type-conversion" class="nav-link" data-scroll-target="#data-type-conversion">Data Type Conversion</a></li>
-  <li><a href="#creating-long-format-for-analysis" id="toc-creating-long-format-for-analysis" class="nav-link" data-scroll-target="#creating-long-format-for-analysis">Creating Long Format for Analysis</a></li>
+  <li><a href="#loading-and-inspecting-the-data" id="toc-loading-and-inspecting-the-data" class="nav-link" data-scroll-target="#loading-and-inspecting-the-data"><span class="header-section-number">3.1</span> Loading and Inspecting the Data</a></li>
+  <li><a href="#data-type-conversion" id="toc-data-type-conversion" class="nav-link" data-scroll-target="#data-type-conversion"><span class="header-section-number">3.2</span> Data Type Conversion</a></li>
+  <li><a href="#creating-long-format-for-analysis" id="toc-creating-long-format-for-analysis" class="nav-link" data-scroll-target="#creating-long-format-for-analysis"><span class="header-section-number">3.3</span> Creating Long Format for Analysis</a></li>
   </ul></li>
-  <li><a href="#part-2-biomarker-analysis-and-visualization" id="toc-part-2-biomarker-analysis-and-visualization" class="nav-link" data-scroll-target="#part-2-biomarker-analysis-and-visualization">Part 2: Biomarker Analysis and Visualization</a>
+  <li><a href="#part-2-biomarker-analysis-and-visualization" id="toc-part-2-biomarker-analysis-and-visualization" class="nav-link" data-scroll-target="#part-2-biomarker-analysis-and-visualization"><span class="header-section-number">4</span> Part 2: Biomarker Analysis and Visualization</a>
   <ul class="collapse">
-  <li><a href="#comparing-biomarkers-across-groups" id="toc-comparing-biomarkers-across-groups" class="nav-link" data-scroll-target="#comparing-biomarkers-across-groups">Comparing Biomarkers Across Groups</a></li>
-  <li><a href="#statistical-testing" id="toc-statistical-testing" class="nav-link" data-scroll-target="#statistical-testing">Statistical Testing</a></li>
+  <li><a href="#comparing-biomarkers-across-groups" id="toc-comparing-biomarkers-across-groups" class="nav-link" data-scroll-target="#comparing-biomarkers-across-groups"><span class="header-section-number">4.1</span> Comparing Biomarkers Across Groups</a></li>
+  <li><a href="#statistical-testing" id="toc-statistical-testing" class="nav-link" data-scroll-target="#statistical-testing"><span class="header-section-number">4.2</span> Statistical Testing</a></li>
   </ul></li>
-  <li><a href="#part-3-spectral-analysis-by-biomarker-levels" id="toc-part-3-spectral-analysis-by-biomarker-levels" class="nav-link" data-scroll-target="#part-3-spectral-analysis-by-biomarker-levels">Part 3: Spectral Analysis by Biomarker Levels</a>
+  <li><a href="#part-3-spectral-analysis-by-biomarker-levels" id="toc-part-3-spectral-analysis-by-biomarker-levels" class="nav-link" data-scroll-target="#part-3-spectral-analysis-by-biomarker-levels"><span class="header-section-number">5</span> Part 3: Spectral Analysis by Biomarker Levels</a>
   <ul class="collapse">
-  <li><a href="#creating-highlow-groups-based-on-quantiles" id="toc-creating-highlow-groups-based-on-quantiles" class="nav-link" data-scroll-target="#creating-highlow-groups-based-on-quantiles">Creating High/Low Groups Based on Quantiles</a></li>
-  <li><a href="#applying-the-analysis-to-different-biomarkers" id="toc-applying-the-analysis-to-different-biomarkers" class="nav-link" data-scroll-target="#applying-the-analysis-to-different-biomarkers">Applying the Analysis to Different Biomarkers</a></li>
+  <li><a href="#creating-highlow-groups-based-on-quantiles" id="toc-creating-highlow-groups-based-on-quantiles" class="nav-link" data-scroll-target="#creating-highlow-groups-based-on-quantiles"><span class="header-section-number">5.1</span> Creating High/Low Groups Based on Quantiles</a></li>
+  <li><a href="#applying-the-analysis-to-different-biomarkers" id="toc-applying-the-analysis-to-different-biomarkers" class="nav-link" data-scroll-target="#applying-the-analysis-to-different-biomarkers"><span class="header-section-number">5.2</span> Applying the Analysis to Different Biomarkers</a></li>
   </ul></li>
-  <li><a href="#part-4-machine-learning-classification" id="toc-part-4-machine-learning-classification" class="nav-link" data-scroll-target="#part-4-machine-learning-classification">Part 4: Machine Learning Classification</a>
+  <li><a href="#part-4-machine-learning-classification" id="toc-part-4-machine-learning-classification" class="nav-link" data-scroll-target="#part-4-machine-learning-classification"><span class="header-section-number">6</span> Part 4: Machine Learning Classification</a>
   <ul class="collapse">
-  <li><a href="#classification-using-full-spectral-data" id="toc-classification-using-full-spectral-data" class="nav-link" data-scroll-target="#classification-using-full-spectral-data">Classification Using Full Spectral Data</a></li>
+  <li><a href="#classification-using-full-spectral-data" id="toc-classification-using-full-spectral-data" class="nav-link" data-scroll-target="#classification-using-full-spectral-data"><span class="header-section-number">6.1</span> Classification Using Full Spectral Data</a></li>
   </ul></li>
-  <li><a href="#what-is-pls-da" id="toc-what-is-pls-da" class="nav-link" data-scroll-target="#what-is-pls-da">What is PLS-DA?</a></li>
-  <li><a href="#variable-importance-analysis-vip-scores" id="toc-variable-importance-analysis-vip-scores" class="nav-link" data-scroll-target="#variable-importance-analysis-vip-scores">Variable Importance Analysis (VIP Scores)</a></li>
-  <li><a href="#part-5-classification-using-vegetation-indices" id="toc-part-5-classification-using-vegetation-indices" class="nav-link" data-scroll-target="#part-5-classification-using-vegetation-indices">Part 5: Classification Using Vegetation Indices</a>
+  <li><a href="#what-is-pls-da" id="toc-what-is-pls-da" class="nav-link" data-scroll-target="#what-is-pls-da"><span class="header-section-number">7</span> What is PLS-DA?</a></li>
+  <li><a href="#variable-importance-analysis-vip-scores" id="toc-variable-importance-analysis-vip-scores" class="nav-link" data-scroll-target="#variable-importance-analysis-vip-scores"><span class="header-section-number">7.1</span> Variable Importance Analysis (VIP Scores)</a></li>
+  <li><a href="#part-5-classification-using-vegetation-indices" id="toc-part-5-classification-using-vegetation-indices" class="nav-link" data-scroll-target="#part-5-classification-using-vegetation-indices"><span class="header-section-number">8</span> Part 5: Classification Using Vegetation Indices</a>
   <ul class="collapse">
-  <li><a href="#calculating-vegetation-indices" id="toc-calculating-vegetation-indices" class="nav-link" data-scroll-target="#calculating-vegetation-indices">Calculating Vegetation Indices</a></li>
-  <li><a href="#classification-using-indices" id="toc-classification-using-indices" class="nav-link" data-scroll-target="#classification-using-indices">Classification Using Indices</a></li>
-  <li><a href="#vip-analysis-for-vegetation-indices" id="toc-vip-analysis-for-vegetation-indices" class="nav-link" data-scroll-target="#vip-analysis-for-vegetation-indices">VIP Analysis for Vegetation Indices</a></li>
+  <li><a href="#calculating-vegetation-indices" id="toc-calculating-vegetation-indices" class="nav-link" data-scroll-target="#calculating-vegetation-indices"><span class="header-section-number">8.1</span> Calculating Vegetation Indices</a></li>
+  <li><a href="#classification-using-indices" id="toc-classification-using-indices" class="nav-link" data-scroll-target="#classification-using-indices"><span class="header-section-number">8.2</span> Classification Using Indices</a></li>
+  <li><a href="#vip-analysis-for-vegetation-indices" id="toc-vip-analysis-for-vegetation-indices" class="nav-link" data-scroll-target="#vip-analysis-for-vegetation-indices"><span class="header-section-number">8.3</span> VIP Analysis for Vegetation Indices</a></li>
   </ul></li>
-  <li><a href="#summary-and-key-takeaways" id="toc-summary-and-key-takeaways" class="nav-link" data-scroll-target="#summary-and-key-takeaways">Summary and Key Takeaways</a></li>
-  <li><a href="#advanced-topics-and-extensions" id="toc-advanced-topics-and-extensions" class="nav-link" data-scroll-target="#advanced-topics-and-extensions">Advanced Topics and Extensions</a>
+  <li><a href="#summary-and-key-takeaways" id="toc-summary-and-key-takeaways" class="nav-link" data-scroll-target="#summary-and-key-takeaways"><span class="header-section-number">9</span> Summary and Key Takeaways</a></li>
+  <li><a href="#advanced-topics-and-extensions" id="toc-advanced-topics-and-extensions" class="nav-link" data-scroll-target="#advanced-topics-and-extensions"><span class="header-section-number">10</span> Advanced Topics and Extensions</a>
   <ul class="collapse">
-  <li><a href="#cross-validation-strategies" id="toc-cross-validation-strategies" class="nav-link" data-scroll-target="#cross-validation-strategies">Cross-Validation Strategies</a></li>
+  <li><a href="#cross-validation-strategies" id="toc-cross-validation-strategies" class="nav-link" data-scroll-target="#cross-validation-strategies"><span class="header-section-number">10.1</span> Cross-Validation Strategies</a></li>
   </ul></li>
-  <li><a href="#why-cross-validation-matters" id="toc-why-cross-validation-matters" class="nav-link" data-scroll-target="#why-cross-validation-matters">Why Cross-Validation Matters</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#why-cross-validation-matters" id="toc-why-cross-validation-matters" class="nav-link" data-scroll-target="#why-cross-validation-matters"><span class="header-section-number">11</span> Why Cross-Validation Matters</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">12</span> Conclusion</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="hyperspectral_tutorial.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
     </div>
@@ -3999,12 +3999,12 @@ vertical-align: -.125em;
 </header>
 
 
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<section id="overview" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="overview"><span class="header-section-number">1</span> Overview</h2>
 <p>This tutorial demonstrates how to analyze hyperspectral data for plant classification and biomarker estimation. We’ll work with spectral reflectance data from plant samples collected in different months (March and July) across various plant groups and classes. The analysis includes data preprocessing, visualization, statistical testing, and machine learning classification using both raw spectral data and derived vegetation indices.</p>
 </section>
-<section id="prerequisites" class="level2">
-<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
+<section id="prerequisites" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="prerequisites"><span class="header-section-number">2</span> Prerequisites</h2>
 <p>Before starting, you’ll need to install and load several R packages for data manipulation, visualization, and machine learning.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install required packages (uncomment if needed)</span></span>
@@ -4027,10 +4027,10 @@ vertical-align: -.125em;
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mixOmics)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="part-1-data-preparation-and-exploration" class="level2">
-<h2 class="anchored" data-anchor-id="part-1-data-preparation-and-exploration">Part 1: Data Preparation and Exploration</h2>
-<section id="loading-and-inspecting-the-data" class="level3">
-<h3 class="anchored" data-anchor-id="loading-and-inspecting-the-data">Loading and Inspecting the Data</h3>
+<section id="part-1-data-preparation-and-exploration" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="part-1-data-preparation-and-exploration"><span class="header-section-number">3</span> Part 1: Data Preparation and Exploration</h2>
+<section id="loading-and-inspecting-the-data" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="loading-and-inspecting-the-data"><span class="header-section-number">3.1</span> Loading and Inspecting the Data</h3>
 <p>First, we load our hyperspectral dataset and examine its structure:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the hyperspectral data</span></span>
@@ -4085,8 +4085,8 @@ vertical-align: -.125em;
 </div>
 </div>
 </section>
-<section id="data-type-conversion" class="level3">
-<h3 class="anchored" data-anchor-id="data-type-conversion">Data Type Conversion</h3>
+<section id="data-type-conversion" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="data-type-conversion"><span class="header-section-number">3.2</span> Data Type Conversion</h3>
 <p>Next, we convert categorical variables to factors and identify spectral columns:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert categorical variables to factors</span></span>
@@ -4115,8 +4115,8 @@ vertical-align: -.125em;
 </div>
 </div>
 </section>
-<section id="creating-long-format-for-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="creating-long-format-for-analysis">Creating Long Format for Analysis</h3>
+<section id="creating-long-format-for-analysis" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="creating-long-format-for-analysis"><span class="header-section-number">3.3</span> Creating Long Format for Analysis</h3>
 <p>Transform the wide spectral data into long format for easier plotting and analysis:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reshape spectral data to long format</span></span>
@@ -4148,10 +4148,10 @@ vertical-align: -.125em;
 </div>
 </section>
 </section>
-<section id="part-2-biomarker-analysis-and-visualization" class="level2">
-<h2 class="anchored" data-anchor-id="part-2-biomarker-analysis-and-visualization">Part 2: Biomarker Analysis and Visualization</h2>
-<section id="comparing-biomarkers-across-groups" class="level3">
-<h3 class="anchored" data-anchor-id="comparing-biomarkers-across-groups">Comparing Biomarkers Across Groups</h3>
+<section id="part-2-biomarker-analysis-and-visualization" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="part-2-biomarker-analysis-and-visualization"><span class="header-section-number">4</span> Part 2: Biomarker Analysis and Visualization</h2>
+<section id="comparing-biomarkers-across-groups" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="comparing-biomarkers-across-groups"><span class="header-section-number">4.1</span> Comparing Biomarkers Across Groups</h3>
 <p>Create comprehensive visualizations to compare biomarker levels across different plant species and traits:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare data for biomarker comparison</span></span>
@@ -4198,8 +4198,8 @@ vertical-align: -.125em;
 </div>
 </div>
 </section>
-<section id="statistical-testing" class="level3">
-<h3 class="anchored" data-anchor-id="statistical-testing">Statistical Testing</h3>
+<section id="statistical-testing" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="statistical-testing"><span class="header-section-number">4.2</span> Statistical Testing</h3>
 <p>Perform pairwise comparisons to identify significant differences:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate pairwise comparisons for each month and biomarker</span></span>
@@ -4259,11 +4259,11 @@ vertical-align: -.125em;
 </div>
 </section>
 </section>
-<section id="part-3-spectral-analysis-by-biomarker-levels" class="level2">
-<h2 class="anchored" data-anchor-id="part-3-spectral-analysis-by-biomarker-levels">Part 3: Spectral Analysis by Biomarker Levels</h2>
+<section id="part-3-spectral-analysis-by-biomarker-levels" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="part-3-spectral-analysis-by-biomarker-levels"><span class="header-section-number">5</span> Part 3: Spectral Analysis by Biomarker Levels</h2>
 <p>This section explores how spectral signatures relate to biomarker concentrations.</p>
-<section id="creating-highlow-groups-based-on-quantiles" class="level3">
-<h3 class="anchored" data-anchor-id="creating-highlow-groups-based-on-quantiles">Creating High/Low Groups Based on Quantiles</h3>
+<section id="creating-highlow-groups-based-on-quantiles" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="creating-highlow-groups-based-on-quantiles"><span class="header-section-number">5.1</span> Creating High/Low Groups Based on Quantiles</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -4327,8 +4327,8 @@ vertical-align: -.125em;
 <span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="applying-the-analysis-to-different-biomarkers" class="level3">
-<h3 class="anchored" data-anchor-id="applying-the-analysis-to-different-biomarkers">Applying the Analysis to Different Biomarkers</h3>
+<section id="applying-the-analysis-to-different-biomarkers" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="applying-the-analysis-to-different-biomarkers"><span class="header-section-number">5.2</span> Applying the Analysis to Different Biomarkers</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Analyze different biomarkers</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>biomarkers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Antho&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;Chlb&quot;</span>, <span class="st">&quot;Chla&quot;</span>, <span class="st">&quot;Cellulose&quot;</span>, <span class="st">&quot;Wax&quot;</span>)</span>
@@ -4408,19 +4408,19 @@ vertical-align: -.125em;
 </div>
 </section>
 </section>
-<section id="part-4-machine-learning-classification" class="level2">
-<h2 class="anchored" data-anchor-id="part-4-machine-learning-classification">Part 4: Machine Learning Classification</h2>
-<section id="classification-using-full-spectral-data" class="level3">
-<h3 class="anchored" data-anchor-id="classification-using-full-spectral-data">Classification Using Full Spectral Data</h3>
+<section id="part-4-machine-learning-classification" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="part-4-machine-learning-classification"><span class="header-section-number">6</span> Part 4: Machine Learning Classification</h2>
+<section id="classification-using-full-spectral-data" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="classification-using-full-spectral-data"><span class="header-section-number">6.1</span> Classification Using Full Spectral Data</h3>
 <p>We’ll use Partial Least Squares Discriminant Analysis (PLS-DA) to classify plant samples based on their spectral signatures.</p>
 </section>
 </section>
-<section id="what-is-pls-da" class="level2 callout-info">
-<h2 class="anchored" data-anchor-id="what-is-pls-da">What is PLS-DA?</h2>
+<section id="what-is-pls-da" class="level2 callout-info" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="what-is-pls-da"><span class="header-section-number">7</span> What is PLS-DA?</h2>
 <p>Partial Least Squares Discriminant Analysis (PLS-DA) is a supervised classification technique that combines dimensionality reduction with discriminant analysis, making it particularly well-suited for high-dimensional data like hyperspectral datasets. Unlike traditional discriminant analysis methods that can fail when the number of variables exceeds the number of samples, PLS-DA first projects the data onto a lower-dimensional space of latent variables (components) that maximize the covariance between the predictor variables (spectral bands) and the class labels. This projection simultaneously reduces noise, handles multicollinearity among spectral bands, and identifies the most discriminative spectral features. The method then performs classification in this reduced space, making it robust for datasets with hundreds or thousands of correlated variables and relatively few samples - a common scenario in remote sensing applications.</p>
 </section>
-<section id="data-preparation-for-classification" class="level4">
-<h4 class="anchored" data-anchor-id="data-preparation-for-classification">Data Preparation for Classification</h4>
+<section id="data-preparation-for-classification" class="level4" data-number="7.0.1">
+<h4 data-number="7.0.1" class="anchored" data-anchor-id="data-preparation-for-classification"><span class="header-section-number">7.0.1</span> Data Preparation for Classification</h4>
 <p>We now extract spectral data columns, scale them separately for each month to ensure equal variance across wavelengths, then combine the standardized data with class labels to create a machine learning-ready dataset.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare classification dataset</span></span>
@@ -4450,8 +4450,8 @@ vertical-align: -.125em;
 </div>
 </div>
 </section>
-<section id="pls-da-function" class="level4">
-<h4 class="anchored" data-anchor-id="pls-da-function">PLS-DA Function</h4>
+<section id="pls-da-function" class="level4" data-number="7.0.2">
+<h4 data-number="7.0.2" class="anchored" data-anchor-id="pls-da-function"><span class="header-section-number">7.0.2</span> PLS-DA Function</h4>
 <p>This function applies the mixOmics::plsda() function to fit a PLS-DA model with 3 components, makes self-predictions on the training data, calculates accuracy metrics, and visualizes class separation in the first two component space.</p>
 <p>The key point is that it uses plsda(X, Y, ncomp = 3) from the mixOmics package to perform the core discriminant analysis, then extracts predictions and component scores from the resulting model object for evaluation and plotting.</p>
 <div class="cell">
@@ -4498,8 +4498,8 @@ vertical-align: -.125em;
 <span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="running-classification-analysis" class="level4">
-<h4 class="anchored" data-anchor-id="running-classification-analysis">Running Classification Analysis</h4>
+<section id="running-classification-analysis" class="level4" data-number="7.0.3">
+<h4 data-number="7.0.3" class="anchored" data-anchor-id="running-classification-analysis"><span class="header-section-number">7.0.3</span> Running Classification Analysis</h4>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset data by month</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>Class_Data_Scaled_M <span class="ot">&lt;-</span> <span class="fu">subset</span>(Class_Data_Scaled, Month <span class="sc">==</span> <span class="st">&quot;March&quot;</span>)</span>
@@ -4548,8 +4548,8 @@ vertical-align: -.125em;
 </div>
 </div>
 </section>
-<section id="variable-importance-analysis-vip-scores" class="level3">
-<h3 class="anchored" data-anchor-id="variable-importance-analysis-vip-scores">Variable Importance Analysis (VIP Scores)</h3>
+<section id="variable-importance-analysis-vip-scores" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="variable-importance-analysis-vip-scores"><span class="header-section-number">7.1</span> Variable Importance Analysis (VIP Scores)</h3>
 <p>Identify which spectral bands are most important for classification:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to extract VIP scores</span></span>
@@ -4639,11 +4639,11 @@ vertical-align: -.125em;
 </div>
 </div>
 </section>
-<section id="part-5-classification-using-vegetation-indices" class="level2">
-<h2 class="anchored" data-anchor-id="part-5-classification-using-vegetation-indices">Part 5: Classification Using Vegetation Indices</h2>
+<section id="part-5-classification-using-vegetation-indices" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="part-5-classification-using-vegetation-indices"><span class="header-section-number">8</span> Part 5: Classification Using Vegetation Indices</h2>
 <p>Instead of using all spectral bands, we can create vegetation indices that capture specific plant properties.</p>
-<section id="calculating-vegetation-indices" class="level3">
-<h3 class="anchored" data-anchor-id="calculating-vegetation-indices">Calculating Vegetation Indices</h3>
+<section id="calculating-vegetation-indices" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="calculating-vegetation-indices"><span class="header-section-number">8.1</span> Calculating Vegetation Indices</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define wavelength ranges for index calculations</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>cols_750_770 <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;X&quot;</span>, <span class="dv">750</span><span class="sc">:</span><span class="dv">770</span>)</span>
@@ -4699,8 +4699,8 @@ vertical-align: -.125em;
 </div>
 </div>
 </section>
-<section id="classification-using-indices" class="level3">
-<h3 class="anchored" data-anchor-id="classification-using-indices">Classification Using Indices</h3>
+<section id="classification-using-indices" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="classification-using-indices"><span class="header-section-number">8.2</span> Classification Using Indices</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare index-based classification data</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>ClassData <span class="ot">&lt;-</span> <span class="fu">subset</span>(data, <span class="at">select =</span> <span class="fu">c</span>(<span class="st">&quot;Month&quot;</span>, <span class="st">&quot;Group&quot;</span>, <span class="st">&quot;Class&quot;</span>, </span>
@@ -4767,8 +4767,8 @@ vertical-align: -.125em;
 </div>
 </div>
 </section>
-<section id="vip-analysis-for-vegetation-indices" class="level3">
-<h3 class="anchored" data-anchor-id="vip-analysis-for-vegetation-indices">VIP Analysis for Vegetation Indices</h3>
+<section id="vip-analysis-for-vegetation-indices" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="vip-analysis-for-vegetation-indices"><span class="header-section-number">8.3</span> VIP Analysis for Vegetation Indices</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># VIP analysis for vegetation indices</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>run_plsda_and_get_vip_indices <span class="ot">&lt;-</span> <span class="cf">function</span>(data, month, <span class="at">ncomp =</span> <span class="dv">3</span>) {</span>
@@ -4821,8 +4821,8 @@ vertical-align: -.125em;
 </div>
 </section>
 </section>
-<section id="summary-and-key-takeaways" class="level2">
-<h2 class="anchored" data-anchor-id="summary-and-key-takeaways">Summary and Key Takeaways</h2>
+<section id="summary-and-key-takeaways" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="summary-and-key-takeaways"><span class="header-section-number">9</span> Summary and Key Takeaways</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href>Data Preprocessing</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href>Exploratory Analysis</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href>Classification Approaches</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href>Model Validation</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false" href>Best Practices</a></li></ul>
 <div class="tab-content">
@@ -4866,10 +4866,10 @@ vertical-align: -.125em;
 </div>
 </div>
 </section>
-<section id="advanced-topics-and-extensions" class="level2">
-<h2 class="anchored" data-anchor-id="advanced-topics-and-extensions">Advanced Topics and Extensions</h2>
-<section id="cross-validation-strategies" class="level3">
-<h3 class="anchored" data-anchor-id="cross-validation-strategies">Cross-Validation Strategies</h3>
+<section id="advanced-topics-and-extensions" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="advanced-topics-and-extensions"><span class="header-section-number">10</span> Advanced Topics and Extensions</h2>
+<section id="cross-validation-strategies" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="cross-validation-strategies"><span class="header-section-number">10.1</span> Cross-Validation Strategies</h3>
 <p>For more robust model evaluation, implement proper cross-validation:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example of k-fold cross-validation for PLS-DA</span></span>
@@ -4916,12 +4916,12 @@ vertical-align: -.125em;
 </div>
 </section>
 </section>
-<section id="why-cross-validation-matters" class="level2 callout-info">
-<h2 class="anchored" data-anchor-id="why-cross-validation-matters">Why Cross-Validation Matters</h2>
+<section id="why-cross-validation-matters" class="level2 callout-info" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="why-cross-validation-matters"><span class="header-section-number">11</span> Why Cross-Validation Matters</h2>
 <p>Cross-validation prevents overly optimistic performance estimates by testing models on data they haven’t seen during training. The earlier classification results used the same data for both training and testing (self-prediction), which typically inflates accuracy metrics since models can memorize training patterns rather than learn generalizable features. K-fold cross-validation splits data into multiple train-test partitions, providing more realistic estimates of how well the model will perform on new, unseen samples - the true test of a classification algorithm’s practical utility.</p>
 </section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<section id="conclusion" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">12</span> Conclusion</h2>
 <p>This tutorial provides a comprehensive workflow for analyzing hyperspectral data in plant science applications. The methods demonstrated here can be adapted to various remote sensing and precision agriculture applications. The combination of statistical analysis, machine learning, and domain knowledge creates a robust framework for understanding plant spectral properties and their relationship to physiological characteristics.</p>
 <p>The integration of multiple analytical approaches—from basic statistical comparisons to advanced machine learning techniques—provides researchers with a complete toolkit for hyperspectral data analysis. The emphasis on both full spectral analysis and vegetation indices demonstrates the trade-offs between detailed spectral information and practical, interpretable measures.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -4943,8 +4943,8 @@ vertical-align: -.125em;
 <li><strong>Scale integration</strong>: Connect lab measurements to field and satellite observations</li>
 <li><strong>Operational applications</strong>: Develop automated pipelines for routine monitoring tasks</li>
 </ul>
-<section id="additional-resources" class="level2">
-<h2 class="anchored" data-anchor-id="additional-resources">Additional Resources</h2>
+<section id="additional-resources" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">13</span> Additional Resources</h2>
 <ul>
 <li><strong>Spectral libraries</strong>: USGS, ECOSIS for reference spectra</li>
 <li><strong>Software packages</strong>: <code>hsdar</code>, <code>RStoolbox</code> for specialized hyperspectral analysis</li>

@@ -9,6 +9,7 @@ format:
     code-fold: false
     theme: cosmo
     embed-resources: true
+    number-sections: true
   pdf:
     toc: true
     number-sections: true
