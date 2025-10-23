@@ -1,0 +1,223 @@
+---
+title: "Theoretical Background: Hyperspectral Remote Sensing of Plant Functional Traits"
+author: "Giorgi Kozhoridze"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: cosmo
+    code-fold: false
+    embed-resources: true
+    lightbox: true
+    number-sections: true
+  pdf:
+    toc: true
+    number-sections: true
+bibliography: references.bib
+---
+
+## Introduction: The Spectral Language of Vegetation
+
+Remote sensing technology enables us to observe and quantify plant characteristics across scales, from individual leaves to entire ecosystems. At the heart of this capability lies the fundamental principle that different plant compounds interact uniquely with electromagnetic radiation [@gates1965spectral]. While human vision is limited to three broad spectral bands (red, green, and blue), hyperspectral sensors capture reflectance across hundreds of narrow, contiguous wavelength bands, revealing detailed information about plant biochemistry, physiology, and structure that remains invisible to the naked eye [@ustin2009remote].
+
+The interaction between light and vegetation is governed by the absorption, transmission, and reflection properties of various biochemical compounds within plant tissues. Each pigment, structural component, and water molecule creates a characteristic spectral signature—a unique pattern of absorption and reflection across the electromagnetic spectrum [@jacquemoud1990prospect]. By analyzing these signatures, we can non-destructively estimate pigment concentrations, assess physiological status, detect stress, and classify vegetation types [@penuelas1994reflectance].
+
+## Seasonal Dynamics and Plant Functional Strategies
+
+Plants exhibit remarkable temporal variability in their spectral properties, driven by phenological cycles, resource allocation strategies, and environmental responses [@richardson2013tracking]. Understanding these dynamics is fundamental to interpreting remote sensing data correctly.
+
+@fig-seasonal-patterns illustrates the dramatic differences between plant functional types and their seasonal trajectories. The comparison between flowers/fruits and leaves demonstrates distinct spectral behaviors, while the seasonal progression from winter dormancy through spring leaf flush, summer maturity, and autumn senescence shows systematic changes in reflectance patterns [@huete2002overview]. The tree diagrams depicting seasonal leaf development—from bare branches in winter, through flowering in spring, full canopy development in summer, to leaf senescence and abscission in autumn—provide a conceptual framework for understanding temporal spectral variability.
+
+![Seasonal phenological patterns in plant functional traits. a: Photographs showing inflorescence and fruits (top row) and leaf phenology (bottom row) in deciduous trees across seasons. b: Seasonal tree phenology diagrams from winter through autumn.](figures/figure1-1.png){#fig-seasonal-patterns width="100%"}
+
+The distinction between mature leaves, juvenile leaves, and senescence leaves highlights that not all foliage within a canopy shares identical spectral properties [@asner2015quantifying]. This heterogeneity must be considered when scaling from leaf-level measurements to canopy or landscape observations.
+
+Moreover, while the general phenological pattern—spring green-up, summer maturity, autumn senescence—is shared across many temperate plant species, the timing, magnitude, and spectral characteristics of these transitions vary systematically among species [@richardson2013tracking; @asner2015quantifying]. Different species exhibit distinct phenological schedules: some leaf out earlier in spring, others maintain green foliage longer into autumn, and evergreen species show entirely different seasonal patterns. These species-specific differences in phenological timing and pigment dynamics create unique spectral-temporal signatures that enable remote differentiation and mapping of plant species or functional types across landscapes [@ustin2009remote]. By tracking how reflectance changes over time, rather than relying on snapshots from single dates, researchers can leverage these phenological differences to improve vegetation classification and monitor ecosystem composition [@hesketh2020seasonal].
+
+## Pigment-Specific Spectral Signatures
+
+Pigment concentrations show typical temporal patterns throughout the growing season. Because each pigment type is characterized by specific spectral signature (@fig-pigment-spectra), specific concentrations of different pigments result in a specific overall spectral response of a leave. This enables us to detect phenology and health status of trees by spectral measurements. The following three key phenological stages can be determined:
+
+1.  **Early season dynamics** (March-May): Rapid increases in pigment concentrations as leaves develop, starting with anthocyanins (red juvenile leaves) and followed by chlorophyll content rising sharply during leaf expansion [@richardson2009seasonal].
+2.  **Mid-season stability** (June-August): Relatively stable biochemical composition during peak photosynthetic activity, though with notable variability reflecting environmental conditions and stress responses. Chloropylles are dominating (green mature leaves), unless stress conditions lead to increased dominance of other pigments (anthocyanins, carotenoids).
+3.  **Late season senescence** (September-October): Declining chlorophyll with differential changes in other compounds, creating the characteristic autumn coloration [@gitelson2001non].
+
+![Spectral signatures of major plant pigments across the visible spectrum (400-800 nm). Top: Chlorophyll spectral reflectance showing characteristic absorption bands at 520-570 nm and 695-735 nm with near-infrared plateau at 750-800 nm. Middle: Carotenoid reflectance patterns with absorption features at 500-520 nm, 540-560 nm, and 700-710 nm. Bottom: Anthocyanin spectral signature showing strong absorption in the green-yellow region (540-560 nm) and at 700-710 nm. Colored boxes indicate key wavelength regions used in vegetation index formulations [@gitelson2006three].](figures/figure1-2.png){#fig-pigment-spectra width="100%"}
+
+### Chlorophylls: The Primary Photosynthetic Pigments
+
+Chlorophylls are the dominant pigments in healthy, photosynthetically active vegetation, and their spectral signature forms the foundation of vegetation remote sensing [@gitelson2003relationships]. @fig-pigment-spectra shows the characteristic double absorption pattern of chlorophylls: strong absorption centered around 430 nm in the blue region and around 680 nm in the red region, corresponding to the absorption peaks of chlorophyll a and b [@lichtenthaler1987chlorophylls]. Between these absorption features, green light (520-570 nm) experiences relatively less absorption, explaining why healthy vegetation appears green to our eyes.
+
+The key spectral regions for chlorophyll detection are:
+
+-   **Blue absorption** (430-490 nm): Primary absorption band, but less commonly used for chlorophyll estimation due to interference from carotenoids and atmospheric scattering [@gitelson2006signature]
+-   **Green peak** (520-570 nm): Local reflectance maximum where chlorophyll absorption is minimal
+-   **Red absorption** (660-690 nm): Deep absorption feature, highly sensitive to chlorophyll concentration
+-   **Red edge** (690-740 nm): Steep transition from red absorption to near-infrared plateau, extremely sensitive to chlorophyll content [@horler1983red]
+-   **Near-infrared plateau** (750-800 nm and beyond): High reflectance due to leaf internal structure, minimally affected by pigments [@gates1965spectral]
+
+The reciprocal reflectance model underlying vegetation indices for chlorophyll typically uses these wavelength regions [@gitelson2005remote]:
+
+$$(1/R_{695-735} - 1/R_{750-800}) \times R_{750-800}$$
+
+where the near-infrared term serves to normalize for structural effects and the difference in reciprocal reflectance quantifies chlorophyll absorption.
+
+### Carotenoids: Accessory Pigments and Photoprotection
+
+Carotenoids serve dual roles in plant physiology: light harvesting in the photosynthetic apparatus and photoprotection against excess light energy [@demmigadams2006photoprotection]. Their spectral signature differs systematically from chlorophylls. @fig-pigment-spectra demonstrates that carotenoids create characteristic absorption features in:
+
+-   **Blue region** (440-520 nm): Strong absorption overlapping with chlorophyll
+-   **Blue-green transition** (500-540 nm): Primary diagnostic region where carotenoid absorption distinguishes them from chlorophylls
+-   **Green region** (540-560 nm): Moderate absorption creating the yellow-orange appearance of carotenoid-rich tissues
+-   **Red region** (650-710 nm): Minimal absorption, contrasting with strong chlorophyll absorption
+
+The spectral separation of carotenoids from chlorophylls becomes particularly important during senescence or stress conditions when the chlorophyll:carotenoid ratio changes dramatically [@gitelson2002novel]. Vegetation indices designed to estimate carotenoids exploit the differential absorption at 500-520 nm and 540-560 nm relative to the near-infrared reference, following a similar reciprocal reflectance formulation:
+
+$$(1/R_{500-520} - 1/R_{700-710}) \times R_{750+}$$
+
+### Anthocyanins: Stress Response and Senescence Indicators
+
+Anthocyanins represent a distinct class of pigments that accumulate in response to various stresses—environmental, pathogenic, or developmental [@gould2004nature]. Unlike chlorophylls and carotenoids, which reside in chloroplasts, anthocyanins accumulate in vacuoles and can mask the spectral signatures of photosynthetic pigments [@gitelson2001nondestructive].
+
+@fig-pigment-spectra shows that anthocyanins create strong absorption in:
+
+-   **Green-yellow region** (540-600 nm): Primary absorption feature, explaining the red-purple appearance of anthocyanin-rich tissues
+-   **Overlap with chlorophyll green peak** (520-560 nm): This overlap complicates the interpretation of reflectance in this region
+
+The reciprocal reflectance model for anthocyanins uses [@gitelson2001nondestructive]:
+
+$$(1/R_{540-560} - 1/R_{700-710}) \times R_{750+}$$
+
+where the denominator wavelength is chosen to minimize chlorophyll interference while capturing anthocyanin absorption.
+
+![Seasonal variation in anthocyanin content and spectral reflectance. Spectral reflectance curves from March through October showing changes in reflectance patterns (400-750 nm) associated with varying anthocyanin concentrations (labeled in nmol/cm²). Spring months (March-April) show elevated anthocyanin in developing leaves, summer months (May-August) display minimal anthocyanin in mature leaves, and autumn months (September-October) exhibit dramatic anthocyanin accumulation during senescence. The green-yellow region (500-650 nm) shows progressive absorption with increasing anthocyanin content.](figures/figure1-3.png){#fig-anthocyanin-seasonal width="100%"}
+
+The temporal dynamics of anthocyanin accumulation are particularly striking. @fig-anthocyanin-seasonal displays spectral reflectance patterns across the growing season (March through October) with varying anthocyanin concentrations labeled on each panel. Key observations include:
+
+1.  **Spring accumulation** (March-April): Young, developing leaves often contain elevated anthocyanins (15-35 nmol/cm²) for photoprotection during leaf expansion [@chalker1999natural]
+2.  **Summer reduction** (May-August): Mature leaves typically maintain low anthocyanin levels (\<7 nmol/cm²) when plants are unstressed
+3.  **Autumn senescence** (September-October): Dramatic anthocyanin accumulation (up to 24 nmol/cm²) as chlorophyll degrades and autumn coloration develops [@hoch2001physiological]
+
+The spectral manifestation of these changes is clearly visible in the green-yellow region (500-600 nm), where increasing anthocyanin content progressively suppresses reflectance. This seasonal pattern makes anthocyanin indices valuable for phenological monitoring and stress detection [@gitelson2006signature].
+
+## Concentration-Dependent Spectral Response
+
+The relationship between biochemical concentration and spectral reflectance follows predictable patterns that enable quantitative remote sensing [@jacquemoud1990prospect]. @fig-concentration-response provides a comprehensive demonstration of this relationship for chlorophylls and carotenoids.
+
+![Concentration-dependent spectral response of chlorophylls and carotenoids. a: Pigment content (nmol/cm²) for chlorophyll (Chl, green bars) and carotenoids (Car, yellow bars) across seven groups with increasing chlorophyll dominance. b: Corresponding spectral reflectance curves (400-750 nm) for each concentration group, showing systematic changes in reflectance magnitude and spectral shape.](figures/figure1-4.png){#fig-concentration-response width="100%"}
+
+The left panel of @fig-concentration-response shows chlorophyll (Chl, green bars) and carotenoid (Car, yellow bars) concentrations across seven groups with increasing biochemical content and chlorophyll dominance. Group 7 contains approximately 35 nmol/cm² of chlorophyll and 10 nmol/cm² of carotenoids, representing dense, healthy foliage, while Group 1 has minimal pigment content dominated by carotenoids, which is characteristic of stressed or senescent tissue.
+
+The right panel shows how these concentration differences manifest in spectral reflectance (400-750 nm). The numbered curves (1-7) correspond to the concentration groups, revealing several critical patterns:
+
+1.  **Blue region** (400-500 nm): All curves show low reflectance due to combined chlorophyll and carotenoid absorption, with minimal differentiation between concentration levels.
+2.  **Green peak** (520-570 nm): Increasing pigment concentrations progressively suppress the green reflectance peak, but this region shows modest dynamic range.
+3.  **Red absorption** (650-690 nm): Deep absorption trough that deepens only slightly with increasing chlorophyll concentration due to saturation effects.
+4.  **Red edge** (690-750 nm): The most dramatic differentiation occurs here, where the slope and position of the red edge shift systematically with chlorophyll content [@horler1983red].
+
+Note the near-linear spacing of curves as pigment concentration increases in the red edge region. This high sensitivity in the red edge makes it the most valuable spectral region for chlorophyll estimation [@gitelson2005remote]. The physical explanation involves the transition from strong chlorophyll absorption in the red to minimal absorption in the near-infrared, creating a steep gradient that shifts in both position (red edge position) and amplitude with changing chlorophyll content.
+
+This concentration-reflectance relationship forms the empirical foundation for vegetation indices and regression-based retrieval algorithms [@verrelst2015optical]. However, the relationships are not always linear due to:
+
+-   **Saturation effects**: At high pigment concentrations, absorption becomes nearly complete, reducing sensitivity [@gitelson2003relationships].
+-   **Multiple scattering**: Photon path length through leaf tissue affects the absorption probability.
+-   **Package effects**: Pigments organized in chloroplasts rather than uniformly distributed. [@jacquemoud1990prospect]
+-   **Structural confounding**: Leaf thickness, internal air spaces, and surface properties modulate reflectance independently of biochemistry [@asner1998biophysical].
+
+## Phenological Stages and Stress Detection
+
+As we stated above, the appearance of foliage across developmental stages and stress conditions creates distinct spectral signatures that enable phenological monitoring and early stress detection [@carter1994responses]. @fig-phenological-stages presents a comprehensive comparison of three critical vegetation states: green (healthy) leaves, yellow-reddish (stress/senescence) leaves, and red (early development) leaves.
+
+![Spectral signatures of leaves at different phenological stages and stress conditions. Top left: Green (healthy) leaves showing characteristic chlorophyll absorption in blue and red regions with prominent green peak and near-infrared plateau. Top right: Yellow-reddish leaves representing early senescence or stress conditions with elevated visible reflectance and reduced red absorption. Bottom: Red leaves indicating advanced senescence with strong anthocyanin absorption in green-yellow region, minimal chlorophyll absorption, and complete loss of red edge feature. Colored bullet points indicate developmental stage: red (beginning of vegetation), green (healthy development), and yellow-orange (stress/senescence).](figures/figure1-5.png){#fig-phenological-stages width="100%"}
+
+### Green Leaves: The Baseline Healthy Signature
+
+The green leaf spectra (top left, @fig-phenological-stages) exhibit the classic vegetation signature [@gates1965spectral]:
+
+-   Low reflectance in blue (400-500 nm) and red (600-680 nm) due to chlorophyll absorption
+-   Modest green peak around 550 nm where chlorophyll absorption is minimal
+-   Sharp red edge transition (690-750 nm)
+-   High near-infrared plateau (750-800 nm) determined by leaf internal structure
+
+Multiple curves represent natural variability within healthy vegetation—different species, leaf ages, or environmental conditions—but all share the fundamental pattern of strong chlorophyll absorption bracketing the green reflectance peak. This signature corresponds to the "Development (healthy)" stage marked in green on the figure, representing peak photosynthetic activity and optimal physiological function [@penuelas1994reflectance].
+
+### Yellow-Reddish Leaves: Stress and Senescence
+
+The yellow-reddish leaf spectra (top right, @fig-phenological-stages) show systematic departures from the healthy baseline:
+
+-   **Elevated reflectance** across the entire visible spectrum (400-700 nm) as chlorophyll degrades
+-   **Broadened and increased green-yellow reflectance** (500-600 nm) revealing underlying carotenoids
+-   **Reduced red absorption depth** as chlorophyll concentration declines
+-   **Gentler red edge slope** indicating lower chlorophyll content
+-   **Slightly reduced near-infrared reflectance** in some cases, suggesting changes in leaf internal structure
+
+These spectral changes correspond to **stress or senescence conditions** (marked in yellow-orange bullets on the figure) where chlorophyll synthesis is impaired or degradation accelerated [@carter1994responses]. During stress or senescence, chlorophyll degrades while carotenoids persist longer, creating the characteristic yellow-orange appearance.
+
+### Red Leaves: Beginning of Vegetation
+
+The red leaf spectra (bottom, @fig-phenological-stages) represent young, developing leaves at the beginning of the growing season:
+
+-   **Elevated visible reflectance** (400-700 nm) due to lower chlorophyll content in developing leaves
+-   **Strong absorption** in green-yellow region (520-600 nm) from anthocyanin accumulation
+-   **Moderate red absorption** as chlorophyll is still developing
+-   **Less pronounced red edge** compared to mature leaves due to lower chlorophyll content
+-   **Lower near-infrared reflectance** than mature leaves, reflecting developing leaf structure
+
+This spectral signature, marked as "Beginning of vegetation" with red bullets in the figure, indicates early spring leaf development where anthocyanins accumulate for photoprotection while the photosynthetic apparatus is still maturing [@chalker1999natural]. Young leaves often produce anthocyanins to protect developing chloroplasts from photo-oxidative damage during the vulnerable expansion phase. As leaves mature and the photosynthetic machinery becomes fully functional, anthocyanin content typically decreases and chlorophyll dominates, transitioning to the green leaf signature.
+
+### The Phenological Continuum
+
+The progression from red (early development) through green (mature, healthy) to yellow-reddish (stress/senescence) leaves represents different physiological states that can be monitored remotely [@gitelson2001non]. Importantly, this highlights a challenge in remote sensing: both young developing leaves and senescing leaves can show elevated anthocyanin content, but for different physiological reasons. Distinguishing between these states requires temporal context—spring observations of red spectra likely indicate new growth, while autumn observations suggest senescence. Vegetation indices designed to capture these transitions must account for the changing relationships between pigments and the multiple roles of anthocyanins across the growing season [@richardson2013tracking].
+
+## Structural Components: Beyond Pigments
+
+While pigments dominate the visible spectrum, structural and biochemical components beyond pigments create diagnostic features in the near-infrared and shortwave infrared regions [@curran1989remote]. @fig-wax-reflectance focuses on epicuticular waxes, protective coatings on leaf surfaces that serve multiple functions including water regulation, pathogen defense, and UV protection [@shepherd2006measurement]. Similarly to chlorophyll, wax concentration is highest at the peak of the vegetation season.
+
+![Impact of epicuticular wax on leaf spectral reflectance. a: Scanning electron microscopy (SEM) images showing leaf surface microstructure with intact epicuticular wax crystals (top row) and after wax removal (bottom row) at different times. b: Spectral reflectance curves (410-1710 nm) demonstrating the effect of wax removal on reflectance across visible, near-infrared, and shortwave infrared regions. Three curves show reflectance before wax removal (highest), after 10 seconds of removal (intermediate), and after 30 seconds of removal (lowest), with the greatest differences observed in the near-infrared region (750-1250 nm).](figures/figure1-6.png){#fig-wax-reflectance width="100%"}
+
+The electron microscopy images in @fig-wax-reflectance show dramatic differences in leaf surface structure before and after wax removal, revealing the crystalline wax structures that coat healthy leaf surfaces. The spectral consequences of wax removal are striking:
+
+-   **Before removal** (top curve): Highest reflectance across the entire spectrum, particularly in the near-infrared (750-1700 nm) where wax creates a highly reflective surface
+-   **After 10 seconds of removal**: Intermediate reflectance as surface wax is partially dissolved
+-   **After 30 seconds of removal** (bottom curve): Lowest reflectance as most surface wax has been eliminated
+
+Notably, the wax removal experiment demonstrates the phenomenon of **blue shift**, where the reflectance spectrum shifts systematically toward shorter wavelengths as wax is removed [@grant1987diffuse]. This blue shift occurs because epicuticular waxes preferentially scatter longer wavelengths; their removal reduces this scattering effect, causing the spectral curves to shift toward the blue end of the spectrum. This phenomenon has important implications for interpreting spectral changes in vegetation experiencing drought stress or other conditions that affect wax production or integrity.
+
+The spectral regions most sensitive to wax content are:
+
+-   **Blue-green** (410-550 nm): Moderate sensitivity with elevated reflectance in waxy leaves
+-   **Near-infrared** (750-1250 nm): High sensitivity throughout this region
+-   **Shortwave infrared** (1300-1700 nm): Continued sensitivity to wax content
+
+The practical implication is that vegetation indices targeting wax content must operate in spectral regions where wax effects dominate over pigment absorption. The reciprocal of the square root of reflectance differences in specific wavelength regions provides a measure of wax content:
+
+$$\frac{1}{\sqrt{R_{750-770} - R_{490-500} - R_{660-690}}}$$
+
+Beyond waxes, other structural components create diagnostic spectral features:
+
+-   **Cellulose and lignin**: Absorption bands in the shortwave infrared around 2100 nm [@curran1989remote]
+-   **Leaf water content**: Strong absorption features at 970 nm, 1200 nm, 1450 nm, and 1940 nm [@penuelas1997semiempirical]
+-   **Leaf internal structure**: Determines the overall magnitude of near-infrared reflectance through multiple scattering [@jacquemoud1990prospect]
+
+These structural and compositional properties interact with pigment signals, creating the full complexity of vegetation spectra that extends from 400 nm through 2500 nm in comprehensive hyperspectral datasets [@ustin2009remote].
+
+## From Spectral Signatures to Quantitative Estimation
+
+The theoretical framework presented here—linking specific biochemical compounds to characteristic spectral features—forms the foundation for quantitative remote sensing of vegetation functional traits [@homolova2013review]. The key principles that enable this translation from photons to plant physiology are:
+
+1.  **Spectral specificity**: Each compound has characteristic absorption features at particular wavelengths, enabling selective detection [@gates1965spectral]
+2.  **Concentration dependence**: Reflectance changes systematically with biochemical concentration, allowing quantitative estimation [@jacquemoud1990prospect]
+3.  **Temporal dynamics**: Seasonal patterns in biochemistry create predictable spectral trajectories [@richardson2013tracking]
+4.  **Structural modulation**: Leaf and canopy architecture affect spectral signals independently of biochemistry, requiring normalization strategies [@asner1998biophysical]
+
+The practical implementation of these principles through vegetation indices and statistical models—demonstrated in the following tutorial sections—provides operational tools for extracting biological information from hyperspectral data [@verrelst2015optical]. By understanding the physical and physiological basis of these spectral-biochemical relationships, researchers can develop robust methods for monitoring plant functional traits across scales, from controlled laboratory measurements to satellite-based global vegetation monitoring [@ustin2009remote].
+
+------------------------------------------------------------------------
+
+This theoretical foundation prepares you to interpret the analytical methods demonstrated in the practical tutorial that follows, where we transform raw spectral measurements into quantitative estimates of plant functional traits through statistical analysis and machine learning classification.
+
+## References
+
+::: {#refs}
+:::
