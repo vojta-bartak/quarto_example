@@ -9,7 +9,7 @@ website:
       - text: "Home"
         href: index.qmd
       - text: "Hyperspectral"
-        href: topics/hyperspectral_intro.qmd
+#        href: topics/hyperspectral_intro.qmd
         menu:
           - text: "Intro"
             href: topics/hyperspectral_intro.qmd
