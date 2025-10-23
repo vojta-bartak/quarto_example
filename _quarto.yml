@@ -17,21 +17,21 @@ website:
             href: topics/hyperspectral_theory.qmd
           - text: "Practice"
             href: topics/hyperspectral_tutorial.qmd
-      - text: "Radiative Transfer Modeling"
-        menu:
-          - text: "Intro"
-          - text: "Theory"
-          - text: "Practice"
-      - text: "Radar"
-        menu:
-          - text: "Intro"
-          - text: "Theory"
-          - text: "Practice"
-      - text: "Lidar"
-        menu:
-          - text: "Intro"
-          - text: "Theory"
-          - text: "Practice"
+#      - text: "Radiative Transfer Modeling"
+#        menu:
+#          - text: "Intro"
+#          - text: "Theory"
+#          - text: "Practice"
+#      - text: "Radar"
+#        menu:
+#          - text: "Intro"
+#          - text: "Theory"
+#          - text: "Practice"
+#      - text: "Lidar"
+#        menu:
+#          - text: "Intro"
+#          - text: "Theory"
+#          - text: "Practice"
 
 format:
   html:
