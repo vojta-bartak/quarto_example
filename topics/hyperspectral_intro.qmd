@@ -19,3 +19,18 @@ execute:
 editor: visual
 ---
 
+## Introduction to Hyperspectral Remote Sensing of Plant Functional Traits
+
+Remote sensing reveals the invisible language of plants through their interaction with light. While our eyes perceive only three broad color channels, hyperspectral sensors measure reflectance across hundreds of narrow wavelength bands from 400 to 2400 nm, creating unique spectral signatures that encode information about plant biochemistry and physiology.
+
+**The Color-Chemistry Connection**
+
+Every plant pigment and structural compound absorbs and reflects light at specific wavelengths, creating diagnostic spectral patterns. Chlorophylls dominate healthy green vegetation with strong absorption around 680 nm (red) and 430 nm (blue), while carotenoids absorb in the blue-green region (480-560 nm). Anthocyanins, stress-response pigments that accumulate during senescence or environmental stress, create characteristic absorption patterns in the green-yellow region (500-600 nm). Even structural components like leaf waxes and cellulose leave distinct spectral fingerprints in the near-infrared and shortwave infrared regions.
+
+**From Spectral Signatures to Biological Insights**
+
+These spectral patterns change dynamically across seasons and in response to stress. As leaves transition from spring flush through summer maturity to autumn senescence, their reflectance spectra transform, revealing shifts in pigment composition, water content, and structural integrity. By measuring these spectral changes, we can track plant phenology, detect stress before visible symptoms appear, and estimate biochemical concentrations non-destructively from leaf to landscape scales.
+
+**The Analysis Challenge**
+
+The richness of hyperspectral data—hundreds of correlated wavelength measurements per sample—creates both opportunity and challenge. This tutorial demonstrates how to extract meaningful biological information from high-dimensional spectral data using statistical analysis, vegetation indices, and machine learning classification techniques, bridging the gap between raw reflectance measurements and actionable ecological understanding.
