@@ -66,7 +66,6 @@ data <- read.csv("SamplesForWorkshop.csv")
 
 # Inspect the basic structure
 head(data[,1:21])
-colnames(data)
 ```
 
 ::: callout-note
@@ -430,7 +429,7 @@ combined_plot <- march_res$plot + july_res$plot + plot_layout(ncol = 2)
 print(combined_plot)
 ```
 
-::: {.callout-note}
+::: callout-note
 ## Interpreting PLS-DA Component Plots
 
 Accuracy metrics evaluate the overall classification success:
@@ -440,11 +439,11 @@ Accuracy metrics evaluate the overall classification success:
 
 The PLS-DA scatter plot shows classification results projected onto the first two discriminant components, revealing how well spectral signatures separate plant classes:
 
-- **Tight clusters** (like SP1-green and SP2-blue) indicate classes with distinct, consistent spectral signatures
-- **Dispersed patterns** (like SP0-red) suggest greater within-class spectral variability
-- **Component axes** represent the most discriminative spectral directions: Component 1 typically provides primary class separation, while Component 2 refines distinctions between remaining classes
-- **Elliptical boundaries** show 95% confidence regions; limited overlap indicates successful spectral discrimination
-- **High accuracy metrics** (OA=93.3%, Kappa=89.6%) confirm that the model found reliable spectral features distinguishing the classes
+-   **Tight clusters** (like SP1-green and SP2-blue) indicate classes with distinct, consistent spectral signatures
+-   **Dispersed patterns** (like SP0-red) suggest greater within-class spectral variability
+-   **Component axes** represent the most discriminative spectral directions: Component 1 typically provides primary class separation, while Component 2 refines distinctions between remaining classes
+-   **Elliptical boundaries** show 95% confidence regions; limited overlap indicates successful spectral discrimination
+-   **High accuracy metrics** (OA=93.3%, Kappa=89.6%) confirm that the model found reliable spectral features distinguishing the classes
 
 This visualization helps assess both model performance and the underlying spectral separability of your plant classes.
 :::
@@ -792,12 +791,11 @@ cv_results <- perform_cv_plsda(march_data)
 print(paste("Mean CV Accuracy:", round(mean(cv_results$accuracy), 3)))
 ```
 
-::: {.callout-info}
+::: callout-info
 ## Why Cross-Validation Matters
 
 Cross-validation prevents overly optimistic performance estimates by testing models on data they haven't seen during training. The earlier classification results used the same data for both training and testing (self-prediction), which typically inflates accuracy metrics since models can memorize training patterns rather than learn generalizable features. K-fold cross-validation splits data into multiple train-test partitions, providing more realistic estimates of how well the model will perform on new, unseen samples - the true test of a classification algorithm's practical utility.
 :::
-
 
 ## Conclusion
 

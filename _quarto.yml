@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "Remote Sensing Lessons"
+  title: "Remote Sensing of Vegetation"
   navbar:
     left:
       - text: "Home"
@@ -13,7 +13,17 @@ website:
       - text: "R Lesson"
         href: topics/r_lesson.qmd
       - text: "Hyperspectral"
-        href: topics/hyperspectral_tutorial.qmd
+        href: topics/hyperspectral_intro.qmd
+        menu:
+          - text: "Intro"
+            href: topics/hyperspectral_intro.qmd
+          - text: "Theory"
+            href: topics/hyperspectral_theory.qmd
+          - text: "Practice"
+            href: topics/hyperspectral_tutorial.qmd
+      - text: "Radiative Transfer Modeling"
+      - text: "Radar"
+      - text: "Lidar"
 
 format:
   html:

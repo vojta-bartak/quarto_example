@@ -1,0 +1,21 @@
+---
+title: "Hyperspectral Data Analysis: An Introduction"
+author: "Vojtěch Barták"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    theme: cosmo
+    embed-resources: true
+  pdf:
+    toc: true
+    number-sections: true
+execute:
+  warning: false
+  message: false
+  cache: true
+editor: visual
+---
+
