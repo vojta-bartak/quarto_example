@@ -47,4 +47,4 @@ View and download the **presentation** from the video:
 
 Read the [**theory**](hyperspectral_theory.qmd)
 
-Analyze data with a [**practical tutorial in R**](hyperspectral_tutorial.qmd)
+Analyze real data with a [**practical tutorial in R**](hyperspectral_tutorial.qmd)
