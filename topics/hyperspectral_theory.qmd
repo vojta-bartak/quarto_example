@@ -25,7 +25,7 @@ The interaction between light and vegetation is governed by the absorption, tran
 
 ## Seasonal Dynamics and Plant Functional Strategies
 
-Plants exhibit remarkable temporal variability in their spectral properties, driven by phenological cycles, resource allocation strategies, and environmental responses [@richardson2013tracking]. Understanding these dynamics is fundamental to interpreting remote sensing data correctly.
+Plants exhibit remarkable temporal variability in their spectral properties, driven by phenological cycles, resource allocation strategies, and environmental responses [@richardson2018tracking]. Understanding these dynamics is fundamental to interpreting remote sensing data correctly.
 
 @fig-seasonal-patterns illustrates the dramatic differences between plant functional types and their seasonal trajectories. The comparison between flowers/fruits and leaves demonstrates distinct spectral behaviors, while the seasonal progression from winter dormancy through spring leaf flush, summer maturity, and autumn senescence shows systematic changes in reflectance patterns [@huete2002overview]. The tree diagrams depicting seasonal leaf development—from bare branches in winter, through flowering in spring, full canopy development in summer, to leaf senescence and abscission in autumn—provide a conceptual framework for understanding temporal spectral variability.
 
@@ -33,7 +33,7 @@ Plants exhibit remarkable temporal variability in their spectral properties, dri
 
 The distinction between mature leaves, juvenile leaves, and senescence leaves highlights that not all foliage within a canopy shares identical spectral properties [@asner2015quantifying]. This heterogeneity must be considered when scaling from leaf-level measurements to canopy or landscape observations.
 
-Moreover, while the general phenological pattern—spring green-up, summer maturity, autumn senescence—is shared across many temperate plant species, the timing, magnitude, and spectral characteristics of these transitions vary systematically among species [@richardson2013tracking; @asner2015quantifying]. Different species exhibit distinct phenological schedules: some leaf out earlier in spring, others maintain green foliage longer into autumn, and evergreen species show entirely different seasonal patterns. These species-specific differences in phenological timing and pigment dynamics create unique spectral-temporal signatures that enable remote differentiation and mapping of plant species or functional types across landscapes [@ustin2009remote]. By tracking how reflectance changes over time, rather than relying on snapshots from single dates, researchers can leverage these phenological differences to improve vegetation classification and monitor ecosystem composition [@hesketh2020seasonal].
+Moreover, while the general phenological pattern—spring green-up, summer maturity, autumn senescence—is shared across many temperate plant species, the timing, magnitude, and spectral characteristics of these transitions vary systematically among species [@richardson2018tracking; @asner2015quantifying]. Different species exhibit distinct phenological schedules: some leaf out earlier in spring, others maintain green foliage longer into autumn, and evergreen species show entirely different seasonal patterns. These species-specific differences in phenological timing and pigment dynamics create unique spectral-temporal signatures that enable remote differentiation and mapping of plant species or functional types across landscapes [@ustin2009remote]. By tracking how reflectance changes over time, rather than relying on snapshots from single dates, researchers can leverage these phenological differences to improve vegetation classification and monitor ecosystem composition [@richardson2018tracking].
 
 ## Pigment-Specific Spectral Signatures
 
@@ -95,7 +95,7 @@ where the denominator wavelength is chosen to minimize chlorophyll interference 
 
 The temporal dynamics of anthocyanin accumulation are particularly striking. @fig-anthocyanin-seasonal displays spectral reflectance patterns across the growing season (March through October) with varying anthocyanin concentrations labeled on each panel. Key observations include:
 
-1.  **Spring accumulation** (March-April): Young, developing leaves often contain elevated anthocyanins (15-35 nmol/cm²) for photoprotection during leaf expansion [@chalker1999natural]
+1.  **Spring accumulation** (March-April): Young, developing leaves often contain elevated anthocyanins (15-35 nmol/cm²) for photoprotection during leaf expansion [@steyn2002anthocyanins]
 2.  **Summer reduction** (May-August): Mature leaves typically maintain low anthocyanin levels (\<7 nmol/cm²) when plants are unstressed
 3.  **Autumn senescence** (September-October): Dramatic anthocyanin accumulation (up to 24 nmol/cm²) as chlorophyll degrades and autumn coloration develops [@hoch2001physiological]
 
@@ -164,15 +164,15 @@ The red leaf spectra (bottom, @fig-phenological-stages) represent young, develop
 -   **Less pronounced red edge** compared to mature leaves due to lower chlorophyll content
 -   **Lower near-infrared reflectance** than mature leaves, reflecting developing leaf structure
 
-This spectral signature, marked as "Beginning of vegetation" with red bullets in the figure, indicates early spring leaf development where anthocyanins accumulate for photoprotection while the photosynthetic apparatus is still maturing [@chalker1999natural]. Young leaves often produce anthocyanins to protect developing chloroplasts from photo-oxidative damage during the vulnerable expansion phase. As leaves mature and the photosynthetic machinery becomes fully functional, anthocyanin content typically decreases and chlorophyll dominates, transitioning to the green leaf signature.
+This spectral signature, marked as "Beginning of vegetation" with red bullets in the figure, indicates early spring leaf development where anthocyanins accumulate for photoprotection while the photosynthetic apparatus is still maturing [@steyn2002anthocyanins]. Young leaves often produce anthocyanins to protect developing chloroplasts from photo-oxidative damage during the vulnerable expansion phase. As leaves mature and the photosynthetic machinery becomes fully functional, anthocyanin content typically decreases and chlorophyll dominates, transitioning to the green leaf signature.
 
 ### The Phenological Continuum
 
-The progression from red (early development) through green (mature, healthy) to yellow-reddish (stress/senescence) leaves represents different physiological states that can be monitored remotely [@gitelson2001non]. Importantly, this highlights a challenge in remote sensing: both young developing leaves and senescing leaves can show elevated anthocyanin content, but for different physiological reasons. Distinguishing between these states requires temporal context—spring observations of red spectra likely indicate new growth, while autumn observations suggest senescence. Vegetation indices designed to capture these transitions must account for the changing relationships between pigments and the multiple roles of anthocyanins across the growing season [@richardson2013tracking].
+The progression from red (early development) through green (mature, healthy) to yellow-reddish (stress/senescence) leaves represents different physiological states that can be monitored remotely [@gitelson2001non]. Importantly, this highlights a challenge in remote sensing: both young developing leaves and senescing leaves can show elevated anthocyanin content, but for different physiological reasons. Distinguishing between these states requires temporal context—spring observations of red spectra likely indicate new growth, while autumn observations suggest senescence. Vegetation indices designed to capture these transitions must account for the changing relationships between pigments and the multiple roles of anthocyanins across the growing season [@richardson2018tracking].
 
 ## Structural Components: Beyond Pigments
 
-While pigments dominate the visible spectrum, structural and biochemical components beyond pigments create diagnostic features in the near-infrared and shortwave infrared regions [@curran1989remote]. @fig-wax-reflectance focuses on epicuticular waxes, protective coatings on leaf surfaces that serve multiple functions including water regulation, pathogen defense, and UV protection [@shepherd2006measurement]. Similarly to chlorophyll, wax concentration is highest at the peak of the vegetation season.
+While pigments dominate the visible spectrum, structural and biochemical components beyond pigments create diagnostic features in the near-infrared and shortwave infrared regions [@curran1989remote]. @fig-wax-reflectance focuses on epicuticular waxes, protective coatings on leaf surfaces that serve multiple functions including water regulation, pathogen defense, and UV protection. Similarly to chlorophyll, wax concentration is highest at the peak of the vegetation season.
 
 ![Impact of epicuticular wax on leaf spectral reflectance. a: Scanning electron microscopy (SEM) images showing leaf surface microstructure with intact epicuticular wax crystals (top row) and after wax removal (bottom row) at different times. b: Spectral reflectance curves (410-1710 nm) demonstrating the effect of wax removal on reflectance across visible, near-infrared, and shortwave infrared regions. Three curves show reflectance before wax removal (highest), after 10 seconds of removal (intermediate), and after 30 seconds of removal (lowest), with the greatest differences observed in the near-infrared region (750-1250 nm).](figures/figure1-6.png){#fig-wax-reflectance width="100%"}
 
@@ -197,7 +197,7 @@ $$\frac{1}{\sqrt{R_{750-770} - R_{490-500} - R_{660-690}}}$$
 Beyond waxes, other structural components create diagnostic spectral features:
 
 -   **Cellulose and lignin**: Absorption bands in the shortwave infrared around 2100 nm [@curran1989remote]
--   **Leaf water content**: Strong absorption features at 970 nm, 1200 nm, 1450 nm, and 1940 nm [@penuelas1997semiempirical]
+-   **Leaf water content**: Strong absorption features at 970 nm, 1200 nm, 1450 nm, and 1940 nm [@penuelas1994reflectance]
 -   **Leaf internal structure**: Determines the overall magnitude of near-infrared reflectance through multiple scattering [@jacquemoud1990prospect]
 
 These structural and compositional properties interact with pigment signals, creating the full complexity of vegetation spectra that extends from 400 nm through 2500 nm in comprehensive hyperspectral datasets [@ustin2009remote].
@@ -208,7 +208,7 @@ The theoretical framework presented here—linking specific biochemical compound
 
 1.  **Spectral specificity**: Each compound has characteristic absorption features at particular wavelengths, enabling selective detection [@gates1965spectral]
 2.  **Concentration dependence**: Reflectance changes systematically with biochemical concentration, allowing quantitative estimation [@jacquemoud1990prospect]
-3.  **Temporal dynamics**: Seasonal patterns in biochemistry create predictable spectral trajectories [@richardson2013tracking]
+3.  **Temporal dynamics**: Seasonal patterns in biochemistry create predictable spectral trajectories [@richardson2018tracking]
 4.  **Structural modulation**: Leaf and canopy architecture affect spectral signals independently of biochemistry, requiring normalization strategies [@asner1998biophysical]
 
 The practical implementation of these principles through vegetation indices and statistical models—demonstrated in the following tutorial sections—provides operational tools for extracting biological information from hyperspectral data [@verrelst2015optical]. By understanding the physical and physiological basis of these spectral-biochemical relationships, researchers can develop robust methods for monitoring plant functional traits across scales, from controlled laboratory measurements to satellite-based global vegetation monitoring [@ustin2009remote].
