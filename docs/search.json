@@ -222,5 +222,12 @@
     "title": "Hyperspectral Data Analysis: An Introduction",
     "section": "Video Lecture",
     "text": "Video Lecture\nWatch the video in which Dr. Giorgi Kozhoridze introduces the key concepts for this lesson:\n\nView and download the presentation from the video:"
+  },
+  {
+    "objectID": "topics/hyperspectral_intro.html#where-to-go-further",
+    "href": "topics/hyperspectral_intro.html#where-to-go-further",
+    "title": "Hyperspectral Data Analysis: An Introduction",
+    "section": "Where to go further?",
+    "text": "Where to go further?\nWatch the video lecture in which Dr. Giorgi Kozhoridze introduces the key concepts for this lesson:\n\nView and download the presentation from the video:\n\nRead the theory\nAnalyze data with a practical tutorial in R"
   }
 ]
