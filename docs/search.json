@@ -4,7 +4,7 @@
     "href": "topics/r_lesson.html",
     "title": "R Lesson",
     "section": "",
-    "text": "R: Intro to Remote Sensing\nThis lesson presents a basic R script for analyzing data.\nLaunch in Binder\nDownload R Script\n\n\n# Generate 100 random numbers from normal distribution\nx &lt;- rnorm(100)\nsummary(x)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n-2.5894 -0.4745  0.2215  0.1610  0.8528  2.7358 \n\n# Plot histogram\nhist(x, main = \"Histogram of x\", col = \"skyblue\", border = \"white\")\n\n\n\n\n\n\n\n\n\nWatch the video below:"
+    "text": "R: Intro to Remote Sensing\nThis lesson presents a basic R script for analyzing data.\nLaunch in Binder\nDownload R Script\n\n\n# Generate 100 random numbers from normal distribution\nx &lt;- rnorm(100)\nsummary(x)\n\n     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. \n-2.539001 -0.778802 -0.007992 -0.035215  0.844029  2.095098 \n\n# Plot histogram\nhist(x, main = \"Histogram of x\", col = \"skyblue\", border = \"white\")\n\n\n\n\n\n\n\n\n\nWatch the video below:"
   },
   {
     "objectID": "topics/hyperspectral_tutorial.html",
@@ -123,7 +123,7 @@
     "href": "topics/hyperspectral_intro.html#video-presentation",
     "title": "Hyperspectral Data Analysis: An Introduction",
     "section": "Video presentation",
-    "text": "Video presentation\nWatch the video in which Dr. Giorgi Kozhoridze introduces the key concepts for this lesson:\n\n\n\n\n\nPresentation from the video"
+    "text": "Video presentation\nWatch the video in which Dr. Giorgi Kozhoridze introduces the key concepts for this lesson:\n\n\nView and download the presentation from the video:"
   },
   {
     "objectID": "notebooks/intro_python.html",
