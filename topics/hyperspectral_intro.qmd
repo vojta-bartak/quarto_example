@@ -35,13 +35,11 @@ These spectral patterns change dynamically across seasons and in response to str
 
 The richness of hyperspectral data—hundreds of correlated wavelength measurements per sample—creates both opportunity and challenge. This tutorial demonstrates how to extract meaningful biological information from high-dimensional spectral data using statistical analysis, vegetation indices, and machine learning classification techniques, bridging the gap between raw reflectance measurements and actionable ecological understanding.
 
-----------------------
-
-## Video lecture
+## Video Lecture
 
 Watch the video in which Dr. Giorgi Kozhoridze introduces the key concepts for this lesson:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/_dSAbX8F2hg?si=XBKtz7FCH7nsGu5V" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+{{< video https://www.youtube.com/embed/_dSAbX8F2hg?si=FXhPgYEjnqxWCXb9 >}}
 
 View and download the presentation from the video:
 
