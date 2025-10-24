@@ -182,7 +182,7 @@ The electron microscopy images in @fig-wax-reflectance show dramatic differences
 -   **After 10 seconds of removal**: Intermediate reflectance as surface wax is partially dissolved
 -   **After 30 seconds of removal** (bottom curve): Lowest reflectance as most surface wax has been eliminated
 
-Notably, the wax removal experiment demonstrates the phenomenon of **blue shift**, where the reflectance spectrum shifts systematically toward shorter wavelengths as wax is removed [@grant1987diffuse]. This blue shift occurs because epicuticular waxes preferentially scatter longer wavelengths; their removal reduces this scattering effect, causing the spectral curves to shift toward the blue end of the spectrum. This phenomenon has important implications for interpreting spectral changes in vegetation experiencing drought stress or other conditions that affect wax production or integrity.
+Notably, the wax removal experiment demonstrates the phenomenon of **blue shift**, where the reflectance spectrum shifts systematically toward shorter wavelengths as wax is removed. This blue shift occurs because epicuticular waxes preferentially scatter longer wavelengths; their removal reduces this scattering effect, causing the spectral curves to shift toward the blue end of the spectrum. This phenomenon has important implications for interpreting spectral changes in vegetation experiencing drought stress or other conditions that affect wax production or integrity.
 
 The spectral regions most sensitive to wax content are:
 

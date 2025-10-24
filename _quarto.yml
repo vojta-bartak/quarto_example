@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "Remote Sensing of Vegetation"
+  title: "Remote Sensing of Forests"
   navbar:
     left:
       - text: "Home"
