@@ -1,6 +1,6 @@
 ---
 title: "Hyperspectral Data Analysis: An Introduction"
-author: "Vojtěch Barták"
+author: "Giorgi Kozhoridze"
 date: today
 format:
   html:
@@ -34,3 +34,9 @@ These spectral patterns change dynamically across seasons and in response to str
 **The Analysis Challenge**
 
 The richness of hyperspectral data—hundreds of correlated wavelength measurements per sample—creates both opportunity and challenge. This tutorial demonstrates how to extract meaningful biological information from high-dimensional spectral data using statistical analysis, vegetation indices, and machine learning classification techniques, bridging the gap between raw reflectance measurements and actionable ecological understanding.
+
+----------------------
+
+Watch the video in which Dr. Giorgi Kozhoridze introduces the key concepts for this lesson:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe> 
