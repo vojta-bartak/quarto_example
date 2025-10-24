@@ -215,5 +215,12 @@
     "title": "Python Lesson",
     "section": "",
     "text": "Python: Intro to Remote Sensing\nIn this lesson, you will run and explore the following Python notebook.\nLaunch in Binder\nDownload Notebook\n\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nx = np.linspace(0, 10, 100)\ny = np.sin(x)\n\nplt.plot(x, y)\nplt.title(\"Sine Wave\")\nplt.show()\n\nWatch the video below:"
+  },
+  {
+    "objectID": "topics/hyperspectral_intro.html#video-lecture",
+    "href": "topics/hyperspectral_intro.html#video-lecture",
+    "title": "Hyperspectral Data Analysis: An Introduction",
+    "section": "Video lecture",
+    "text": "Video lecture\nWatch the video in which Dr. Giorgi Kozhoridze introduces the key concepts for this lesson:\n\n\nView and download the presentation from the video:"
   }
 ]
