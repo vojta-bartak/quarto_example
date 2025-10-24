@@ -37,8 +37,10 @@ The richness of hyperspectral data—hundreds of correlated wavelength measureme
 
 ----------------------
 
+## Video presentation
+
 Watch the video in which Dr. Giorgi Kozhoridze introduces the key concepts for this lesson:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe> 
 
-[![Presentation from the video](figures/figure1-1.png)](https://youtu.be/_dSAbX8F2hg)
+[![Presentation from the video](figures/figure1-1.png){width=200px .border}](https://youtu.be/_dSAbX8F2hg)
