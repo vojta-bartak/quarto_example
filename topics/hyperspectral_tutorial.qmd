@@ -26,7 +26,7 @@ This tutorial demonstrates how to analyze hyperspectral data for plant classific
 
 ## Prerequisites
 
-Before starting, you'll need to install and load several R packages for data manipulation, visualization, and machine learning.
+Before starting, you'll need to download the [data](https://drive.google.com/file/d/1mIxO-blw3TtG8mQRL8GUzixGl6m6CF8w/view?usp=sharing) and install and load several R packages for data manipulation, visualization, and machine learning.
 
 ```{r setup}
 #| label: setup-packages

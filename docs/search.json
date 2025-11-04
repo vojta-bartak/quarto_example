@@ -4,7 +4,7 @@
     "href": "topics/r_lesson.html",
     "title": "R Lesson",
     "section": "",
-    "text": "R: Intro to Remote Sensing\nThis lesson presents a basic R script for analyzing data.\nLaunch in Binder\nDownload R Script\n\n\n# Generate 100 random numbers from normal distribution\nx &lt;- rnorm(100)\nsummary(x)\n\n    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. \n-1.87559 -0.48482  0.17705  0.05211  0.58182  3.06003 \n\n# Plot histogram\nhist(x, main = \"Histogram of x\", col = \"skyblue\", border = \"white\")\n\n\n\n\n\n\n\n\n\nWatch the video below:"
+    "text": "R: Intro to Remote Sensing\nThis lesson presents a basic R script for analyzing data.\nLaunch in Binder\nDownload R Script\n\n\n# Generate 100 random numbers from normal distribution\nx &lt;- rnorm(100)\nsummary(x)\n\n    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. \n-2.04665 -0.68207  0.00502  0.03300  0.71911  2.95022 \n\n# Plot histogram\nhist(x, main = \"Histogram of x\", col = \"skyblue\", border = \"white\")\n\n\n\n\n\n\n\n\n\nWatch the video below:"
   },
   {
     "objectID": "topics/hyperspectral_tutorial.html",
@@ -25,7 +25,7 @@
     "href": "topics/hyperspectral_tutorial.html#prerequisites",
     "title": "Hyperspectral Data Analysis Tutorial: From Spectral Reflectance to Plant Classification",
     "section": "2 Prerequisites",
-    "text": "2 Prerequisites\nBefore starting, you’ll need to install and load several R packages for data manipulation, visualization, and machine learning.\n\n# Install required packages (uncomment if needed)\n# install.packages(c(\"tidyverse\", \"ggpubr\", \"dplyr\", \"caret\", \"ggplot2\",\n#                    \"patchwork\", \"ggforce\", \"pls\"))\n# \n# # Install BiocManager and mixOmics for advanced multivariate analysis\n# install.packages(\"BiocManager\")\n# BiocManager::install(\"mixOmics\")\n\n# Load libraries\nlibrary(tidyverse)\nlibrary(ggpubr)\nlibrary(dplyr)\nlibrary(caret)\nlibrary(ggplot2)\nlibrary(patchwork)\nlibrary(ggforce)\nlibrary(pls)\nlibrary(mixOmics)"
+    "text": "2 Prerequisites\nBefore starting, you’ll need to download the data and install and load several R packages for data manipulation, visualization, and machine learning.\n\n# Install required packages (uncomment if needed)\n# install.packages(c(\"tidyverse\", \"ggpubr\", \"dplyr\", \"caret\", \"ggplot2\",\n#                    \"patchwork\", \"ggforce\", \"pls\"))\n# \n# # Install BiocManager and mixOmics for advanced multivariate analysis\n# install.packages(\"BiocManager\")\n# BiocManager::install(\"mixOmics\")\n\n# Load libraries\nlibrary(tidyverse)\nlibrary(ggpubr)\nlibrary(dplyr)\nlibrary(caret)\nlibrary(ggplot2)\nlibrary(patchwork)\nlibrary(ggforce)\nlibrary(pls)\nlibrary(mixOmics)"
   },
   {
     "objectID": "topics/hyperspectral_tutorial.html#part-1-data-preparation-and-exploration",
@@ -119,11 +119,11 @@
     "text": "Remote sensing reveals the invisible language of plants through their interaction with light. While our eyes perceive only three broad color channels, hyperspectral sensors measure reflectance across hundreds of narrow wavelength bands from 400 to 2400 nm, creating unique spectral signatures that encode information about plant biochemistry and physiology.\nThe Color-Chemistry Connection\nEvery plant pigment and structural compound absorbs and reflects light at specific wavelengths, creating diagnostic spectral patterns. Chlorophylls dominate healthy green vegetation with strong absorption around 680 nm (red) and 430 nm (blue), while carotenoids absorb in the blue-green region (480-560 nm). Anthocyanins, stress-response pigments that accumulate during senescence or environmental stress, create characteristic absorption patterns in the green-yellow region (500-600 nm). Even structural components like leaf waxes and cellulose leave distinct spectral fingerprints in the near-infrared and shortwave infrared regions.\nFrom Spectral Signatures to Biological Insights\nThese spectral patterns change dynamically across seasons and in response to stress. As leaves transition from spring flush through summer maturity to autumn senescence, their reflectance spectra transform, revealing shifts in pigment composition, water content, and structural integrity. By measuring these spectral changes, we can track plant phenology, detect stress before visible symptoms appear, and estimate biochemical concentrations non-destructively from leaf to landscape scales.\nThe Analysis Challenge\nThe richness of hyperspectral data—hundreds of correlated wavelength measurements per sample—creates both opportunity and challenge. This tutorial demonstrates how to extract meaningful biological information from high-dimensional spectral data using statistical analysis, vegetation indices, and machine learning classification techniques, bridging the gap between raw reflectance measurements and actionable ecological understanding."
   },
   {
-    "objectID": "topics/hyperspectral_intro.html#video-presentation",
-    "href": "topics/hyperspectral_intro.html#video-presentation",
+    "objectID": "topics/hyperspectral_intro.html#where-to-go-further",
+    "href": "topics/hyperspectral_intro.html#where-to-go-further",
     "title": "Hyperspectral Data Analysis: An Introduction",
-    "section": "Video presentation",
-    "text": "Video presentation\nWatch the video in which Dr. Giorgi Kozhoridze introduces the key concepts for this lesson:\n\n\nView and download the presentation from the video:"
+    "section": "Where to go further?",
+    "text": "Where to go further?\nWatch the video lecture in which Dr. Giorgi Kozhoridze introduces the key concepts for this lesson:\n\nView and download the presentation from the video:\n\nRead the theory\nAnalyze real data with a practical tutorial in R"
   },
   {
     "objectID": "notebooks/intro_python.html",
@@ -215,19 +215,5 @@
     "title": "Python Lesson",
     "section": "",
     "text": "Python: Intro to Remote Sensing\nIn this lesson, you will run and explore the following Python notebook.\nLaunch in Binder\nDownload Notebook\n\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nx = np.linspace(0, 10, 100)\ny = np.sin(x)\n\nplt.plot(x, y)\nplt.title(\"Sine Wave\")\nplt.show()\n\nWatch the video below:"
-  },
-  {
-    "objectID": "topics/hyperspectral_intro.html#video-lecture",
-    "href": "topics/hyperspectral_intro.html#video-lecture",
-    "title": "Hyperspectral Data Analysis: An Introduction",
-    "section": "Video Lecture",
-    "text": "Video Lecture\nWatch the video in which Dr. Giorgi Kozhoridze introduces the key concepts for this lesson:\n\nView and download the presentation from the video:"
-  },
-  {
-    "objectID": "topics/hyperspectral_intro.html#where-to-go-further",
-    "href": "topics/hyperspectral_intro.html#where-to-go-further",
-    "title": "Hyperspectral Data Analysis: An Introduction",
-    "section": "Where to go further?",
-    "text": "Where to go further?\nWatch the video lecture in which Dr. Giorgi Kozhoridze introduces the key concepts for this lesson:\n\nView and download the presentation from the video:\n\nRead the theory\nAnalyze real data with a practical tutorial in R"
   }
 ]
