@@ -4,7 +4,7 @@
     "href": "topics/r_lesson.html",
     "title": "R Lesson",
     "section": "",
-    "text": "R: Intro to Remote Sensing\nThis lesson presents a basic R script for analyzing data.\nLaunch in Binder\nDownload R Script\n\n\n# Generate 100 random numbers from normal distribution\nx &lt;- rnorm(100)\nsummary(x)\n\n    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. \n-2.04665 -0.68207  0.00502  0.03300  0.71911  2.95022 \n\n# Plot histogram\nhist(x, main = \"Histogram of x\", col = \"skyblue\", border = \"white\")\n\n\n\n\n\n\n\n\n\nWatch the video below:"
+    "text": "R: Intro to Remote Sensing\nThis lesson presents a basic R script for analyzing data.\nLaunch in Binder\nDownload R Script\n\n\n# Generate 100 random numbers from normal distribution\nx &lt;- rnorm(100)\nsummary(x)\n\n    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. \n-2.19766 -0.88185  0.10686 -0.08487  0.63221  2.14449 \n\n# Plot histogram\nhist(x, main = \"Histogram of x\", col = \"skyblue\", border = \"white\")\n\n\n\n\n\n\n\n\n\nWatch the video below:"
   },
   {
     "objectID": "topics/hyperspectral_tutorial.html",
