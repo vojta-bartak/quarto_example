@@ -1,6 +1,6 @@
 ---
 title: "Hyperspectral Data Analysis Tutorial: From Spectral Reflectance to Plant Classification"
-author: "Giorgi Kozhoridze"
+author: "Giorgi Kozhoridze, Vojtěch Barták"
 date: today
 format:
   html:

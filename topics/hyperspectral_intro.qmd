@@ -1,6 +1,6 @@
 ---
 title: "Hyperspectral Data Analysis: An Introduction"
-author: "Giorgi Kozhoridze"
+author: "Giorgi Kozhoridze, Vojtěch Barták"
 date: today
 format:
   html:
@@ -43,7 +43,7 @@ Watch the **video lecture** in which Dr. Giorgi Kozhoridze introduces the key co
 
 View and download the **presentation** from the video:
 
-[![](figures/tumbnail_pres1.png){width=200px .border}](https://drive.google.com/file/d/1uvuj9CsbJ4RLjRyPCoc7AzkPgttVPxrU/view?usp=drive_link)
+[![](figures/tumbnail_pres1.png){width=200px .border}](https://drive.google.com/file/d/1smqDpEAZRWgXDXZLybzvWTgOBy6kI6qv/view?usp=sharing)
 
 Read the [**theory**](hyperspectral_theory.qmd)
 
