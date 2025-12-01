@@ -1,6 +1,6 @@
 ---
 title: "Theoretical Background: Hyperspectral Remote Sensing of Plant Functional Traits"
-author: "Giorgi Kozhoridze"
+author: "Giorgi Kozhoridze, Vojtěch Barták"
 date: today
 format:
   html:
@@ -29,7 +29,7 @@ Plants exhibit remarkable temporal variability in their spectral properties, dri
 
 @fig-seasonal-patterns illustrates the dramatic differences between plant functional types and their seasonal trajectories. The comparison between flowers/fruits and leaves demonstrates distinct spectral behaviors, while the seasonal progression from winter dormancy through spring leaf flush, summer maturity, and autumn senescence shows systematic changes in reflectance patterns [@huete2002overview]. The tree diagrams depicting seasonal leaf development—from bare branches in winter, through flowering in spring, full canopy development in summer, to leaf senescence and abscission in autumn—provide a conceptual framework for understanding temporal spectral variability.
 
-![Seasonal phenological patterns in plant functional traits. a: Photographs showing inflorescence and fruits (top row) and leaf phenology (bottom row) in deciduous trees across seasons. b: Seasonal tree phenology diagrams from winter through autumn.](figures/figure1-1.png){#fig-seasonal-patterns width="100%"}
+![Seasonal phenological patterns in plant functional traits. a: Photographs showing inflorescence and fruits (top row) and leaf phenology (bottom row) in deciduous trees across seasons. b: Seasonal tree phenology diagrams from winter through autumn. Source: Golan-Goldhirsch A., Kozhoridze G., et al. (unpublished work).](figures/figure1-1.png){#fig-seasonal-patterns width="100%"}
 
 The distinction between mature leaves, juvenile leaves, and senescence leaves highlights that not all foliage within a canopy shares identical spectral properties [@asner2015quantifying]. This heterogeneity must be considered when scaling from leaf-level measurements to canopy or landscape observations.
 
@@ -91,7 +91,7 @@ $$(1/R_{540-560} - 1/R_{700-710}) \times R_{750+}$$
 
 where the denominator wavelength is chosen to minimize chlorophyll interference while capturing anthocyanin absorption.
 
-![Seasonal variation in anthocyanin content and spectral reflectance. Spectral reflectance curves from March through October showing changes in reflectance patterns (400-750 nm) associated with varying anthocyanin concentrations (labeled in nmol/cm²). Spring months (March-April) show elevated anthocyanin in developing leaves, summer months (May-August) display minimal anthocyanin in mature leaves, and autumn months (September-October) exhibit dramatic anthocyanin accumulation during senescence. The green-yellow region (500-650 nm) shows progressive absorption with increasing anthocyanin content.](figures/figure1-3.png){#fig-anthocyanin-seasonal width="100%"}
+![Seasonal variation in anthocyanin content and spectral reflectance. Spectral reflectance curves from March through October showing changes in reflectance patterns (400-750 nm) associated with varying anthocyanin concentrations (labeled in nmol/cm²). Spring months (March-April) show elevated anthocyanin in developing leaves, summer months (May-August) display minimal anthocyanin in mature leaves, and autumn months (September-October) exhibit dramatic anthocyanin accumulation during senescence. The green-yellow region (500-650 nm) shows progressive absorption with increasing anthocyanin content. Source: Gitelson et al., 2006.](figures/figure1-3.png){#fig-anthocyanin-seasonal width="100%"}
 
 The temporal dynamics of anthocyanin accumulation are particularly striking. @fig-anthocyanin-seasonal displays spectral reflectance patterns across the growing season (March through October) with varying anthocyanin concentrations labeled on each panel. Key observations include:
 
@@ -105,7 +105,7 @@ The spectral manifestation of these changes is clearly visible in the green-yell
 
 The relationship between biochemical concentration and spectral reflectance follows predictable patterns that enable quantitative remote sensing [@jacquemoud1990prospect]. @fig-concentration-response provides a comprehensive demonstration of this relationship for chlorophylls and carotenoids.
 
-![Concentration-dependent spectral response of chlorophylls and carotenoids. a: Pigment content (nmol/cm²) for chlorophyll (Chl, green bars) and carotenoids (Car, yellow bars) across seven groups with increasing chlorophyll dominance. b: Corresponding spectral reflectance curves (400-750 nm) for each concentration group, showing systematic changes in reflectance magnitude and spectral shape.](figures/figure1-4.png){#fig-concentration-response width="100%"}
+![Concentration-dependent spectral response of chlorophylls and carotenoids. a: Pigment content (nmol/cm²) for chlorophyll (Chl, green bars) and carotenoids (Car, yellow bars) across seven groups with increasing chlorophyll dominance. b: Corresponding spectral reflectance curves (400-750 nm) for each concentration group, showing systematic changes in reflectance magnitude and spectral shape. Source: Gitelson et al., 2006.](figures/figure1-4.png){#fig-concentration-response width="100%"}
 
 The left panel of @fig-concentration-response shows chlorophyll (Chl, green bars) and carotenoid (Car, yellow bars) concentrations across seven groups with increasing biochemical content and chlorophyll dominance. Group 7 contains approximately 35 nmol/cm² of chlorophyll and 10 nmol/cm² of carotenoids, representing dense, healthy foliage, while Group 1 has minimal pigment content dominated by carotenoids, which is characteristic of stressed or senescent tissue.
 
@@ -129,7 +129,7 @@ This concentration-reflectance relationship forms the empirical foundation for v
 
 As we stated above, the appearance of foliage across developmental stages and stress conditions creates distinct spectral signatures that enable phenological monitoring and early stress detection [@carter1994responses]. @fig-phenological-stages presents a comprehensive comparison of three critical vegetation states: green (healthy) leaves, yellow-reddish (stress/senescence) leaves, and red (early development) leaves.
 
-![Spectral signatures of leaves at different phenological stages and stress conditions. Top left: Green (healthy) leaves showing characteristic chlorophyll absorption in blue and red regions with prominent green peak and near-infrared plateau. Top right: Yellow-reddish leaves representing early senescence or stress conditions with elevated visible reflectance and reduced red absorption. Bottom: Red leaves indicating advanced senescence with strong anthocyanin absorption in green-yellow region, minimal chlorophyll absorption, and complete loss of red edge feature. Colored bullet points indicate developmental stage: red (beginning of vegetation), green (healthy development), and yellow-orange (stress/senescence).](figures/figure1-5.png){#fig-phenological-stages width="100%"}
+![Spectral signatures of leaves at different phenological stages and stress conditions. Top left: Green (healthy) leaves showing characteristic chlorophyll absorption in blue and red regions with prominent green peak and near-infrared plateau. Top right: Yellow-reddish leaves representing early senescence or stress conditions with elevated visible reflectance and reduced red absorption. Bottom: Red leaves indicating advanced senescence with strong anthocyanin absorption in green-yellow region, minimal chlorophyll absorption, and complete loss of red edge feature. Colored bullet points indicate developmental stage: red (beginning of vegetation), green (healthy development), and yellow-orange (stress/senescence). Source: Gitelson et al., 2006.](figures/figure1-5.png){#fig-phenological-stages width="100%"}
 
 ### Green Leaves: The Baseline Healthy Signature
 
@@ -174,7 +174,7 @@ The progression from red (early development) through green (mature, healthy) to 
 
 While pigments dominate the visible spectrum, structural and biochemical components beyond pigments create diagnostic features in the near-infrared and shortwave infrared regions [@curran1989remote]. @fig-wax-reflectance focuses on epicuticular waxes, protective coatings on leaf surfaces that serve multiple functions including water regulation, pathogen defense, and UV protection. Similarly to chlorophyll, wax concentration is highest at the peak of the vegetation season.
 
-![Impact of epicuticular wax on leaf spectral reflectance. a: Scanning electron microscopy (SEM) images showing leaf surface microstructure with intact epicuticular wax crystals (top row) and after wax removal (bottom row) at different times. b: Spectral reflectance curves (410-1710 nm) demonstrating the effect of wax removal on reflectance across visible, near-infrared, and shortwave infrared regions. Three curves show reflectance before wax removal (highest), after 10 seconds of removal (intermediate), and after 30 seconds of removal (lowest), with the greatest differences observed in the near-infrared region (750-1250 nm).](figures/figure1-6.png){#fig-wax-reflectance width="100%"}
+![Impact of epicuticular wax on leaf spectral reflectance. a: Scanning electron microscopy (SEM) images showing leaf surface microstructure with intact epicuticular wax crystals (top row) and after wax removal (bottom row) at different times. b: Spectral reflectance curves (410-1710 nm) demonstrating the effect of wax removal on reflectance across visible, near-infrared, and shortwave infrared regions. Three curves show reflectance before wax removal (highest), after 10 seconds of removal (intermediate), and after 30 seconds of removal (lowest), with the greatest differences observed in the near-infrared region (750-1250 nm). Source: @kozhoridze2016remote](figures/figure1-6.png){#fig-wax-reflectance width="100%"}
 
 The electron microscopy images in @fig-wax-reflectance show dramatic differences in leaf surface structure before and after wax removal, revealing the crystalline wax structures that coat healthy leaf surfaces. The spectral consequences of wax removal are striking:
 
