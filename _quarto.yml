@@ -9,7 +9,6 @@ website:
       - text: "Home"
         href: index.qmd
       - text: "Hyperspectral"
-#        href: topics/hyperspectral_intro.qmd
         menu:
           - text: "Intro"
             href: topics/hyperspectral_intro.qmd
@@ -17,11 +16,14 @@ website:
             href: topics/hyperspectral_theory.qmd
           - text: "Practice"
             href: topics/hyperspectral_tutorial.qmd
-#      - text: "Radiative Transfer Modeling"
-#        menu:
-#          - text: "Intro"
-#          - text: "Theory"
-#          - text: "Practice"
+      - text: "Radiative Transfer Modeling"
+        menu:
+          - text: "Intro"
+            href: topics/hyperspectral_intro.qmd
+          - text: "Theory"
+            href: topics/hyperspectral_theory.qmd
+          - text: "Practice"
+            href: topics/DART_tutorial.qmd
 #      - text: "Radar"
 #        menu:
 #          - text: "Intro"
