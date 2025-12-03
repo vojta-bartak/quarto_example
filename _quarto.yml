@@ -21,7 +21,7 @@ website:
           - text: "Intro"
             href: topics/hyperspectral_intro.qmd
           - text: "Theory"
-            href: topics/hyperspectral_theory.qmd
+            href: topics/DART_theory.qmd
           - text: "Practice"
             href: topics/DART_tutorial.qmd
 #      - text: "Radar"
