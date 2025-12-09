@@ -1,0 +1,5 @@
+numpy == 2.2.4
+tqdm == 4.67.1
+scikit-image == 0.25.0
+scipy == 1.15.2
+matplotlib == 3.10.1
