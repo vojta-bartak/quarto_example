@@ -43,7 +43,7 @@ Watch the **video lecture** in which Dr. Giorgi Kozhoridze introduces the key co
 
 View and download the **presentation** from the video:
 
-[![](figures/tumbnail_pres1.png){width=200px .border}](https://drive.google.com/file/d/1smqDpEAZRWgXDXZLybzvWTgOBy6kI6qv/view?usp=sharing)
+[![](figures/tumbnail_pres1.png){.border width="200px"}](https://drive.google.com/file/d/1smqDpEAZRWgXDXZLybzvWTgOBy6kI6qv/view?usp=sharing)
 
 Read the [**theory**](hyperspectral_theory.qmd)
 

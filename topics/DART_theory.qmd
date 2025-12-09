@@ -21,14 +21,14 @@ bibliography: DART_references.bib
 
 Remote sensing provides us with unprecedented capabilities to observe Earth's ecosystems from above. However, the spectral signals captured by satellite and airborne sensors represent complex interactions between electromagnetic radiation and vegetation structures. To unlock the full information content of these signals, we need more than statistical relationships—we need physical understanding of how light interacts with plant canopies.
 
-Radiative Transfer Models (RTMs) are powerful tools that use physical equations to simulate light interaction within virtual scenes, including forests, agricultural fields, and urban environments [@gastellu2017dart]. Unlike empirical models that rely on correlations between spectral data and field measurements, RTMs are based on the fundamental laws of physics governing light propagation, scattering, and absorption [@knyazikhin1998synergistic]. This physical foundation makes RTMs invaluable for:
+Radiative Transfer Models (RTMs) are powerful tools that use physical equations to simulate light interaction within virtual scenes, including forests, agricultural fields, and urban environments. Unlike empirical models that rely on correlations between spectral data and field measurements, RTMs are based on the fundamental laws of physics governing light propagation, scattering, and absorption. This physical foundation makes RTMs invaluable for:
 
 - **Interpreting remote sensing observations** by linking canopy reflectance to biophysical and biochemical properties
 - **Understanding ecosystem processes** related to light scattering and energy balance
 - **Designing new sensors** and optimizing acquisition strategies
 - **Retrieving vegetation traits** that cannot be directly measured from space
 
-The evolution from simple 1D turbid medium approximations to complex 3D ray-tracing models has paralleled advances in computational power and our understanding of canopy architecture [@widlowski2015radiation]. Today's RTMs can simulate scenes with remarkable detail, from individual leaf biochemistry to landscape-scale heterogeneity.
+The evolution from simple 1D turbid medium approximations to complex 3D ray-tracing models has paralleled advances in computational power and our understanding of canopy architecture. Today's RTMs can simulate scenes with remarkable detail, from individual leaf biochemistry to landscape-scale heterogeneity.
 
 ## Types of Radiative Transfer Models
 
@@ -36,7 +36,7 @@ RTMs operate at different spatial scales and levels of complexity, each designed
 
 ### Leaf-Level RTMs
 
-![Leaf-level radiative transfer mechanisms. (a) Light interaction with leaf structure: polarized (red) and non-polarized (black) light interact through surface reflection at micro-facets, absorption by chloroplasts, and scattering within mesophyll tissue. (b) Conceptual diagram showing light interaction with leaf surface and internal structures including epidermis, palisade, spongy mesophyll, and air spaces. (c) Simplified plate model showing light transmission and reflection through mesophyll layers with refractive index n>1. (c) Detailed representation of light path including surface reflection and internal scattering at multiple interfaces. (d) Multi-layer representation with N layers showing transmittance (T_N) and reflectance (R_N) terms. Sources: (a) @li2025radiative, (b) @xu2023light](DART_figures/fig_leaf_level_rtm.png){#fig-leaf-rtm width="100%"}
+![Leaf-level radiative transfer mechanisms. (a) Light interaction with leaf structure: polarized (red) and non-polarized (black) light interact through surface reflection at micro-facets, absorption by chloroplasts, and scattering within mesophyll tissue. (b) Conceptual diagram showing light interaction with leaf surface and internal structures including epidermis, palisade, spongy mesophyll, and air spaces. (c) Simplified plate model showing light transmission and reflection through mesophyll layers with refractive index n>1. (c) Detailed representation of light path including surface reflection and internal scattering at multiple interfaces. (d) Multi-layer representation with N layers showing transmittance (T_N) and reflectance (R_N) terms. Sources: (a) Li et al. (2025), (b)  Xu and Ye (2023).](DART_figures/fig_leaf_level_rtm.png){#fig-leaf-rtm width="100%"}
 
 Leaf-level RTMs simulate the optical properties of individual leaves based on their internal structure and biochemical composition [@jacquemoud1990prospect]. @fig-leaf-rtm illustrates the complex interactions of light within leaf tissues. Key components include:
 
@@ -86,7 +86,7 @@ Each version improves spectral fidelity and retrieval accuracy for specific comp
 
 ### Canopy-Level RTMs
 
-![Canopy-level radiative transfer in 3D scene. The diagram shows the DART model structure including atmosphere layers (high and mid atmosphere), Earth scene with detailed 3D vegetation (trees, grass, water, topography), and multiple sensor configurations. Key elements include: TOA (Top of Atmosphere), BOA (Bottom of Atmosphere), direct sun irradiance, atmosphere radiance, per-pixel radiation, and both satellite and airborne sensor geometries. Source: @gastellu2017dart.](DART_figures/fig_canopy_level_rtm.png){#fig-canopy-rtm width="100%"}
+![Canopy-level radiative transfer in 3D scene. The diagram shows the DART model structure including atmosphere layers (high and mid atmosphere), Earth scene with detailed 3D vegetation (trees, grass, water, topography), and multiple sensor configurations. Key elements include: TOA (Top of Atmosphere), BOA (Bottom of Atmosphere), direct sun irradiance, atmosphere radiance, per-pixel radiation, and both satellite and airborne sensor geometries. Source: Gastellu-Etchegorry et al. (2017).](DART_figures/fig_canopy_level_rtm.png){#fig-canopy-rtm width="100%"}
 
 Canopy-level RTMs simulate light interaction within entire plant canopies or landscape scenes [@gastellu2017dart]. @fig-canopy-rtm illustrates the comprehensive approach of 3D canopy models like DART, which can represent:
 
@@ -135,7 +135,7 @@ These models generate various products:
 
 ### Levels of Complexity
 
-RTMs can be categorized by their representation of canopy architecture [@bailey2020onedimensional]:
+RTMs can be categorized by their representation of canopy architecture:
 
 ![Three levels of canopy representation in radiative transfer models. Left: 1D turbid medium with horizontally homogeneous layers. Center: 3D geometrical objects with simple crown shapes. Right: 3D complex representation with explicit 3D tree structures. Yellow arrows indicate incident direct solar radiation, with scattered radiation paths shown by dashed lines.](DART_figures/fig_model_complexity.png){#fig-model-complexity width="100%"}
 
@@ -197,13 +197,13 @@ For high-resolution hyperspectral imagery of forests, 3D complex models offer th
 
 ## Radiative Transfer Model Products
 
-RTMs generate a variety of outputs useful for different remote sensing applications [@gastellu2017dart]:
+RTMs generate a variety of outputs useful for different remote sensing applications:
 
 ### Optical Products
 
 **Bidirectional Reflectance Factor (BRF):**
 
-The most common output, BRF quantifies how reflectance varies with illumination and viewing geometry. It is defined as the ratio of reflected radiance in a given direction to the radiance that would be reflected by an ideal Lambertian surface under identical illumination [@schaepman2006earth]:
+The most common output, BRF quantifies how reflectance varies with illumination and viewing geometry. It is defined as the ratio of reflected radiance in a given direction to the radiance that would be reflected by an ideal Lambertian surface under identical illumination [@schaepman2006reflectance]:
 
 $$\text{BRF}(\theta_s, \phi_s, \theta_v, \phi_v, \lambda) = \frac{\pi \cdot L(\theta_v, \phi_v, \lambda)}{E(\theta_s, \phi_s, \lambda)}$$
 
@@ -215,7 +215,7 @@ where:
 - $L$: Reflected radiance
 - $E$: Incoming irradiance
 
-![Multi-angle BRF patterns for a forest canopy. Polar plots showing BRF at four wavelengths (550 nm, 665 nm, 780 nm, 1650 nm) across viewing hemisphere. (a) Canopy simulation design. (b) BRF vs. viewing zenith angle for different solar positions (shown as colored lines). (c) Polar projections with solar position marked by star symbol. Patterns reveal strong forward scattering (hotspot) and angular anisotropy varying with wavelength. Source: @hanus2023flying](DART_figures/fig_brf_patterns.png){#fig-brf-patterns width="100%"}
+![Multi-angle BRF patterns for a forest canopy. Polar plots showing BRF at four wavelengths (550 nm, 665 nm, 780 nm, 1650 nm) across viewing hemisphere. (a) Canopy simulation design. (b) BRF vs. viewing zenith angle for different solar positions (shown as colored lines). (c) Polar projections with solar position marked by star symbol. Patterns reveal strong forward scattering (hotspot) and angular anisotropy varying with wavelength. Source: Hanuš st al. (2023).](DART_figures/fig_brf_patterns.png){#fig-brf-patterns width="100%"}
 
 @fig-brf-patterns illustrates how BRF varies with viewing geometry at different wavelengths. Key features include:
 
@@ -232,7 +232,7 @@ RTMs can simulate BRF for any combination of sun-sensor geometries, enabling:
 
 ### Thermal Products
 
-Some RTMs (e.g., DART) simulate brightness temperature by coupling radiative transfer with energy balance equations [@gastellu2015modeling]. This enables:
+Some RTMs (e.g., DART) simulate brightness temperature by coupling radiative transfer with energy balance equations [@gastellu2017dart]. This enables:
 
 - **Canopy temperature** mapping from thermal imagery
 - **Evapotranspiration** estimation via surface energy balance
@@ -254,24 +254,24 @@ These synthetic LiDAR data support:
 
 ### Radiative Budget
 
-RTMs compute the absorption, transmission, and reflection of radiation throughout the canopy [@widlowski2015radiation]:
+RTMs compute the absorption, transmission, and reflection of radiation throughout the canopy:
 
 - **Absorbed PAR (Photosynthetically Active Radiation)**: Critical for photosynthesis models
 - **Transmitted radiation**: Light reaching understory
 - **Vertical profiles**: Radiation availability at different canopy heights
 - **Per-triangle/voxel budget**: Spatially explicit energy balance
 
-These outputs link remote sensing to ecosystem functioning and carbon cycle models [@malenovsksy2009radiative].
+These outputs link remote sensing to ecosystem functioning and carbon cycle models.
 
 ## Applications of Radiative Transfer Models
 
-RTMs serve multiple roles in ecosystem science and remote sensing [@malenovsksy2021scientific]:
+RTMs serve multiple roles in ecosystem science and remote sensing [@malenovsky2009scientific]:
 
 ### 1. BRDF/BRF Correction and Normalization
 
 Multi-temporal remote sensing imagery suffers from varying sun-sensor geometries that create artificial reflectance changes unrelated to vegetation state. RTMs enable physics-based corrections [@hanus2023flying]:
 
-**Problem:** Reflectance of the same surface can vary by 20-50% depending on viewing angle [@schaepman2006earth].
+**Problem:** Reflectance of the same surface can vary significantly depending on viewing angle.
 
 **Solution:** 
 
@@ -302,13 +302,13 @@ The primary application of RTMs is estimating vegetation properties from remote 
 - **Structural**: LAI, canopy height, canopy cover, clumping index
 - **Photosynthetic**: Absorbed PAR, light use efficiency
 
-![Vegetation trait retrieval workflow. Left: True-color (CASI 2016) and false-color (SASI 2016) hyperspectral images of a forest study site. Right: Retrieved trait maps showing spatial distribution of leaf chlorophyll content (Cab), leaf carotenoids content (Car), leaf water content (Cw), and leave area index (LAI). Color scales indicate concentration gradients across the heterogeneous canopy. Source: @janoutova2021detailed](DART_figures/fig_trait_retrieval.png){#fig-trait-retrieval width="100%"}
+![Vegetation trait retrieval workflow. Left: True-color (CASI 2016) and false-color (SASI 2016) hyperspectral images of a forest study site. Right: Retrieved trait maps showing spatial distribution of leaf chlorophyll content (Cab), leaf carotenoids content (Car), leaf water content (Cw), and leave area index (LAI). Color scales indicate concentration gradients across the heterogeneous canopy. Source: Janoutová et al. (2021).](DART_figures/fig_trait_retrieval.png){#fig-trait-retrieval width="100%"}
 
 @fig-trait-retrieval demonstrates trait retrieval results from airborne hyperspectral imagery, showing detailed spatial patterns of biochemical content and canopy structure.
 
 ### 3. Sensitivity Analysis
 
-Before collecting expensive remote sensing data or designing retrieval algorithms, RTMs can reveal which spectral bands contain information about specific traits [@malenovsksy2021scientific]:
+Before collecting expensive remote sensing data or designing retrieval algorithms, RTMs can reveal which spectral bands contain information about specific traits [@malenovsky2009scientific]:
 
 **Approach:**
 
@@ -317,7 +317,7 @@ Before collecting expensive remote sensing data or designing retrieval algorithm
 3. Quantify spectral sensitivity: $\partial \text{BRF}(\lambda) / \partial \text{Trait}$
 4. Identify optimal wavebands for trait estimation
 
-![Sensitivity analysis for different tree types and canopy representations. Simulated RGB, CIR (Color Infrared), and 3D canopy views for three species (Norway spruce, white peppermint, European beech) using three modeling approaches: 3D detailed, turbid medium, and simple geometric representation. Each representation creates different spatial patterns and spectral responses, revealing the importance of architectural fidelity for accurate simulations. Source: @janoutova2021detailed](DART_figures/fig_sensitivity.png){#fig-sensitivity width="100%"}
+![Sensitivity analysis for different tree types and canopy representations. Simulated RGB, CIR (Color Infrared), and 3D canopy views for three species (Norway spruce, white peppermint, European beech) using three modeling approaches: 3D detailed, turbid medium, and simple geometric representation. Each representation creates different spatial patterns and spectral responses, revealing the importance of architectural fidelity for accurate simulations. Source: Janoutová et al. (2021).](DART_figures/fig_sensitivity.png){#fig-sensitivity width="100%"}
 
 @fig-sensitivity illustrates how different levels of structural representation (3D detailed vs. turbid medium vs. simple geometry) affect simulated imagery. This type of analysis reveals:
 
@@ -327,7 +327,7 @@ Before collecting expensive remote sensing data or designing retrieval algorithm
 
 ### 4. Radiative Budget Modeling
 
-Understanding how much light is absorbed, transmitted, or reflected by vegetation is fundamental to ecosystem energy balance and photosynthesis [@malenovsksy2009radiative]:
+Understanding how much light is absorbed, transmitted, or reflected by vegetation is fundamental to ecosystem energy balance and photosynthesis:
 
 **Applications:**
 
@@ -347,11 +347,11 @@ Before launching new satellites or airborne campaigns, RTMs can test sensor conf
 - What view angles maximize sensitivity to LAI?
 - How does along-track vs. across-track scanning affect shadowing?
 
-**Case Study:** The FLEX (Fluorescence Explorer) satellite mission used RTM simulations extensively to define optimal spectral bands, view angles, and overpass times for measuring solar-induced chlorophyll fluorescence [@malenovsksy2021scientific].
+**Case Study:** The FLEX (Fluorescence Explorer) satellite mission used RTM simulations extensively to define optimal spectral bands, view angles, and overpass times for measuring solar-induced chlorophyll fluorescence.
 
 ## The Radiation transfer Model Intercomparison (RAMI) Initiative
 
-Given the diversity of RTMs with different underlying assumptions and implementations, the community recognized the need for systematic model benchmarking. The RAMI initiative provides standardized test scenes and reference solutions [@widlowski2015radiation].
+Given the diversity of RTMs with different underlying assumptions and implementations, the community recognized the need for systematic model benchmarking. The RAMI initiative provides standardized test scenes and reference solutions [@widlowski2013fourth].
 
 ![Evolution of the RAMI initiative from 1999 to 2022. Timeline showing progression through RAMI phases: RAMI-1 (1999) for basic benchmarking, RAMI-2 (2002) for expanded scenarios, RAMI-3 (2005) for 3D heterogeneous scenes, ROMC (2007) for online model checker, RAMI4PILPS (2008/2009) coupling with land surface models, RAMI-IV (2009/2015) for realistic forest scenes, RAMI-V (2020) for comprehensive validation, and RAMI4ATM (2022) for atmospheric coupling. Source: Source: <https://rami-benchmark.jrc.ec.europa.eu/_www/index.php>](DART_figures/fig_rami.png){#fig-rami width="100%"}
 
@@ -519,9 +519,9 @@ The primary application of RTMs in ecosystem monitoring is retrieving biophysica
 
 ### Retrieval Workflow Overview
 
-![Vegetation traits retrieval workflow. The process flows from bottom to top: (1) Leaf & canopy RT models are parameterized with ground measurements, (2) Radiative transfer simulations generate a database of spectral signatures for quantitative vegetation parameters (chlorophylls shown as example), (3) Retrieval algorithm compares this database with reflectance image data (after corrections), (4) Validation using ground measurements confirms accuracy. The workflow represents bottom-up scaling from leaf to canopy level. Source: @malenovsky2009scientific](DART_figures/fig_retrieval_workflow.png){#fig-retrieval-workflow width="100%"}
+![Vegetation traits retrieval workflow. The process flows from bottom to top: (1) Leaf & canopy RT models are parameterized with ground measurements, (2) Radiative transfer simulations generate a database of spectral signatures for quantitative vegetation parameters (chlorophylls shown as example), (3) Retrieval algorithm compares this database with reflectance image data (after corrections), (4) Validation using ground measurements confirms accuracy. The workflow represents bottom-up scaling from leaf to canopy level. Source: Malenovský et al. (2009).](DART_figures/fig_retrieval_workflow.png){#fig-retrieval-workflow width="100%"}
 
-@fig-retrieval-workflow illustrates the complete RTM-based retrieval workflow [@malenovsksy2009radiative]. The process involves:
+@fig-retrieval-workflow illustrates the complete RTM-based retrieval workflow [@malenovsky2009scientific]. The process involves:
 
 1. **Parameterization**: Field measurements provide inputs for leaf and canopy RT models
 2. **Database generation**: RTM simulations create a Look-Up Table (LUT) of spectra for different trait combinations
@@ -532,7 +532,7 @@ This approach enables quantitative trait estimation from spectral data, bridging
 
 ### Choosing the Right Approach
 
-Before starting a retrieval study, several key questions determine the appropriate RTM complexity [@gastellu2017dart]:
+Before starting a retrieval study, several key questions determine the appropriate RTM complexity:
 
 **What type of remote sensing data will be analyzed?**
 
@@ -557,7 +557,7 @@ The fine spatial resolution captures individual tree crowns and intra-crown vari
 
 ### Field Data Collection
 
-Accurate RTM parameterization requires comprehensive field measurements [@janoutova2021detailed]:
+Accurate RTM parameterization requires comprehensive field measurements:
 
 ![Field measurement equipment and spectral data. (a) Spectroradiometers with contact probe (bark), pistol grip (ground), and integrating sphere (leaves). (b) Example spectral reflectance and transmittance curves for leaves (green wavelengths show characteristic chlorophyll absorption), and reflectance spectra for twigs/bark (brown) and ground (dashed black). These field measurements provide the optical properties needed to parameterize RTMs.](DART_figures/fig_field_measurements.png){#fig-field-measurements width="100%"}
 
@@ -596,7 +596,7 @@ When field measurements are limited, use databases:
 
 ### Scene Configuration
 
-RTM simulations require careful scene parameterization. General parameters apply to all RTM studies [@gastellu2017dart]:
+RTM simulations require careful scene parameterization. General parameters apply to all RTM studies:
 
 **Site Location and Sun Geometry:**
 
@@ -628,7 +628,7 @@ For forest ecosystems, additional structural detail is required [@hanousek2024hi
    - Includes all factors affecting spectra at specific location
    - Used when you have detailed field data for one location
 
-![3D forest scene representation in DART. (a) Top-down view showing tree positions in systematic grid pattern with brown ground visible between crowns. (b) Oblique 3D view showing detailed tree architecture with individual crowns, trunks, and branches. Scene dimensions are 30m × 30m with trees positioned to achieve target canopy cover and LAI. Source: @hanousek2024high](DART_figures/fig_scene_parameters.png){#fig-scene-parameters width="100%"}
+![3D forest scene representation in DART. (a) Top-down view showing tree positions in systematic grid pattern with brown ground visible between crowns. (b) Oblique 3D view showing detailed tree architecture with individual crowns, trunks, and branches. Scene dimensions are 30m × 30m with trees positioned to achieve target canopy cover and LAI. Source: Hanousek et al. (2024).](DART_figures/fig_scene_parameters.png){#fig-scene-parameters width="100%"}
 
 **Scene Components (@fig-scene-parameters):**
 
@@ -655,7 +655,7 @@ Creating large LUTs requires computational resources and expertise typically ava
 
 LUTs form the core of RTM-based retrieval, systematically exploring the relationship between traits and spectra [@hanousek2024high]:
 
-![Look-Up Table generation strategy. Flow diagram shows how leaf traits (chlorophyll, carotenoids, water, dry matter, structural parameter) combine with structural and scene parameters (canopy cover, LAI, sun zenith angle, sun azimuth angle). Total possible combinations: 3.5 million. Through random sampling (2000 combinations) and filtering for realism (1728 combinations remain after excluding unrealistic scenarios like low canopy cover with high LAI), these are organized into trait groups, then expanded across structural-geometric combinations, yielding a final database of 3,456,000 spectra. Source: @hanousek2024high](DART_figures/fig_lut_design.png){#fig-lut-design width="100%"}
+![Look-Up Table generation strategy. Flow diagram shows how leaf traits (chlorophyll, carotenoids, water, dry matter, structural parameter) combine with structural and scene parameters (canopy cover, LAI, sun zenith angle, sun azimuth angle). Total possible combinations: 3.5 million. Through random sampling (2000 combinations) and filtering for realism (1728 combinations remain after excluding unrealistic scenarios like low canopy cover with high LAI), these are organized into trait groups, then expanded across structural-geometric combinations, yielding a final database of 3,456,000 spectra. Source: Hanousek et al. (2024).](DART_figures/fig_lut_design.png){#fig-lut-design width="100%"}
 
 @fig-lut-design shows a sophisticated LUT design for broadleaf forests. Key principles:
 
@@ -680,7 +680,7 @@ For the tutorial user, the key insight is that trait retrieval requires this sys
 
 Before using LUT spectra for retrieval, simulated images must be processed consistently with real imagery [@hanousek2024high]:
 
-![Processing of simulated DART imagery. (a) RGB composite showing forest canopy with green sunlit leaves, dark shadows between crowns, and brown/purple mixed pixels at crown edges. (b) Binary mask isolating only sunlit leaf pixels (bright green) while excluding shadows, woody parts, and ground. This masking ensures that LUT spectra represent the same surface types as pixels used in retrieval from real imagery. Source: @hanousek2024high](DART_figures/fig_masking.png){#fig-masking width="100%"}
+![Processing of simulated DART imagery. (a) RGB composite showing forest canopy with green sunlit leaves, dark shadows between crowns, and brown/purple mixed pixels at crown edges. (b) Binary mask isolating only sunlit leaf pixels (bright green) while excluding shadows, woody parts, and ground. This masking ensures that LUT spectra represent the same surface types as pixels used in retrieval from real imagery. Source: Hanousek et al. (2024).](DART_figures/fig_masking.png){#fig-masking width="100%"}
 
 **Critical Step: Masking (@fig-masking)**
 
@@ -707,7 +707,7 @@ Whatever processing you apply to simulated images (masking, smoothing, aggregati
 
 With a prepared LUT and processed imagery, retrieval algorithms estimate traits by matching observed spectra to the database [@slaninakova2025introducing]:
 
-![Comparison of retrieval methods on seasonal hyperspectral imagery. Three rows show results from Statistical (empirical regression), ALSS (Adaptive LUT Subset Selection), and LUT (full Look-Up Table matching) methods. Four columns represent different dates: 26 Apr 2019, 21 Jun 2021, 18 Jul 2019, and 22 Oct 2020. Color scale shows chlorophyll content (Cab) from 10-60 μg/cm². All methods capture seasonal variation (low chlorophyll in spring/autumn, high in summer) and spatial patterns (individual tree crowns), but differ in smoothness and detail. ALSS balances accuracy and robustness. Source: @slaninakova2025introducing](DART_figures/fig_application.png){#fig-application width="100%"}
+![Comparison of retrieval methods on seasonal hyperspectral imagery. Three rows show results from Statistical (empirical regression), ALSS (Adaptive LUT Subset Selection), and LUT (full Look-Up Table matching) methods. Four columns represent different dates: 26 Apr 2019, 21 Jun 2021, 18 Jul 2019, and 22 Oct 2020. Color scale shows chlorophyll content (Cab) from 10-60 μg/cm². All methods capture seasonal variation (low chlorophyll in spring/autumn, high in summer) and spatial patterns (individual tree crowns), but differ in smoothness and detail. ALSS balances accuracy and robustness. Source: Slanináková et al. (2025).](DART_figures/fig_application.png){#fig-application width="100%"}
 
 **Common Retrieval Approaches:**
 
@@ -755,7 +755,7 @@ You typically won't generate your own LUT unless working on a long-term research
 
 ## Challenges and Future Directions
 
-While RTM-based retrieval is powerful, several challenges remain [@malenovsksy2021scientific]:
+While RTM-based retrieval is powerful, several challenges remain:
 
 **Current Limitations:**
 
@@ -767,7 +767,7 @@ While RTM-based retrieval is powerful, several challenges remain [@malenovsksy20
 
 **Emerging Solutions:**
 
-- **Machine learning emulators**: Neural networks approximate RTM behavior, reducing computation by orders of magnitude [@verrelst2015machine]
+- **Machine learning emulators**: Neural networks approximate RTM behavior, reducing computation by orders of magnitude [@verrelst2012machine]
 - **TLS integration**: Laser scanning provides unprecedented structural detail [@janoutova2021detailed]
 - **Multi-sensor fusion**: Combine optical, LiDAR, and thermal for comprehensive characterization
 - **Uncertainty quantification**: Bayesian approaches provide confidence intervals, not just point estimates

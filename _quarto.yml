@@ -19,7 +19,7 @@ website:
       - text: "Radiative Transfer Modeling"
         menu:
           - text: "Intro"
-            href: topics/hyperspectral_intro.qmd
+            href: topics/DART_intro.qmd
           - text: "Theory"
             href: topics/DART_theory.qmd
           - text: "Practice"
