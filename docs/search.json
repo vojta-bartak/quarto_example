@@ -322,11 +322,60 @@
     "text": "Run the following code to see the sine function.\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nx = np.linspace(0, 10, 100)\ny = np.sin(x)\nplt.plot(x, y)\nplt.title('Sine Wave')\nplt.show()"
   },
   {
+    "objectID": "authors.html",
+    "href": "authors.html",
+    "title": "About the Authors",
+    "section": "",
+    "text": "Giorgi Kozhoridze is a researcher at the Czech University of Life Sciences Prague focusing on environmental remote sensing and geospatial data analysis. His work includes the development of analytical workflows for forest and landscape monitoring, with a particular interest in integrating multispectral, hyperspectral, and LiDAR data for environmental applications."
+  },
+  {
+    "objectID": "authors.html#giorgi-kozhoridze-czech-university-of-life-sciences-prague-czu",
+    "href": "authors.html#giorgi-kozhoridze-czech-university-of-life-sciences-prague-czu",
+    "title": "About the Authors",
+    "section": "",
+    "text": "Giorgi Kozhoridze is a researcher at the Czech University of Life Sciences Prague focusing on environmental remote sensing and geospatial data analysis. His work includes the development of analytical workflows for forest and landscape monitoring, with a particular interest in integrating multispectral, hyperspectral, and LiDAR data for environmental applications."
+  },
+  {
+    "objectID": "authors.html#david-moravec-czech-university-of-life-sciences-prague-czu",
+    "href": "authors.html#david-moravec-czech-university-of-life-sciences-prague-czu",
+    "title": "About the Authors",
+    "section": "David Moravec (Czech University of Life Sciences Prague – CZU)",
+    "text": "David Moravec (Czech University of Life Sciences Prague – CZU)\n\nDavid Moravec is a remote sensing specialist at CZU with expertise in environmental appliactions of radar remote sensing. His research covers environmental sensing methods for biodiversity monitoring, forest structure analysis, and the integration of in-situ and remote sensing observations across scales."
+  },
+  {
+    "objectID": "authors.html#růžena-janoutová-czechglobe-global-change-research-institute",
+    "href": "authors.html#růžena-janoutová-czechglobe-global-change-research-institute",
+    "title": "About the Authors",
+    "section": "Růžena Janoutová (CzechGlobe – Global Change Research Institute)",
+    "text": "Růžena Janoutová (CzechGlobe – Global Change Research Institute)\n\nRůžena Janoutová is a researcher at CzechGlobe specialising in optical and thermal remote sensing of vegetation. Her work focuses on forest ecosystem monitoring, spectral analysis, and the development of methods for detecting environmental stress and changes in vegetation dynamics."
+  },
+  {
+    "objectID": "authors.html#xiao-liu-technische-universität-dresden-tud",
+    "href": "authors.html#xiao-liu-technische-universität-dresden-tud",
+    "title": "About the Authors",
+    "section": "Xiao Liu (Technische Universität Dresden – TUD)",
+    "text": "Xiao Liu (Technische Universität Dresden – TUD)\n\nXiao Liu finished his PhD at TU Dresden in 2025, working in environmental remote sensing. His research interests include radar and LiDAR processing, vegetation structure modelling, and the application of advanced machine learning techniques to monitor forest dynamics and biodiversity."
+  },
+  {
+    "objectID": "authors.html#fabian-fischer-technical-university-of-munich-tum",
+    "href": "authors.html#fabian-fischer-technical-university-of-munich-tum",
+    "title": "About the Authors",
+    "section": "Fabian Fischer (Technical University of Munich – TUM)",
+    "text": "Fabian Fischer (Technical University of Munich – TUM)\n\nFabian Fischer is a researcher at the Technical University of Munich specializing in forest structure and dynamics, remote sensing (Airborne Laser Scanning), individual-based forest modeling, allometric models, and tropical forest ecology."
+  },
+  {
+    "objectID": "authors.html#vojtěch-barták-czech-university-of-life-sciences-prague-czu",
+    "href": "authors.html#vojtěch-barták-czech-university-of-life-sciences-prague-czu",
+    "title": "About the Authors",
+    "section": "Vojtěch Barták (Czech University of Life Sciences Prague – CZU)",
+    "text": "Vojtěch Barták (Czech University of Life Sciences Prague – CZU)\n\nVojtěch Barták is a researcher and software developer at CZU specialising in geospatial analysis, remote sensing workflows, and reproducible scientific computing. He works on the integration of environmental sensing data, development of analytical tools, and preparation of educational materials for Earth Observation training."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Welcome",
+    "title": "Remote Sensing of Forests – E-learning Course",
     "section": "",
-    "text": "Welcome to Remote Sensing Lessons\nThis site provides interactive tutorials in Python and R using real-world remote sensing data.\nChoose a lesson from the navigation bar to get started."
+    "text": "Welcome to the Remote Sensing of Forests e-learning course developed within the EarthBridge project (Horizon Europe, Grant Agreement 101079310). The course brings together the expertise of lecturers from CZU Prague, TU Dresden, Università di Bologna, and the University of Bonn, and builds directly on the EarthBridge Summer School focused on environmental Earth Observation and biodiversity monitoring.\nThis online resource provides an accessible entry point into advanced methods for analysing forest ecosystems using modern remote sensing technologies. Its goal is to support students, early-career researchers, and professionals who wish to deepen their understanding of environmental sensing and apply these methods in research and practice.\nThe course is structured into thematic chapters covering key domains of forest remote sensing:\n\nHyperspectral Remote Sensing\nRadiative Transfer Modelling\nRadar Remote Sensing\nSAR Tomography\nLidar\n\nEach chapter combines:\n\na concise introduction to the topic\na theoretical overview based on recorded lectures\na practical, step-by-step tutorial using real data\nlinks to presentations, datasets, and video recordings\n\nAll materials are openly accessible and hosted on GitHub Pages. Presentations and datasets are provided through EarthBridge cloud storage, while lecture recordings are available via the EarthBridge YouTube channel.\nThe course is designed as a living resource that will continue to evolve. Additional chapters, updated tutorials, and refinements may be added as new material becomes available and as feedback from users is incorporated.\nWe hope that these materials support your learning, research, and exploration of remote sensing methods for understanding and monitoring forest ecosystems."
   },
   {
     "objectID": "notebooks/r_analysis.html",

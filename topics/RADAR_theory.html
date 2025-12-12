@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="quarto-1.8.26" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+<meta name="author" content="David Moravec" />
+<meta name="dcterms.date" content="2025-12-12" />
+
+<title>Theoretical Background: Radar Remote Sensing Fundamentals – Remote Sensing of Forests</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<!-- htmldependencies:E3FAD763 -->
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="/index.html">
+    <span class="navbar-title">Remote Sensing of Forests</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+  aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation"
+  onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="/index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-hyperspectral" role="link" data-bs-toggle="dropdown" aria-expanded="false" >
+ <span class="menu-text">Hyperspectral</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-hyperspectral">    
+        <li>
+    <a class="dropdown-item" href="/topics/hyperspectral_intro.html">
+ <span class="dropdown-text">Intro</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="/topics/hyperspectral_theory.html">
+ <span class="dropdown-text">Theory</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="/topics/hyperspectral_tutorial.html">
+ <span class="dropdown-text">Practice</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-radiative-transfer-modeling" role="link" data-bs-toggle="dropdown" aria-expanded="false" >
+ <span class="menu-text">Radiative Transfer Modeling</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-radiative-transfer-modeling">    
+        <li>
+    <a class="dropdown-item" href="/topics/DART_intro.html">
+ <span class="dropdown-text">Intro</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="/topics/DART_theory.html">
+ <span class="dropdown-text">Theory</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="/topics/DART_tutorial.html">
+ <span class="dropdown-text">Practice</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-sar-tomography" role="link" data-bs-toggle="dropdown" aria-expanded="false" >
+ <span class="menu-text">SAR Tomography</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-sar-tomography">    
+        <li class="dropdown-header">
+ Intro</li>
+        <li>
+    <a class="dropdown-item" href="/topics/SART_intro.html">
+ <span class="dropdown-text">SAR Tomography of Forests: An Introduction</span></a>
+  </li>  
+        <li class="dropdown-header">
+ Theory</li>
+        <li>
+    <a class="dropdown-item" href="/topics/SART_theory.html">
+ <span class="dropdown-text">Theoretical Background: Synthetic Aperture Radar Tomography of Forests</span></a>
+  </li>  
+        <li class="dropdown-header">
+ Practice</li>
+        <li>
+    <a class="dropdown-item" href="/topics/SART_tutorial.html">
+ <span class="dropdown-text">SAR Tomography of Tropical Forests</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <span class="nav-link">
+<span class="menu-text">Authors</span>
+    </span>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="/authors.html"> 
+<span class="menu-text">About the Authors</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <div id="quarto-toc-target"></div>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Theoretical Background: Radar Remote Sensing Fundamentals</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>David Moravec </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 12, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+<nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction-the-active-microwave-perspective" id="toc-introduction-the-active-microwave-perspective"><span class="header-section-number">1</span> Introduction: The Active Microwave Perspective</a></li>
+  <li><a href="#the-importance-of-forests-context-for-radar-applications" id="toc-the-importance-of-forests-context-for-radar-applications"><span class="header-section-number">2</span> The Importance of Forests: Context for Radar Applications</a></li>
+  <li><a href="#why-microwave-radiation" id="toc-why-microwave-radiation"><span class="header-section-number">3</span> Why Microwave Radiation?</a></li>
+  <li><a href="#side-looking-radar-geometry" id="toc-side-looking-radar-geometry"><span class="header-section-number">4</span> Side-Looking Radar Geometry</a>
+  <ul>
+  <li><a href="#geometric-parameters" id="toc-geometric-parameters"><span class="header-section-number">4.1</span> Geometric Parameters</a></li>
+  <li><a href="#why-side-looking" id="toc-why-side-looking"><span class="header-section-number">4.2</span> Why Side-Looking?</a></li>
+  </ul></li>
+  <li><a href="#surface-geometry-and-scattering-mechanisms" id="toc-surface-geometry-and-scattering-mechanisms"><span class="header-section-number">5</span> Surface Geometry and Scattering Mechanisms</a>
+  <ul>
+  <li><a href="#the-backscattering-coefficient" id="toc-the-backscattering-coefficient"><span class="header-section-number">5.1</span> The Backscattering Coefficient</a></li>
+  <li><a href="#scattering-mechanisms" id="toc-scattering-mechanisms"><span class="header-section-number">5.2</span> Scattering Mechanisms</a></li>
+  <li><a href="#permittivity-and-moisture-effects" id="toc-permittivity-and-moisture-effects"><span class="header-section-number">5.3</span> Permittivity and Moisture Effects</a></li>
+  </ul></li>
+  <li><a href="#wavelength-dependent-interactions" id="toc-wavelength-dependent-interactions"><span class="header-section-number">6</span> Wavelength-Dependent Interactions</a>
+  <ul>
+  <li><a href="#standard-radar-frequency-bands" id="toc-standard-radar-frequency-bands"><span class="header-section-number">6.1</span> Standard Radar Frequency Bands</a></li>
+  <li><a href="#penetration-depth-and-biomass-sensitivity" id="toc-penetration-depth-and-biomass-sensitivity"><span class="header-section-number">6.2</span> Penetration Depth and Biomass Sensitivity</a></li>
+  <li><a href="#implications-for-forest-monitoring" id="toc-implications-for-forest-monitoring"><span class="header-section-number">6.3</span> Implications for Forest Monitoring</a></li>
+  </ul></li>
+  <li><a href="#polarization-a-multi-dimensional-view" id="toc-polarization-a-multi-dimensional-view"><span class="header-section-number">7</span> Polarization: A Multi-Dimensional View</a>
+  <ul>
+  <li><a href="#polarization-fundamentals" id="toc-polarization-fundamentals"><span class="header-section-number">7.1</span> Polarization Fundamentals</a></li>
+  <li><a href="#polarimetric-modes" id="toc-polarimetric-modes"><span class="header-section-number">7.2</span> Polarimetric Modes</a></li>
+  <li><a href="#scattering-behavior-by-polarization" id="toc-scattering-behavior-by-polarization"><span class="header-section-number">7.3</span> Scattering Behavior by Polarization</a></li>
+  <li><a href="#forest-applications-of-polarimetry" id="toc-forest-applications-of-polarimetry"><span class="header-section-number">7.4</span> Forest Applications of Polarimetry</a></li>
+  <li><a href="#polarimetric-decompositions" id="toc-polarimetric-decompositions"><span class="header-section-number">7.5</span> Polarimetric Decompositions</a></li>
+  </ul></li>
+  <li><a href="#geometric-distortions-in-radar-imaging" id="toc-geometric-distortions-in-radar-imaging"><span class="header-section-number">8</span> Geometric Distortions in Radar Imaging</a>
+  <ul>
+  <li><a href="#foreshortening" id="toc-foreshortening"><span class="header-section-number">8.1</span> Foreshortening</a></li>
+  <li><a href="#layover" id="toc-layover"><span class="header-section-number">8.2</span> Layover</a></li>
+  <li><a href="#radar-shadow" id="toc-radar-shadow"><span class="header-section-number">8.3</span> Radar Shadow</a></li>
+  <li><a href="#mitigating-geometric-distortions" id="toc-mitigating-geometric-distortions"><span class="header-section-number">8.4</span> Mitigating Geometric Distortions</a></li>
+  </ul></li>
+  <li><a href="#speckle-coherent-noise-in-radar-images" id="toc-speckle-coherent-noise-in-radar-images"><span class="header-section-number">9</span> Speckle: Coherent Noise in Radar Images</a>
+  <ul>
+  <li><a href="#speckle-statistics" id="toc-speckle-statistics"><span class="header-section-number">9.1</span> Speckle Statistics</a></li>
+  <li><a href="#visual-impact" id="toc-visual-impact"><span class="header-section-number">9.2</span> Visual Impact</a></li>
+  <li><a href="#speckle-reduction-strategies" id="toc-speckle-reduction-strategies"><span class="header-section-number">9.3</span> Speckle Reduction Strategies</a></li>
+  <li><a href="#speckle-tracking-and-offset-tracking" id="toc-speckle-tracking-and-offset-tracking"><span class="header-section-number">9.4</span> Speckle Tracking and Offset Tracking</a></li>
+  <li><a href="#implications-for-forest-monitoring-1" id="toc-implications-for-forest-monitoring-1"><span class="header-section-number">9.5</span> Implications for Forest Monitoring</a></li>
+  </ul></li>
+  <li><a href="#phase-information-interferometry-and-beyond" id="toc-phase-information-interferometry-and-beyond"><span class="header-section-number">10</span> Phase Information: Interferometry and Beyond</a>
+  <ul>
+  <li><a href="#phase-fundamentals" id="toc-phase-fundamentals"><span class="header-section-number">10.1</span> Phase Fundamentals</a></li>
+  <li><a href="#interferometric-sar-insar" id="toc-interferometric-sar-insar"><span class="header-section-number">10.2</span> Interferometric SAR (InSAR)</a></li>
+  <li><a href="#applications-of-insar" id="toc-applications-of-insar"><span class="header-section-number">10.3</span> Applications of InSAR</a></li>
+  <li><a href="#coherence-and-decorrelation" id="toc-coherence-and-decorrelation"><span class="header-section-number">10.4</span> Coherence and Decorrelation</a></li>
+  <li><a href="#phase-unwrapping" id="toc-phase-unwrapping"><span class="header-section-number">10.5</span> Phase Unwrapping</a></li>
+  </ul></li>
+  <li><a href="#future-radar-missions-and-emerging-capabilities" id="toc-future-radar-missions-and-emerging-capabilities"><span class="header-section-number">11</span> Future Radar Missions and Emerging Capabilities</a>
+  <ul>
+  <li><a href="#near-term-operational-missions" id="toc-near-term-operational-missions"><span class="header-section-number">11.1</span> Near-Term Operational Missions</a></li>
+  <li><a href="#advanced-sar-techniques-for-forests" id="toc-advanced-sar-techniques-for-forests"><span class="header-section-number">11.2</span> Advanced SAR Techniques for Forests</a></li>
+  <li><a href="#emerging-commercial-constellations" id="toc-emerging-commercial-constellations"><span class="header-section-number">11.3</span> Emerging Commercial Constellations</a></li>
+  </ul></li>
+  <li><a href="#physical-and-semi-empirical-models" id="toc-physical-and-semi-empirical-models"><span class="header-section-number">12</span> Physical and Semi-Empirical Models</a>
+  <ul>
+  <li><a href="#the-water-cloud-model-wcm" id="toc-the-water-cloud-model-wcm"><span class="header-section-number">12.1</span> The Water Cloud Model (WCM)</a></li>
+  <li><a href="#the-michigan-microwave-canopy-scattering-model-mimics" id="toc-the-michigan-microwave-canopy-scattering-model-mimics"><span class="header-section-number">12.2</span> The Michigan Microwave Canopy Scattering Model (MIMICS)</a></li>
+  <li><a href="#the-discrete-scattering-model" id="toc-the-discrete-scattering-model"><span class="header-section-number">12.3</span> The Discrete Scattering Model</a></li>
+  <li><a href="#model-based-inversion" id="toc-model-based-inversion"><span class="header-section-number">12.4</span> Model-Based Inversion</a></li>
+  </ul></li>
+  <li><a href="#conclusion-the-radar-remote-sensing-toolbox" id="toc-conclusion-the-radar-remote-sensing-toolbox"><span class="header-section-number">13</span> Conclusion: The Radar Remote Sensing Toolbox</a></li>
+  <li><a href="#references" id="toc-references"><span class="header-section-number">14</span> References</a></li>
+  </ul>
+</nav>
+<section id="introduction-the-active-microwave-perspective" class="level2" data-number="1">
+<h2 data-number="1"><span class="header-section-number">1</span> Introduction: The Active Microwave Perspective</h2>
+<p>Radar (Radio Detection and Ranging) remote sensing represents a fundamentally different approach to Earth observation compared to optical and infrared methods. While passive optical sensors rely on reflected sunlight, radar systems actively transmit microwave radiation and measure the backscattered signal <span class="citation" data-cites="lillesand2015remote">(<a href="#ref-lillesand2015remote" role="doc-biblioref"><strong>lillesand2015remote?</strong></a>)</span>. This active nature, combined with the long wavelengths of microwave radiation (ranging from millimeters to meters), provides unique capabilities that overcome many limitations of passive optical remote sensing.</p>
+<p>The electromagnetic spectrum shows that microwave radiation occupies the region between radio waves and infrared radiation, with wavelengths ranging from approximately 1 mm to 1 m (<a href="#fig-em-spectrum" class="quarto-xref">Figure 1</a>). Within the atmosphere, specific wavelength regions—called atmospheric windows—allow electromagnetic radiation to propagate with minimal attenuation. The microwave region features broad atmospheric windows that enable radar signals to penetrate clouds, fog, rain, and darkness, providing all-weather, day-and-night imaging capabilities <span class="citation" data-cites="ulaby2014microwave">(<a href="#ref-ulaby2014microwave" role="doc-biblioref"><strong>ulaby2014microwave?</strong></a>)</span>.</p>
+<div id="fig-em-spectrum" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-em-spectrum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/em_spectrum.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure 1: Electromagnetic spectrum showing the position of radar bands. The microwave region (highlighted) spans wavelengths from ~1 mm to 1 m, corresponding to frequencies from 300 GHz to 300 MHz. Common radar bands are labeled: Ka, K, Ku, X, C, S, L, and P-band. The lower graph shows atmospheric opacity, with the microwave “radio window” demonstrating excellent atmospheric transmission compared to visible and infrared regions."><img src="RADAR_figures/em_spectrum.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-em-spectrum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 1: Electromagnetic spectrum showing the position of radar bands. The microwave region (highlighted) spans wavelengths from ~1 mm to 1 m, corresponding to frequencies from 300 GHz to 300 MHz. Common radar bands are labeled: Ka, K, Ku, X, C, S, L, and P-band. The lower graph shows atmospheric opacity, with the microwave “radio window” demonstrating excellent atmospheric transmission compared to visible and infrared regions.
+</figcaption>
+</figure>
+</div>
+<p>Three fundamental advantages distinguish radar from optical remote sensing:</p>
+<ol type="1">
+<li><strong>Active illumination</strong>: Radar provides its own energy source, enabling observations regardless of solar illumination and at any time of day or night <span class="citation" data-cites="henderson2998manual">(<a href="#ref-henderson2998manual" role="doc-biblioref"><strong>henderson2998manual?</strong></a>)</span></li>
+<li><strong>Cloud penetration</strong>: Microwave radiation passes through clouds, smoke, and atmospheric moisture that block optical sensors <span class="citation" data-cites="woodhouse2017introduction">(<a href="#ref-woodhouse2017introduction" role="doc-biblioref"><strong>woodhouse2017introduction?</strong></a>)</span></li>
+<li><strong>Surface penetration</strong>: Longer radar wavelengths can penetrate vegetation canopies and even soil or ice surfaces, revealing subsurface structures and volume properties <span class="citation" data-cites="ulaby2014microwave">(<a href="#ref-ulaby2014microwave" role="doc-biblioref"><strong>ulaby2014microwave?</strong></a>)</span></li>
+</ol>
+<p>These capabilities make radar particularly valuable for forest monitoring, where cloud cover often obscures optical observations in tropical and temperate regions, and where information about forest structure extends throughout the three-dimensional canopy volume rather than just the top surface visible to optical sensors.</p>
+</section>
+<section id="the-importance-of-forests-context-for-radar-applications" class="level2" data-number="2">
+<h2 data-number="2"><span class="header-section-number">2</span> The Importance of Forests: Context for Radar Applications</h2>
+<p>Understanding why radar remote sensing matters for forest monitoring requires first appreciating the critical role forests play in Earth’s systems (<a href="#fig-forest-importance" class="quarto-xref">Figure 2</a>). Forests are crucial for regulating energy, water, and carbon balance, covering 31% of Earth’s solid surface and 43% of the European Union’s area <span class="citation" data-cites="bonan2008forests">(<a href="#ref-bonan2008forests" role="doc-biblioref"><strong>bonan2008forests?</strong></a>)</span>. They represent Europe’s most important renewable source of biomass and deliver livelihoods for 1.6 billion people globally <span class="citation" data-cites="fao2020">(<a href="#ref-fao2020" role="doc-biblioref"><strong>fao2020?</strong></a>)</span>. Forests provide habitat for the vast majority of terrestrial plant and animal species, making their monitoring essential for biodiversity conservation <span class="citation" data-cites="fao2020state">(<a href="#ref-fao2020state" role="doc-biblioref"><strong>fao2020state?</strong></a>)</span>.</p>
+<div id="fig-forest-importance" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-forest-importance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/forest_importance.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figure 2: The global importance of forests. Forests regulate energy, water, and carbon cycles; cover substantial portions of Earth’s land surface; provide renewable biomass; support billions of people’s livelihoods; and harbor most terrestrial biodiversity. These multiple roles make forest monitoring through remote sensing a critical application."><img src="RADAR_figures/forest_importance.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-forest-importance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 2: The global importance of forests. Forests regulate energy, water, and carbon cycles; cover substantial portions of Earth’s land surface; provide renewable biomass; support billions of people’s livelihoods; and harbor most terrestrial biodiversity. These multiple roles make forest monitoring through remote sensing a critical application.
+</figcaption>
+</figure>
+</div>
+<p>Traditional optical remote sensing faces significant challenges in forest environments. Dense tropical forests occur in regions with persistent cloud cover, limiting optical data acquisition to rare cloud-free windows. Even in temperate zones, seasonal cloud patterns can prevent optical observations for weeks or months <span class="citation" data-cites="woodhouse2017introduction">(<a href="#ref-woodhouse2017introduction" role="doc-biblioref"><strong>woodhouse2017introduction?</strong></a>)</span>. Moreover, optical sensors primarily detect the uppermost canopy layer, providing limited information about understory structure, stem volume, or subsurface moisture <span class="citation" data-cites="kasischke2019forest">(<a href="#ref-kasischke2019forest" role="doc-biblioref"><strong>kasischke2019forest?</strong></a>)</span>.</p>
+<p>Radar overcomes these limitations by penetrating clouds and, depending on wavelength, penetrating into and through vegetation canopies. The degree of penetration depends on the radar wavelength: shorter wavelengths (X-band, C-band) primarily interact with leaves and small branches, while longer wavelengths (L-band, P-band) penetrate deeper into canopy structure and interact with larger branches and stems (<strong>?@fig-wavelength-penetration</strong>). This wavelength-dependent penetration enables estimation of forest structural parameters including canopy height, biomass, and vertical profile that remain inaccessible to optical methods <span class="citation" data-cites="le2011relating">(<a href="#ref-le2011relating" role="doc-biblioref"><strong>le2011relating?</strong></a>)</span>.</p>
+</section>
+<section id="why-microwave-radiation" class="level2" data-number="3">
+<h2 data-number="3"><span class="header-section-number">3</span> Why Microwave Radiation?</h2>
+<p>The choice of microwave frequencies for radar remote sensing stems from fundamental physical principles governing electromagnetic wave propagation and interaction with Earth’s atmosphere and surface. <a href="#fig-why-microwave" class="quarto-xref">Figure 3</a> illustrates the dramatic difference between optical and radar imaging: the left image shows an optical view dominated by clouds obscuring the surface, while the right image demonstrates radar’s ability to see through these clouds to reveal underlying landscape features.</p>
+<div id="fig-why-microwave" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-why-microwave-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/why_microwave.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure 3: Comparison between optical (left) and radar (right) views of the same cloudy scene. The optical image shows dense cloud cover blocking surface visibility, while the radar image penetrates clouds to reveal surface features including vegetation patterns and topography. This demonstrates radar’s all-weather imaging capability."><img src="RADAR_figures/why_microwave.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-why-microwave-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 3: Comparison between optical (left) and radar (right) views of the same cloudy scene. The optical image shows dense cloud cover blocking surface visibility, while the radar image penetrates clouds to reveal surface features including vegetation patterns and topography. This demonstrates radar’s all-weather imaging capability.
+</figcaption>
+</figure>
+</div>
+<p>The physical basis for this capability lies in the relationship between electromagnetic radiation wavelength and atmospheric interaction. <a href="#fig-energy-sources" class="quarto-xref">Figure 4</a> shows the spectral distribution of solar radiation (Sun’s energy at 6000 K) and Earth’s thermal emission (Earth’s energy at 300 K) across the electromagnetic spectrum. The critical observation is that between these natural emission peaks lies a region of minimal natural radiation—the microwave gap <span class="citation" data-cites="ulaby2014microwave">(<a href="#ref-ulaby2014microwave" role="doc-biblioref"><strong>ulaby2014microwave?</strong></a>)</span>.</p>
+<div id="fig-energy-sources" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-energy-sources-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/energy_sources.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figure 4: Energy sources and atmospheric transmission. Top panel shows blackbody radiation curves for the Sun (6000 K) and Earth (300 K), revealing a gap in natural radiation around the microwave region (highlighted in red box). Bottom panel shows atmospheric transmission, demonstrating high transmission in the microwave “radio window” where natural illumination is minimal. This combination makes active radar systems necessary and effective for microwave remote sensing."><img src="RADAR_figures/energy_sources.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-energy-sources-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 4: Energy sources and atmospheric transmission. Top panel shows blackbody radiation curves for the Sun (6000 K) and Earth (300 K), revealing a gap in natural radiation around the microwave region (highlighted in red box). Bottom panel shows atmospheric transmission, demonstrating high transmission in the microwave “radio window” where natural illumination is minimal. This combination makes active radar systems necessary and effective for microwave remote sensing.
+</figcaption>
+</figure>
+</div>
+<p>In this microwave region, there is insufficient natural radiation for passive sensing, necessitating active illumination. However, this same region features excellent atmospheric transmission—electromagnetic waves at microwave frequencies experience minimal absorption by atmospheric water vapor, oxygen, and clouds <span class="citation" data-cites="woodhouse2017introduction">(<a href="#ref-woodhouse2017introduction" role="doc-biblioref"><strong>woodhouse2017introduction?</strong></a>)</span>. This atmospheric window extends from approximately 1 cm to 1 m wavelength, encompassing the standard radar bands used for remote sensing.</p>
+<p>The microwave region offers additional advantages beyond cloud penetration:</p>
+<ul>
+<li><strong>Reduced atmospheric scattering</strong>: Unlike visible light, microwave radiation experiences minimal Rayleigh scattering from air molecules and aerosols <span class="citation" data-cites="henderson2998manual">(<a href="#ref-henderson2998manual" role="doc-biblioref"><strong>henderson2998manual?</strong></a>)</span></li>
+<li><strong>Minimal ionospheric effects</strong>: At frequencies above ~1 GHz (wavelengths shorter than ~30 cm), ionospheric refraction becomes negligible for space-based systems <span class="citation" data-cites="meyer2019sar">(<a href="#ref-meyer2019sar" role="doc-biblioref"><strong>meyer2019sar?</strong></a>)</span></li>
+<li><strong>Weather independence</strong>: Radar imaging quality remains consistent regardless of solar illumination, precipitation (except very heavy rain at shorter wavelengths), fog, or smoke <span class="citation" data-cites="woodhouse2017introduction">(<a href="#ref-woodhouse2017introduction" role="doc-biblioref"><strong>woodhouse2017introduction?</strong></a>)</span></li>
+</ul>
+<p>These properties make radar particularly valuable for operational applications requiring guaranteed data acquisition, such as disaster response, military reconnaissance, and continuous monitoring programs where temporal gaps are unacceptable.</p>
+</section>
+<section id="side-looking-radar-geometry" class="level2" data-number="4">
+<h2 data-number="4"><span class="header-section-number">4</span> Side-Looking Radar Geometry</h2>
+<p>The fundamental geometry of radar imaging systems differs profoundly from optical sensors. While optical sensors typically observe directly beneath the platform (nadir-looking), imaging radar systems employ a <strong>side-looking geometry</strong> that is essential to their operational principle (<a href="#fig-side-looking" class="quarto-xref">Figure 5</a>). This geometric arrangement creates both unique capabilities and specific challenges that shape how radar data must be acquired and interpreted.</p>
+<div id="fig-side-looking" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-side-looking-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/side_looking_geometry.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figure 5: Side-looking radar geometry showing key components: the sensor platform (satellite or aircraft) with antenna pointing perpendicular to the flight direction, transmitted radar pulses illuminating the surface at an oblique angle, and the resulting image formation. The azimuth direction follows the platform’s motion, while the range direction extends perpendicular to the flight path. The look angle (θ) determines the incidence angle at the surface."><img src="RADAR_figures/side_looking_geometry.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-side-looking-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 5: Side-looking radar geometry showing key components: the sensor platform (satellite or aircraft) with antenna pointing perpendicular to the flight direction, transmitted radar pulses illuminating the surface at an oblique angle, and the resulting image formation. The azimuth direction follows the platform’s motion, while the range direction extends perpendicular to the flight path. The look angle (θ) determines the incidence angle at the surface.
+</figcaption>
+</figure>
+</div>
+<section id="geometric-parameters" class="level3" data-number="4.1">
+<h3 data-number="4.1"><span class="header-section-number">4.1</span> Geometric Parameters</h3>
+<p>The side-looking configuration is defined by several critical geometric parameters <span class="citation" data-cites="henderson2998manual">(<a href="#ref-henderson2998manual" role="doc-biblioref"><strong>henderson2998manual?</strong></a>)</span>:</p>
+<ul>
+<li><strong>Slant range (R)</strong>: The direct distance from the antenna to a target on the ground</li>
+<li><strong>Ground range</strong>: The horizontal distance from the point directly beneath the antenna to the target</li>
+<li><strong>Look angle (θ)</strong>: The angle between nadir (vertical) and the line from antenna to target</li>
+<li><strong>Incidence angle (θ<sub>i</sub>)</strong>: The angle between the incident radar beam and the perpendicular to the local surface (normal)</li>
+<li><strong>Depression angle</strong>: The angle between horizontal and the radar beam</li>
+<li><strong>Beamwidth (β)</strong>: The angular extent of the transmitted radar pulse</li>
+</ul>
+<p>The relationship between these parameters determines the spatial resolution and geometric distortions in radar images. The <strong>range resolution</strong>—the ability to distinguish separate targets along the line of sight—is determined by the radar pulse length:</p>
+<p><span class="math display">\[R_{res} = \frac{c \tau}{2 \sin \theta}\]</span></p>
+<p>where <em>c</em> is the speed of light, <em>τ</em> is the pulse duration, and <em>θ</em> is the look angle <span class="citation" data-cites="woodhouse2017introduction">(<a href="#ref-woodhouse2017introduction" role="doc-biblioref"><strong>woodhouse2017introduction?</strong></a>)</span>. The factor of 2 appears because the radar signal must travel to the target and back.</p>
+<p>The <strong>azimuth resolution</strong>—the ability to distinguish targets along the direction of platform motion—depends on the antenna aperture length (<em>L</em>) and slant range (<em>R</em>):</p>
+<p><span class="math display">\[A_{res} = \frac{\lambda R}{L}\]</span></p>
+<p>For real aperture radar systems, achieving fine azimuth resolution requires either very long antennas or short ranges. <strong>Synthetic Aperture Radar (SAR)</strong> overcomes this limitation by synthesizing a long antenna aperture through platform motion, achieving azimuth resolution given by <span class="citation" data-cites="cumming2005digital">(<a href="#ref-cumming2005digital" role="doc-biblioref"><strong>cumming2005digital?</strong></a>)</span>:</p>
+<p><span class="math display">\[A_{SAR} = \frac{L}{2}\]</span></p>
+<p>remarkably independent of range and wavelength. This makes SAR the dominant technology for space-based radar remote sensing, enabling meter-scale resolution from satellite altitudes of hundreds of kilometers.</p>
+</section>
+<section id="why-side-looking" class="level3" data-number="4.2">
+<h3 data-number="4.2"><span class="header-section-number">4.2</span> Why Side-Looking?</h3>
+<p>The side-looking geometry is not merely a design choice but a fundamental requirement for imaging radar systems <span class="citation" data-cites="henderson2998manual">(<a href="#ref-henderson2998manual" role="doc-biblioref"><strong>henderson2998manual?</strong></a>)</span>. If a radar looked straight down (nadir), all targets at equal range would return echoes simultaneously, making it impossible to distinguish their positions laterally. The side-looking geometry resolves this ambiguity by ensuring that targets at different ground positions have different slant ranges, enabling their spatial separation in the resulting image.</p>
+<p>Additionally, the oblique illumination creates shadows and highlights topographic features, enhancing the interpretability of terrain and surface structure. The specific choice of look angle represents a trade-off: steeper angles (closer to nadir) reduce geometric distortions and shadow areas but decrease sensitivity to surface roughness, while shallower angles (more oblique) maximize roughness sensitivity but increase geometric distortions and shadowing <span class="citation" data-cites="woodhouse2017introduction">(<a href="#ref-woodhouse2017introduction" role="doc-biblioref"><strong>woodhouse2017introduction?</strong></a>)</span>.</p>
+<p>For vegetation and forestry applications, moderate incidence angles (typically 20-40°) provide an optimal balance: sufficient penetration into canopy structure, sensitivity to volume scattering from branches and leaves, and manageable geometric distortions <span class="citation" data-cites="kasischke2019forest">(<a href="#ref-kasischke2019forest" role="doc-biblioref"><strong>kasischke2019forest?</strong></a>)</span>.</p>
+</section>
+</section>
+<section id="surface-geometry-and-scattering-mechanisms" class="level2" data-number="5">
+<h2 data-number="5"><span class="header-section-number">5</span> Surface Geometry and Scattering Mechanisms</h2>
+<p>The interaction between radar waves and Earth’s surface is fundamentally governed by the surface’s geometric and dielectric properties. Unlike optical remote sensing, where surface reflectance is largely determined by chemical composition and pigments, radar backscatter is dominated by structural geometry—the size, shape, orientation, and arrangement of scattering elements—and by dielectric constant, which is primarily controlled by moisture content <span class="citation" data-cites="ulaby2014microwave">(<a href="#ref-ulaby2014microwave" role="doc-biblioref"><strong>ulaby2014microwave?</strong></a>)</span>.</p>
+<p><a href="#fig-surface-geometry" class="quarto-xref">Figure 6</a> illustrates a fundamental principle: surface geometry matters profoundly for radar backscatter. The same objects (buildings, water body, terrain) illuminated from different directions produce dramatically different backscatter patterns. This angular dependence stems from the coherent nature of radar radiation and the resulting interference patterns created by scattering from multiple surface elements <span class="citation" data-cites="woodhouse2017introduction">(<a href="#ref-woodhouse2017introduction" role="doc-biblioref"><strong>woodhouse2017introduction?</strong></a>)</span>.</p>
+<div id="fig-surface-geometry" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-surface-geometry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/surface_geometry.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure 6: Influence of surface geometry on radar backscatter, shown for three different satellite viewing geometries. The scene contains buildings, a water body, and varied terrain. Notice how the same features appear differently depending on illumination direction: buildings may show strong corner reflections or shadows, water appears dark or bright depending on surface roughness and viewing angle, and terrain slope orientation relative to the radar beam significantly affects backscatter intensity. This geometric sensitivity is fundamental to radar remote sensing."><img src="RADAR_figures/surface_geometry.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-surface-geometry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 6: Influence of surface geometry on radar backscatter, shown for three different satellite viewing geometries. The scene contains buildings, a water body, and varied terrain. Notice how the same features appear differently depending on illumination direction: buildings may show strong corner reflections or shadows, water appears dark or bright depending on surface roughness and viewing angle, and terrain slope orientation relative to the radar beam significantly affects backscatter intensity. This geometric sensitivity is fundamental to radar remote sensing.
+</figcaption>
+</figure>
+</div>
+<section id="the-backscattering-coefficient" class="level3" data-number="5.1">
+<h3 data-number="5.1"><span class="header-section-number">5.1</span> The Backscattering Coefficient</h3>
+<p>Quantitatively, radar systems measure the <strong>backscattering coefficient</strong> (σ°), defined as the radar cross section per unit area <span class="citation" data-cites="ulaby2014microwave">(<a href="#ref-ulaby2014microwave" role="doc-biblioref"><strong>ulaby2014microwave?</strong></a>)</span>:</p>
+<p><span class="math display">\[\sigma° = \frac{P_r}{P_t} \frac{(4\pi)^3 R^4}{G^2 \lambda^2 A}\]</span></p>
+<p>where <em>P<sub>r</sub></em> is received power, <em>P<sub>t</sub></em> is transmitted power, <em>R</em> is range, <em>G</em> is antenna gain, <em>λ</em> is wavelength, and <em>A</em> is illuminated area. The backscattering coefficient is typically expressed in decibels:</p>
+<p><span class="math display">\[\sigma°_{dB} = 10 \log_{10}(\sigma°)\]</span></p>
+<p>This coefficient depends on surface properties (roughness, dielectric constant, structure), radar parameters (wavelength, polarization, incidence angle), and for vegetated surfaces, on moisture content throughout the scattering volume <span class="citation" data-cites="henderson2998manual">(<a href="#ref-henderson2998manual" role="doc-biblioref"><strong>henderson2998manual?</strong></a>)</span>.</p>
+</section>
+<section id="scattering-mechanisms" class="level3" data-number="5.2">
+<h3 data-number="5.2"><span class="header-section-number">5.2</span> Scattering Mechanisms</h3>
+<p>The physical processes by which surfaces scatter radar energy fall into several categories, each producing characteristic signatures that enable interpretation of surface properties (<a href="#fig-scattering-mechanisms" class="quarto-xref">Figure 7</a>):</p>
+<div id="fig-scattering-mechanisms" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-scattering-mechanisms-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/scattering_mechanisms.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Figure 7: Major scattering mechanisms in radar remote sensing. Top row: (a) Specular scattering from smooth surfaces directs energy away from the sensor; (b) Rough surface scattering distributes energy in multiple directions. Middle row: (c) Corner reflector geometry (dihedral scattering) from perpendicular surfaces directs energy strongly back toward the sensor; (d) Volume scattering from vegetation creates multiple scattering paths. Bottom row: (e) Bragg scattering from periodic surface structures shows wavelength-dependent constructive interference when surface periodicity matches radar wavelength."><img src="RADAR_figures/scattering_mechanisms.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-scattering-mechanisms-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 7: Major scattering mechanisms in radar remote sensing. Top row: (a) Specular scattering from smooth surfaces directs energy away from the sensor; (b) Rough surface scattering distributes energy in multiple directions. Middle row: (c) Corner reflector geometry (dihedral scattering) from perpendicular surfaces directs energy strongly back toward the sensor; (d) Volume scattering from vegetation creates multiple scattering paths. Bottom row: (e) Bragg scattering from periodic surface structures shows wavelength-dependent constructive interference when surface periodicity matches radar wavelength.
+</figcaption>
+</figure>
+</div>
+<p><strong>1. Specular (Mirror-like) Scattering</strong></p>
+<p>When the radar wavelength is much larger than surface roughness features, the surface appears smooth and acts like a mirror, reflecting energy away from the sensor <span class="citation" data-cites="woodhouse2017introduction">(<a href="#ref-woodhouse2017introduction" role="doc-biblioref"><strong>woodhouse2017introduction?</strong></a>)</span>. This produces very low backscatter. Calm water bodies, paved roads, and recently tilled agricultural fields often exhibit specular scattering, appearing dark in radar images.</p>
+<p>The Rayleigh roughness criterion defines surface smoothness <span class="citation" data-cites="ulaby2014microwave">(<a href="#ref-ulaby2014microwave" role="doc-biblioref"><strong>ulaby2014microwave?</strong></a>)</span>:</p>
+<p><span class="math display">\[h &lt; \frac{\lambda}{32 \cos \theta_i}\]</span></p>
+<p>where <em>h</em> is RMS surface height variation, <em>λ</em> is wavelength, and <em>θ<sub>i</sub></em> is incidence angle. Surfaces satisfying this criterion produce predominantly specular scattering.</p>
+<p><strong>2. Diffuse (Rough Surface) Scattering</strong></p>
+<p>When surface roughness features approach or exceed the radar wavelength, scattering becomes diffuse, distributing energy in multiple directions including back toward the sensor <span class="citation" data-cites="henderson2998manual">(<a href="#ref-henderson2998manual" role="doc-biblioref"><strong>henderson2998manual?</strong></a>)</span>. This creates moderate to high backscatter depending on roughness magnitude and orientation. Natural surfaces like soil, rock, and vegetation typically produce diffuse scattering.</p>
+<p>For moderate roughness, the backscattering coefficient increases with surface roughness until saturation occurs when roughness greatly exceeds the wavelength <span class="citation" data-cites="fung1994microwave">(<a href="#ref-fung1994microwave" role="doc-biblioref"><strong>fung1994microwave?</strong></a>)</span>.</p>
+<p><strong>3. Double-Bounce (Dihedral) Scattering</strong></p>
+<p>Corner reflector geometry—created by perpendicular or near-perpendicular surfaces—produces extremely strong backscatter through double-bounce reflection (<a href="#fig-scattering-mechanisms" class="quarto-xref">Figure 7</a> panel c). The radar pulse reflects from one surface onto another, then back toward the sensor, creating backscatter intensities that can be 10-20 dB higher than rough surface scattering <span class="citation" data-cites="henderson2998manual">(<a href="#ref-henderson2998manual" role="doc-biblioref"><strong>henderson2998manual?</strong></a>)</span>.</p>
+<p>Double-bounce mechanisms are characteristic of: - <strong>Urban areas</strong>: Building walls and ground create vertical-horizontal dihedrals - <strong>Flooded vegetation</strong>: Water surface and vertical stems create strong double-bounce returns - <strong>Tree trunks and ground</strong>: In forests, trunk-ground interaction produces significant double-bounce contribution</p>
+<p>The mathematical description of double-bounce scattering from dihedrals depends on polarization, but generally produces strong HH and VV returns with distinct phase relationships <span class="citation" data-cites="ulaby2014microwave">(<a href="#ref-ulaby2014microwave" role="doc-biblioref"><strong>ulaby2014microwave?</strong></a>)</span>.</p>
+<p><strong>4. Volume Scattering</strong></p>
+<p>Complex three-dimensional structures—particularly vegetation canopies—produce <strong>volume scattering</strong> through multiple interactions within the scattering volume (<a href="#fig-scattering-mechanisms" class="quarto-xref">Figure 7</a> panel d). Radar energy penetrates into the canopy, scatters from leaves, branches, and stems at multiple levels, with some energy reaching the ground and scattering back through the canopy <span class="citation" data-cites="kasischke2019forest">(<a href="#ref-kasischke2019forest" role="doc-biblioref"><strong>kasischke2019forest?</strong></a>)</span>.</p>
+<p>Volume scattering is characterized by: - <strong>Depolarization</strong>: Multiple scattering randomizes polarization, producing strong cross-polarized returns (HV, VH) - <strong>Wavelength dependence</strong>: Longer wavelengths penetrate deeper, interacting with larger structural elements - <strong>Complex phase behavior</strong>: Multiple path lengths create phase diversity that reduces interferometric coherence</p>
+<p>For forests, volume scattering dominates at HV polarization and increases with forest density and biomass <span class="citation" data-cites="le2011relating">(<a href="#ref-le2011relating" role="doc-biblioref"><strong>le2011relating?</strong></a>)</span>. The depth of penetration—and thus which structural elements contribute most to backscatter—depends critically on wavelength, as discussed in the following section.</p>
+<p><strong>5. Bragg Scattering</strong></p>
+<p>When surfaces exhibit periodic structure (waves, sand ripples, furrows), and the periodicity matches the radar wavelength, constructive interference produces enhanced backscatter through <strong>Bragg scattering</strong> <span class="citation" data-cites="woodhouse2017introduction">(<a href="#ref-woodhouse2017introduction" role="doc-biblioref"><strong>woodhouse2017introduction?</strong></a>)</span>. The Bragg condition is:</p>
+<p><span class="math display">\[\lambda = 2 d \sin \theta_i\]</span></p>
+<p>where <em>d</em> is the surface periodicity spacing. This mechanism is particularly important for ocean wave imaging, where capillary waves and gravity waves satisfying the Bragg condition create strong returns that enable measurement of wave spectra and surface wind fields <span class="citation" data-cites="moreira2013tutorial">(<a href="#ref-moreira2013tutorial" role="doc-biblioref"><strong>moreira2013tutorial?</strong></a>)</span>.</p>
+</section>
+<section id="permittivity-and-moisture-effects" class="level3" data-number="5.3">
+<h3 data-number="5.3"><span class="header-section-number">5.3</span> Permittivity and Moisture Effects</h3>
+<p>Beyond geometry, the <strong>dielectric constant</strong> (or relative permittivity, ε<sub>r</sub>) profoundly affects radar backscatter. The dielectric constant determines how much electromagnetic energy is reflected versus transmitted at boundaries <span class="citation" data-cites="ulaby2014microwave">(<a href="#ref-ulaby2014microwave" role="doc-biblioref"><strong>ulaby2014microwave?</strong></a>)</span>:</p>
+<p><span class="math display">\[\Gamma = \frac{\sqrt{\varepsilon_{r1}} - \sqrt{\varepsilon_{r2}}}{\sqrt{\varepsilon_{r1}} + \sqrt{\varepsilon_{r2}}}\]</span></p>
+<p>where Γ is the reflection coefficient and ε<sub>r1</sub>, ε<sub>r2</sub> are the dielectric constants of the two media.</p>
+<p>Crucially, liquid water has a very high dielectric constant (ε<sub>r</sub> ≈ 80 at microwave frequencies) compared to dry soil (ε<sub>r</sub> ≈ 3-5), dry vegetation (ε<sub>r</sub> ≈ 2-10), and ice (ε<sub>r</sub> ≈ 3) <span class="citation" data-cites="ulaby2014microwave">(<a href="#ref-ulaby2014microwave" role="doc-biblioref"><strong>ulaby2014microwave?</strong></a>)</span>. This means:</p>
+<ul>
+<li><strong>Wet surfaces</strong> reflect strongly (high Γ) → high backscatter</li>
+<li><strong>Dry surfaces</strong> reflect weakly (low Γ) → lower backscatter</li>
+<li><strong>Moisture content changes</strong> cause substantial backscatter variations</li>
+</ul>
+<p>This sensitivity to moisture is both an opportunity—enabling soil moisture mapping and vegetation water content estimation—and a challenge, as moisture variations can mask structural changes of interest <span class="citation" data-cites="wigneron2017modis">(<a href="#ref-wigneron2017modis" role="doc-biblioref"><strong>wigneron2017modis?</strong></a>)</span>.</p>
+<p><a href="#fig-surface-geometry" class="quarto-xref">Figure 6</a> demonstrates these combined effects: the water body’s backscatter changes dramatically with wind conditions (flat water is specular and dark; rough water produces diffuse scattering and appears brighter), buildings show corner reflections or shadows depending on orientation, and terrain slope affects the local incidence angle and thus scattering mechanism.</p>
+<p>Understanding these scattering mechanisms is essential for interpreting radar signatures of forests and other land cover types, where multiple mechanisms occur simultaneously and their relative contributions change with sensor parameters and environmental conditions.</p>
+</section>
+</section>
+<section id="wavelength-dependent-interactions" class="level2" data-number="6">
+<h2 data-number="6"><span class="header-section-number">6</span> Wavelength-Dependent Interactions</h2>
+<p>One of the most fundamental principles governing radar remote sensing of vegetation is that <strong>scattering occurs primarily from objects whose size is comparable to or larger than the radar wavelength</strong> <span class="citation" data-cites="ulaby2014microwave">(<a href="#ref-ulaby2014microwave" role="doc-biblioref"><strong>ulaby2014microwave?</strong></a>)</span>. This wavelength dependence creates dramatic differences in how various radar frequencies interact with forest canopies, determining which structural elements contribute most to the observed backscatter.</p>
+<p><strong>?@fig-wavelength-penetration</strong> illustrates this principle by showing a single tree structure as “seen” by different radar wavelengths. The progression from left to right—X-band (λ = 3 cm) through L-band (λ = 27 cm) to P-band (λ = 70 cm) and VHF (λ &gt; 3 m)—reveals how longer wavelengths progressively see through smaller structural elements to interact with larger components deeper in the canopy.</p>
+<p>!<span class="citation" data-cites="le2007">(Wavelength-dependent penetration and scattering in forest canopies. The same tree structure appears progressively more transparent at longer wavelengths. X-band (3 cm) interacts primarily with leaves and small branches in the upper canopy. L-band (27 cm) penetrates through foliage to interact with larger branches and some trunk components. P-band (70 cm) penetrates to the ground, interacting primarily with large branches and trunks. VHF (&gt;3 m) wavelengths pass through most canopy structure, interacting primarily with trunks and ground. Source: <a href="#ref-le2007" role="doc-biblioref"><strong>le2007?</strong></a>)</span>.](RADAR_figures/wavelength_penetration.png){#fig-wavelength-penetration width=“100%”}</p>
+<section id="standard-radar-frequency-bands" class="level3" data-number="6.1">
+<h3 data-number="6.1"><span class="header-section-number">6.1</span> Standard Radar Frequency Bands</h3>
+<p>Radar systems are conventionally designated by letter bands that originated in military secrecy during World War II but now serve as standard nomenclature <span class="citation" data-cites="woodhouse2017introduction">(<a href="#ref-woodhouse2017introduction" role="doc-biblioref"><strong>woodhouse2017introduction?</strong></a>)</span>. <a href="#fig-radar-bands" class="quarto-xref">Figure 8</a> shows the most important bands for Earth observation:</p>
+<div id="fig-radar-bands" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-radar-bands-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/radar_bands.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Figure 8: Radar frequency bands and their applications. The microwave spectrum from X-band through P-band is shown with corresponding wavelengths (3-90 cm) and frequencies. Current operational satellites (KOMPSAT-5, PAZ, TerraSAR-X/TanDEM-X at X-band; Radarsat-2, Sentinel-1 at C-band; NISAR at L-band and S-band) and planned missions (BIOMASS at P-band) are indicated. The lower panel shows atmospheric opacity across the electromagnetic spectrum, highlighting the excellent atmospheric transmission in the microwave region that enables all-weather radar observation."><img src="RADAR_figures/radar_bands.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-radar-bands-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 8: Radar frequency bands and their applications. The microwave spectrum from X-band through P-band is shown with corresponding wavelengths (3-90 cm) and frequencies. Current operational satellites (KOMPSAT-5, PAZ, TerraSAR-X/TanDEM-X at X-band; Radarsat-2, Sentinel-1 at C-band; NISAR at L-band and S-band) and planned missions (BIOMASS at P-band) are indicated. The lower panel shows atmospheric opacity across the electromagnetic spectrum, highlighting the excellent atmospheric transmission in the microwave region that enables all-weather radar observation.
+</figcaption>
+</figure>
+</div>
+<p>The key bands for vegetation remote sensing are <span class="citation" data-cites="kasischke2019forest">(<a href="#ref-kasischke2019forest" role="doc-biblioref"><strong>kasischke2019forest?</strong></a>)</span>:</p>
+<ul>
+<li><p><strong>X-band</strong> (~3 cm, ~10 GHz): Interacts with leaves, needles, and very small branches. Limited canopy penetration. Used for high-resolution urban and ice mapping. Systems include TerraSAR-X, TanDEM-X, COSMO-SkyMed.</p></li>
+<li><p><strong>C-band</strong> (~6 cm, ~5 GHz): Interacts with leaves, small branches, and crop structure. Moderate canopy penetration. Optimal for agricultural monitoring and widely used operationally. Systems include Sentinel-1 (operational), Radarsat-2, and the retired ERS and Envisat.</p></li>
+<li><p><strong>S-band</strong> (~12 cm, ~3 GHz): Intermediate penetration, sensitive to medium branch structure. Less commonly used but planned for NISAR mission.</p></li>
+<li><p><strong>L-band</strong> (~24 cm, ~1.5 GHz): Penetrates through foliage to interact with larger branches and trunks. Sensitive to forest structure and biomass. Systems include ALOS PALSAR (retired), ALOS-2, SAOCOM, and the upcoming NISAR mission.</p></li>
+<li><p><strong>P-band</strong> (~70 cm, ~450 MHz): Deep penetration to ground level even in dense forests. Interacts primarily with large branches and trunks. Optimal for biomass estimation. ESA’s BIOMASS mission (launch planned) will be the first spaceborne P-band SAR.</p></li>
+</ul>
+</section>
+<section id="penetration-depth-and-biomass-sensitivity" class="level3" data-number="6.2">
+<h3 data-number="6.2"><span class="header-section-number">6.2</span> Penetration Depth and Biomass Sensitivity</h3>
+<p>The penetration depth—the distance that radar energy travels into vegetation before being completely scattered or absorbed—increases with wavelength according to approximately <span class="citation" data-cites="le2011relating">(<a href="#ref-le2011relating" role="doc-biblioref"><strong>le2011relating?</strong></a>)</span>:</p>
+<p><span class="math display">\[\delta \propto \frac{\lambda}{k_e}\]</span></p>
+<p>where <em>k<sub>e</sub></em> is the extinction coefficient of the vegetation, which depends on biomass density, moisture content, and structural complexity. Empirically, penetration depth scales roughly linearly with wavelength for forest canopies.</p>
+<p>This wavelength-dependent penetration creates characteristic sensitivities to forest biomass:</p>
+<ul>
+<li><p><strong>Short wavelengths (X, C-band)</strong> saturate at low biomass (~20-60 Mg/ha) because scattering occurs entirely in the upper canopy; once this layer is dense, additional biomass below contributes minimally to backscatter <span class="citation" data-cites="kasischke2019forest">(<a href="#ref-kasischke2019forest" role="doc-biblioref"><strong>kasischke2019forest?</strong></a>)</span>.</p></li>
+<li><p><strong>Medium wavelengths (L-band)</strong> penetrate deeper and remain sensitive to higher biomass (~100-150 Mg/ha) by interacting with larger structural elements throughout the canopy <span class="citation" data-cites="mitchard2009using">(<a href="#ref-mitchard2009using" role="doc-biblioref"><strong>mitchard2009using?</strong></a>)</span>.</p></li>
+<li><p><strong>Long wavelengths (P-band)</strong> penetrate to the ground even in dense tropical forests and maintain sensitivity to biomass approaching 500 Mg/ha, making them essential for global carbon monitoring in high-biomass ecosystems <span class="citation" data-cites="le2011relating">(<a href="#ref-le2011relating" role="doc-biblioref"><strong>le2011relating?</strong></a>)</span>.</p></li>
+</ul>
+<p><a href="#fig-wavelength-comparison" class="quarto-xref">Figure 9</a> shows this principle with actual satellite data: RADARSAT (C-band) and ALOS PALSAR (L-band) images of the same area in Greenland reveal strikingly different surface expressions due to their different interaction depths <span class="citation" data-cites="joughin2016sar">(<a href="#ref-joughin2016sar" role="doc-biblioref"><strong>joughin2016sar?</strong></a>)</span>.</p>
+<div id="fig-wavelength-comparison" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-wavelength-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/wavelength_comparison.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Figure 9: Wavelength comparison: RADARSAT C-band (left) and ALOS PALSAR L-band (right) images of Greenland. The C-band image shows primarily surface scattering from ice and snow, with strong sensitivity to surface roughness and moisture. The L-band image penetrates deeper into ice and snow layers, revealing subsurface structures and features invisible to C-band. The difference demonstrates how wavelength choice fundamentally determines what information can be extracted from radar data."><img src="RADAR_figures/wavelength_comparison.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wavelength-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 9: Wavelength comparison: RADARSAT C-band (left) and ALOS PALSAR L-band (right) images of Greenland. The C-band image shows primarily surface scattering from ice and snow, with strong sensitivity to surface roughness and moisture. The L-band image penetrates deeper into ice and snow layers, revealing subsurface structures and features invisible to C-band. The difference demonstrates how wavelength choice fundamentally determines what information can be extracted from radar data.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="implications-for-forest-monitoring" class="level3" data-number="6.3">
+<h3 data-number="6.3"><span class="header-section-number">6.3</span> Implications for Forest Monitoring</h3>
+<p>The wavelength-dependent nature of radar-vegetation interaction has profound implications for application selection:</p>
+<p><strong>For biomass estimation</strong>: L-band or P-band are essential in moderate to high biomass forests, as shorter wavelengths saturate too quickly. Global biomass mapping requires spaceborne L-band or P-band systems <span class="citation" data-cites="saatchi2011benchmark">(<a href="#ref-saatchi2011benchmark" role="doc-biblioref"><strong>saatchi2011benchmark?</strong></a>)</span>.</p>
+<p><strong>For deforestation detection</strong>: C-band systems like Sentinel-1 are effective because clearcutting removes the scattering canopy, creating large backscatter changes even at wavelengths that see only upper canopy in intact forest <span class="citation" data-cites="bouvet2018sar">(<a href="#ref-bouvet2018sar" role="doc-biblioref"><strong>bouvet2018sar?</strong></a>)</span>.</p>
+<p><strong>For crop monitoring</strong>: C-band provides optimal sensitivity to crop structure and soil moisture throughout the growing season without excessive penetration <span class="citation" data-cites="mcnairn2017review">(<a href="#ref-mcnairn2017review" role="doc-biblioref"><strong>mcnairn2017review?</strong></a>)</span>.</p>
+<p><strong>For forest structure</strong>: L-band provides good sensitivity to canopy structure parameters including height, gap fraction, and vertical complexity <span class="citation" data-cites="treuhaft2015biomass">(<a href="#ref-treuhaft2015biomass" role="doc-biblioref"><strong>treuhaft2015biomass?</strong></a>)</span>.</p>
+<p><strong>For subsurface imaging</strong>: P-band and VHF enable detection of subsurface features, including archaeological remains beneath forest canopy and ice structure beneath dry snow <span class="citation" data-cites="moreira2013tutorial">(<a href="#ref-moreira2013tutorial" role="doc-biblioref"><strong>moreira2013tutorial?</strong></a>)</span>.</p>
+</section>
+</section>
+<section id="polarization-a-multi-dimensional-view" class="level2" data-number="7">
+<h2 data-number="7"><span class="header-section-number">7</span> Polarization: A Multi-Dimensional View</h2>
+<p>Beyond wavelength, <strong>polarization</strong>—the orientation of the electromagnetic field—provides an additional dimension for characterizing surface and volume scattering properties. Polarimetric radar systems transmit and receive both horizontally (H) and vertically (V) polarized radiation, enabling measurement of how surfaces and volumes transform polarization through scattering <span class="citation" data-cites="cloude2009polarisation">(<a href="#ref-cloude2009polarisation" role="doc-biblioref"><strong>cloude2009polarisation?</strong></a>)</span>.</p>
+<section id="polarization-fundamentals" class="level3" data-number="7.1">
+<h3 data-number="7.1"><span class="header-section-number">7.1</span> Polarization Fundamentals</h3>
+<p>An electromagnetic wave’s polarization describes the orientation of its electric field vector. For radar remote sensing, we conventionally define polarization relative to the plane containing the radar line of sight and the local vertical <span class="citation" data-cites="woodhouse2017introduction">(<a href="#ref-woodhouse2017introduction" role="doc-biblioref"><strong>woodhouse2017introduction?</strong></a>)</span>:</p>
+<ul>
+<li><strong>Horizontal (H)</strong>: Electric field perpendicular to this plane</li>
+<li><strong>Vertical (V)</strong>: Electric field parallel to this plane</li>
+</ul>
+<p>A radar system can transmit at one polarization and receive at the same or different polarization, creating four possible combinations called <strong>polarization channels</strong> <span class="citation" data-cites="lee2009polarimetric">(<a href="#ref-lee2009polarimetric" role="doc-biblioref"><strong>lee2009polarimetric?</strong></a>)</span>:</p>
+<ol type="1">
+<li><strong>HH</strong>: Transmit horizontal, receive horizontal (co-polarized)</li>
+<li><strong>VV</strong>: Transmit vertical, receive vertical (co-polarized)</li>
+<li><strong>HV</strong>: Transmit horizontal, receive vertical (cross-polarized)</li>
+<li><strong>VH</strong>: Transmit vertical, receive horizontal (cross-polarized)</li>
+</ol>
+<p>Due to reciprocity (for most natural surfaces), HV = VH, so only three independent measurements are available <span class="citation" data-cites="cloude2009polarisation">(<a href="#ref-cloude2009polarisation" role="doc-biblioref"><strong>cloude2009polarisation?</strong></a>)</span>.</p>
+</section>
+<section id="polarimetric-modes" class="level3" data-number="7.2">
+<h3 data-number="7.2"><span class="header-section-number">7.2</span> Polarimetric Modes</h3>
+<p>Different radar systems offer various polarimetric capabilities (<strong>?@fig-polarization-modes</strong>):</p>
+<div id="fig-polarization_modes" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-polarization_modes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/polarization_modes.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Figure 10: Polarimetric radar capabilities of different satellite systems. Sentinel-1 provides single (HH or VV) or dual polarization (HH+HV or VV+VH). Envisat offered alternating polarization or dual polarization. RADARSAT-2 provides full polarimetric capability (HH, VV, HV, VH simultaneously). The diagram shows the electromagnetic wave polarization orientations and how different systems sample the polarimetric response."><img src="RADAR_figures/polarization_modes.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polarization_modes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 10: Polarimetric radar capabilities of different satellite systems. Sentinel-1 provides single (HH or VV) or dual polarization (HH+HV or VV+VH). Envisat offered alternating polarization or dual polarization. RADARSAT-2 provides full polarimetric capability (HH, VV, HV, VH simultaneously). The diagram shows the electromagnetic wave polarization orientations and how different systems sample the polarimetric response.
+</figcaption>
+</figure>
+</div>
+<ul>
+<li><p><strong>Single polarization</strong>: Transmits and receives only one polarization (HH or VV). Simplest mode, used for routine monitoring. Example: Sentinel-1 in Extra Wide Swath mode <span class="citation" data-cites="torres2012gmes">(<a href="#ref-torres2012gmes" role="doc-biblioref"><strong>torres2012gmes?</strong></a>)</span>.</p></li>
+<li><p><strong>Dual polarization</strong>: Transmits one polarization and receives both (e.g., VV+VH). Provides sensitivity to depolarization from volume scattering. Example: Sentinel-1 in Interferometric Wide Swath mode <span class="citation" data-cites="torres2012gmes">(<a href="#ref-torres2012gmes" role="doc-biblioref"><strong>torres2012gmes?</strong></a>)</span>.</p></li>
+<li><p><strong>Compact polarimetry</strong>: Transmits circular polarization and receives H and V, providing partial polarimetric information with reduced data volume <span class="citation" data-cites="raney2007hybrid">(<a href="#ref-raney2007hybrid" role="doc-biblioref"><strong>raney2007hybrid?</strong></a>)</span>.</p></li>
+<li><p><strong>Quad polarization (full polarimetry)</strong>: Transmits both H and V, receives all four combinations, capturing the complete scattering matrix. Provides maximum information but at reduced spatial coverage. Example: RADARSAT-2, ALOS-2 in polarimetric mode <span class="citation" data-cites="cloude2009polarisation">(<a href="#ref-cloude2009polarisation" role="doc-biblioref"><strong>cloude2009polarisation?</strong></a>)</span>.</p></li>
+</ul>
+</section>
+<section id="scattering-behavior-by-polarization" class="level3" data-number="7.3">
+<h3 data-number="7.3"><span class="header-section-number">7.3</span> Scattering Behavior by Polarization</h3>
+<p>Different scattering mechanisms produce characteristic polarimetric signatures (<a href="#fig-polarization-scattering" class="quarto-xref">Figure 11</a>):</p>
+<div id="fig-polarization-scattering" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-polarization-scattering-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/polarization_scattering.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Figure 11: Polarimetric response of a cylindrical scatterer (representing a tree branch or trunk) at different orientations. Top panel shows horizontal cylinder: strong HH return (red), weak VV return (blue), as H-polarized radiation aligns with the long axis. Middle panel shows oblique cylinder: both HH and VV respond, with depolarization producing HV signal. Bottom panel shows vertical cylinder: strong VV return, weak HH return. This demonstrates how polarization enables detection of scatterer geometry and orientation."><img src="RADAR_figures/polarization_scattering.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polarization-scattering-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 11: Polarimetric response of a cylindrical scatterer (representing a tree branch or trunk) at different orientations. Top panel shows horizontal cylinder: strong HH return (red), weak VV return (blue), as H-polarized radiation aligns with the long axis. Middle panel shows oblique cylinder: both HH and VV respond, with depolarization producing HV signal. Bottom panel shows vertical cylinder: strong VV return, weak HH return. This demonstrates how polarization enables detection of scatterer geometry and orientation.
+</figcaption>
+</figure>
+</div>
+<p><strong>Surface scattering</strong> (smooth or moderately rough surfaces): - Strong co-polarized returns (HH, VV) - Weak cross-polarized returns (HV ≈ 0) - VV typically stronger than HH at moderate incidence angles <span class="citation" data-cites="ulaby2014microwave">(<a href="#ref-ulaby2014microwave" role="doc-biblioref"><strong>ulaby2014microwave?</strong></a>)</span></p>
+<p><strong>Double-bounce scattering</strong> (corner reflectors, ground-trunk interaction): - Very strong HH and VV - Minimal cross-polarization - The relative strength of HH vs VV depends on surface properties <span class="citation" data-cites="henderson2998manual">(<a href="#ref-henderson2998manual" role="doc-biblioref"><strong>henderson2998manual?</strong></a>)</span></p>
+<p><strong>Volume scattering</strong> (vegetation, rough surfaces, snow): - Strong cross-polarized returns (HV, VH) - Depolarization caused by multiple scattering events randomizing polarization - HV is diagnostic of volume scattering <span class="citation" data-cites="kasischke2019forest">(<a href="#ref-kasischke2019forest" role="doc-biblioref"><strong>kasischke2019forest?</strong></a>)</span></p>
+<p><strong>The table in <a href="#tbl-scattering-polarization" class="quarto-xref">Table 1</a> summarizes the relative scattering strength by mechanism and polarization:</strong></p>
+<div id="tbl-scattering-polarization" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-tbl">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-scattering-polarization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table 1: Relative scattering strength by polarization for different mechanisms <span class="citation" data-cites="lee2009polarimetric">(<a href="#ref-lee2009polarimetric" role="doc-biblioref"><strong>lee2009polarimetric?</strong></a>)</span>.
+</figcaption>
+<div aria-describedby="tbl-scattering-polarization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top">
+<colgroup>
+<col style="width: 40%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 34%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Scattering Mechanism</th>
+<th>HH/VV</th>
+<th>HV/VH</th>
+<th>Diagnostic Feature</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Rough Surface</td>
+<td>High</td>
+<td>Low</td>
+<td>|S<sub>VV</sub>| &gt; |S<sub>HH</sub>| &gt; |S<sub>HV</sub>|</td>
+</tr>
+<tr class="even">
+<td>Double Bounce</td>
+<td>Very High</td>
+<td>Very Low</td>
+<td>|S<sub>HH</sub>| &gt; |S<sub>VV</sub>| &gt; |S<sub>HV</sub>|</td>
+</tr>
+<tr class="odd">
+<td>Volume Scattering</td>
+<td>Moderate</td>
+<td>High</td>
+<td>Main source of |S<sub>HV</sub>|</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="forest-applications-of-polarimetry" class="level3" data-number="7.4">
+<h3 data-number="7.4"><span class="header-section-number">7.4</span> Forest Applications of Polarimetry</h3>
+<p>Polarimetric data enable several important applications in forest remote sensing:</p>
+<p><strong>1. Forest/Non-Forest Classification</strong></p>
+<p>The high HV backscatter from volume scattering in forests contrasts sharply with the low HV from bare soil or water, enabling robust forest mapping even when HH or VV responses are ambiguous <span class="citation" data-cites="santoro2015estimates">(<a href="#ref-santoro2015estimates" role="doc-biblioref"><strong>santoro2015estimates?</strong></a>)</span>.</p>
+<p><strong>2. Forest Type Discrimination</strong></p>
+<p>Different forest types exhibit distinct polarimetric signatures: coniferous forests with vertical trunk structure show enhanced VV, deciduous forests with more horizontal branch orientation favor HH, and forest structure metrics like crown density affect depolarization strength <span class="citation" data-cites="lee2009polarimetric">(<a href="#ref-lee2009polarimetric" role="doc-biblioref"><strong>lee2009polarimetric?</strong></a>)</span>.</p>
+<p><strong>3. Biomass Estimation Enhancement</strong></p>
+<p>Combining multiple polarizations improves biomass estimation by capturing both surface (HH, VV) and volume (HV) scattering components. Multi-polarization approaches extend the range of biomass sensitivity compared to single-polarization methods <span class="citation" data-cites="robinson2013impacts">(<a href="#ref-robinson2013impacts" role="doc-biblioref"><strong>robinson2013impacts?</strong></a>)</span>.</p>
+<p><strong>4. Inundation Mapping in Forests</strong></p>
+<p>Flooded forests produce distinctive polarimetric signatures: strong HH/VV from double-bounce between water and trunks, combined with moderate HV from remaining canopy volume scattering. This combination allows detection of flooding beneath canopy cover <span class="citation" data-cites="henderson2008radar">(<a href="#ref-henderson2008radar" role="doc-biblioref"><strong>henderson2008radar?</strong></a>)</span>.</p>
+</section>
+<section id="polarimetric-decompositions" class="level3" data-number="7.5">
+<h3 data-number="7.5"><span class="header-section-number">7.5</span> Polarimetric Decompositions</h3>
+<p>Advanced polarimetric analysis employs <strong>target decomposition</strong> methods that mathematically separate the measured backscatter into contributions from different scattering mechanisms <span class="citation" data-cites="cloude1997entropy">(<a href="#ref-cloude1997entropy" role="doc-biblioref"><strong>cloude1997entropy?</strong></a>)</span>. <strong>?@fig-polarimetric-decomposition</strong> shows various decomposition results applied to the same scene.</p>
+<p>![Polarimetric decomposition methods applied to RADARSAT-2 data. Each decomposition separates the total backscatter into components representing different scattering mechanisms: Pauli decomposition (surface in blue, dihedral in red, volume in green); Freeman-Durden decomposition (separating surface, double-bounce, and volume contributions); H/A/Alpha decomposition (entropy, anisotropy, alpha angle providing scattering mechanism classification). Different decompositions emphasize different aspects of the scattering process. Source: <span class="citation" data-cites="liu2021">(<a href="#ref-liu2021" role="doc-biblioref"><strong>liu2021?</strong></a>)</span>].](RADAR_figures/polarimetric_decomposition.png){#fig-polarimetric-decomposition width=“100%”}</p>
+<p>Common decompositions include:</p>
+<ul>
+<li><strong>Pauli decomposition</strong>: Separates single-bounce, double-bounce, and volume scattering <span class="citation" data-cites="lee2009polarimetric">(<a href="#ref-lee2009polarimetric" role="doc-biblioref"><strong>lee2009polarimetric?</strong></a>)</span></li>
+<li><strong>Freeman-Durden decomposition</strong>: Models scattering as combination of surface, double-bounce, and volume components <span class="citation" data-cites="freeman1998three">(<a href="#ref-freeman1998three" role="doc-biblioref"><strong>freeman1998three?</strong></a>)</span></li>
+<li><strong>Cloude-Pottier (H/A/α) decomposition</strong>: Uses entropy, anisotropy, and alpha angle to characterize scattering randomness and mechanism <span class="citation" data-cites="cloude1997entropy">(<a href="#ref-cloude1997entropy" role="doc-biblioref"><strong>cloude1997entropy?</strong></a>)</span></li>
+<li><strong>Yamaguchi decomposition</strong>: Extends Freeman-Durden with helix scattering term for complex oriented volumes <span class="citation" data-cites="yamaguchi2011four">(<a href="#ref-yamaguchi2011four" role="doc-biblioref"><strong>yamaguchi2011four?</strong></a>)</span></li>
+</ul>
+<p>These decompositions transform polarimetric data into interpretable scattering parameters, enhancing classification accuracy and providing physical insight into surface and volume properties <span class="citation" data-cites="lee2009polarimetric">(<a href="#ref-lee2009polarimetric" role="doc-biblioref"><strong>lee2009polarimetric?</strong></a>)</span>.</p>
+</section>
+</section>
+<section id="geometric-distortions-in-radar-imaging" class="level2" data-number="8">
+<h2 data-number="8"><span class="header-section-number">8</span> Geometric Distortions in Radar Imaging</h2>
+<p>The side-looking geometry of radar systems, combined with the range-based measurement principle, creates characteristic <strong>geometric distortions</strong> that profoundly affect radar image geometry and require careful correction for quantitative analysis <span class="citation" data-cites="henderson2998manual">(<a href="#ref-henderson2998manual" role="doc-biblioref"><strong>henderson2998manual?</strong></a>)</span>. Unlike optical images where each pixel represents a fixed ground area, radar pixel spacing in range depends on local surface topography and viewing geometry.</p>
+<p>Three primary distortion types affect radar imagery: foreshortening, layover, and shadow. Understanding these effects is essential for radar image interpretation and for determining optimal imaging geometry for specific applications.</p>
+<section id="foreshortening" class="level3" data-number="8.1">
+<h3 data-number="8.1"><span class="header-section-number">8.1</span> Foreshortening</h3>
+<p><strong>Foreshortening</strong> occurs when terrain slopes toward the radar, causing the slant range distance between the slope base and crest to be compressed relative to the true ground distance (<a href="#fig-geometric-distortions" class="quarto-xref">Figure 12</a> left panel). The effect is analogous to viewing a hillside from an oblique angle: features on the slope appear compressed in the viewing direction <span class="citation" data-cites="woodhouse2017introduction">(<a href="#ref-woodhouse2017introduction" role="doc-biblioref"><strong>woodhouse2017introduction?</strong></a>)</span>.</p>
+<div id="fig-geometric-distortions" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-geometric-distortions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/geometric_distortions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Figure 12: Geometric distortions in radar imagery. Left: Foreshortening—the sensor-facing slope AB appears compressed to A’B’ in the image because the slant range difference is smaller than the ground range difference. Center: Layover—when slope exceeds radar look angle, the mountain top C’ is imaged before the base B, causing geometric reversal. Right: Shadow—area behind the mountain is not illuminated by the radar beam, appearing as a signal void (dark area) in the image. Ground range is shown as the horizontal axis; image positioning follows slant range order."><img src="RADAR_figures/geometric_distortions.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-geometric-distortions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 12: Geometric distortions in radar imagery. Left: Foreshortening—the sensor-facing slope AB appears compressed to A’B’ in the image because the slant range difference is smaller than the ground range difference. Center: Layover—when slope exceeds radar look angle, the mountain top C’ is imaged before the base B, causing geometric reversal. Right: Shadow—area behind the mountain is not illuminated by the radar beam, appearing as a signal void (dark area) in the image. Ground range is shown as the horizontal axis; image positioning follows slant range order.
+</figcaption>
+</figure>
+</div>
+<p>Mathematically, the compression factor for a uniform slope is <span class="citation" data-cites="henderson2998manual">(<a href="#ref-henderson2998manual" role="doc-biblioref"><strong>henderson2998manual?</strong></a>)</span>:</p>
+<p><span class="math display">\[CF = \frac{R_{slant}}{R_{ground}} = \frac{\sin(\theta_i - \alpha)}{\sin(\theta_i)}\]</span></p>
+<p>where <em>θ<sub>i</sub></em> is the radar incidence angle and <em>α</em> is the terrain slope angle (positive when sloping toward the radar).</p>
+<p>Consequences of foreshortening: - <strong>Bright returns</strong>: Compressed terrain results in energy returned from a larger actual area concentrated into fewer image pixels, increasing pixel brightness - <strong>Distorted geometry</strong>: Distances and areas are incorrectly represented, affecting measurements - <strong>Reduced texture</strong>: Surface detail is compressed, potentially limiting interpretation</p>
+<p>Foreshortening effects <em>decrease with increasing look angle</em> (more oblique views), as the angular difference between radar look angle and slope angle increases <span class="citation" data-cites="woodhouse2017introduction">(<a href="#ref-woodhouse2017introduction" role="doc-biblioref"><strong>woodhouse2017introduction?</strong></a>)</span>.</p>
+</section>
+<section id="layover" class="level3" data-number="8.2">
+<h3 data-number="8.2"><span class="header-section-number">8.2</span> Layover</h3>
+<p>When terrain slope exceeds the radar depression angle, <strong>layover</strong> occurs: the top of the slope is closer to the radar in slant range than the base, causing these features to be imaged in reversed order (<a href="#fig-geometric-distortions" class="quarto-xref">Figure 12</a> center panel). This geometric inversion is unique to radar and has no optical equivalent <span class="citation" data-cites="henderson2998manual">(<a href="#ref-henderson2998manual" role="doc-biblioref"><strong>henderson2998manual?</strong></a>)</span>.</p>
+<p>The layover condition is met when <span class="citation" data-cites="woodhouse2017introduction">(<a href="#ref-woodhouse2017introduction" role="doc-biblioref"><strong>woodhouse2017introduction?</strong></a>)</span>:</p>
+<p><span class="math display">\[\alpha &gt; \theta_i\]</span></p>
+<p>where <em>α</em> is terrain slope and <em>θ<sub>i</sub></em> is incidence angle.</p>
+<p>Characteristics of layover: - <strong>Complete geometric reversal</strong>: Features at the slope top appear in front of (closer in range than) features at the base - <strong>Superposition</strong>: Signals from multiple elevations overlap in a single image location, mixing returns from different surface elements - <strong>Very bright returns</strong>: Multiple scattering surfaces contribute to the same pixels - <strong>Interpretation difficulty</strong>: Layover regions are essentially uninterpretable; features cannot be reliably identified</p>
+<p><strong>?@fig-mountain-distortions</strong> shows a dramatic real-world example: mountains in Alaska imaged by SAR exhibit severe foreshortening on the radar-facing slopes (very bright, compressed features) and shadow on the far slopes (no signal, black areas).</p>
+<div id="fig-mountain_distortions" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-mountain_distortions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/mountain_distortions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Figure 13: Foreshortening and shadow in mountainous terrain. SAR image from Alaska showing mountains with pronounced geometric distortions. The near slope (facing the radar, arriving from the left) shows foreshortening: bright compressed returns where terrain slopes toward the sensor. The far slope shows radar shadow: dark areas where terrain blocks the radar beam. The arrows indicate the direction of radar illumination and the resulting distortion patterns."><img src="RADAR_figures/mountain_distortions.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mountain_distortions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 13: Foreshortening and shadow in mountainous terrain. SAR image from Alaska showing mountains with pronounced geometric distortions. The near slope (facing the radar, arriving from the left) shows foreshortening: bright compressed returns where terrain slopes toward the sensor. The far slope shows radar shadow: dark areas where terrain blocks the radar beam. The arrows indicate the direction of radar illumination and the resulting distortion patterns.
+</figcaption>
+</figure>
+</div>
+<p><strong>Layover increases with decreasing look angle</strong> (steeper views), as the probability that terrain slope exceeds radar incidence angle increases. Very steep look angles can cause layover even on moderate slopes.</p>
+</section>
+<section id="radar-shadow" class="level3" data-number="8.3">
+<h3 data-number="8.3"><span class="header-section-number">8.3</span> Radar Shadow</h3>
+<p><strong>Radar shadow</strong> occurs when terrain blocks the radar beam from illuminating areas behind topographic obstacles (<a href="#fig-geometric-distortions" class="quarto-xref">Figure 12</a> right panel). Unlike optical shadows (caused by blocked sunlight), radar shadows result from blocked radar illumination from the specific side-looking viewing geometry <span class="citation" data-cites="henderson2998manual">(<a href="#ref-henderson2998manual" role="doc-biblioref"><strong>henderson2998manual?</strong></a>)</span>.</p>
+<p>Shadow occurs when <span class="citation" data-cites="woodhouse2017introduction">(<a href="#ref-woodhouse2017introduction" role="doc-biblioref"><strong>woodhouse2017introduction?</strong></a>)</span>:</p>
+<p><span class="math display">\[\alpha_{far} &lt; -\theta_i\]</span></p>
+<p>where <em>α<sub>far</sub></em> is the slope angle on the far side of a topographic feature (negative for slopes facing away from the radar).</p>
+<p>Characteristics of radar shadow: - <strong>No signal return</strong>: Shadowed areas receive no radar illumination, resulting in zero or noise-level backscatter (appear black) - <strong>Complete information loss</strong>: No surface information can be retrieved from shadowed pixels - <strong>Sharp boundaries</strong>: Shadow edges are geometrically well-defined by terrain and viewing geometry - <strong>Can be useful</strong>: Shadow provides strong topographic information and can enhance 3D perception of terrain relief</p>
+<p><strong>Shadow extent increases with decreasing look angle</strong> (steeper views) and increases with increasing terrain relief. Calculating shadow extent requires detailed topographic information (DEM) and precise orbit geometry <span class="citation" data-cites="small2012flattening">(<a href="#ref-small2012flattening" role="doc-biblioref"><strong>small2012flattening?</strong></a>)</span>.</p>
+</section>
+<section id="mitigating-geometric-distortions" class="level3" data-number="8.4">
+<h3 data-number="8.4"><span class="header-section-number">8.4</span> Mitigating Geometric Distortions</h3>
+<p>Several strategies minimize or correct geometric distortions <span class="citation" data-cites="henderson2998manual small2012flattening">(<a href="#ref-henderson2998manual" role="doc-biblioref"><strong>henderson2998manual?</strong></a>; <a href="#ref-small2012flattening" role="doc-biblioref"><strong>small2012flattening?</strong></a>)</span>:</p>
+<p><strong>1. Imaging Geometry Selection</strong></p>
+<ul>
+<li><strong>Moderate incidence angles</strong> (30-40°) balance foreshortening (worse at steep angles), layover (worse at steep angles), and shadow (worse at shallow angles)</li>
+<li><strong>Multiple viewing geometries</strong>: Ascending and descending pass combinations image opposite slope faces, ensuring one geometry avoids layover/shadow for each feature</li>
+<li><strong>Right-side and left-side looking</strong>: Some satellites can point the radar beam to either side, providing geometric diversity</li>
+</ul>
+<p><strong>2. Terrain Correction</strong></p>
+<p><strong>Radiometric terrain correction</strong> compensates for local incidence angle effects caused by topography, normalizing backscatter to a reference geometry <span class="citation" data-cites="small2012flattening">(<a href="#ref-small2012flattening" role="doc-biblioref"><strong>small2012flattening?</strong></a>)</span>. This requires: - High-quality Digital Elevation Model (DEM) - Precise orbit and sensor geometry information - Radiometric calibration</p>
+<p>The correction adjusts pixel values based on local geometry:</p>
+<p><span class="math display">\[\sigma°_{corrected} = \sigma°_{measured} \times \frac{\sin \theta_{ref}}{\sin \theta_{local}}\]</span></p>
+<p>where <em>θ<sub>local</sub></em> is the local incidence angle accounting for topography, and <em>θ<sub>ref</sub></em> is the reference incidence angle <span class="citation" data-cites="ulander1996radiometric">(<a href="#ref-ulander1996radiometric" role="doc-biblioref"><strong>ulander1996radiometric?</strong></a>)</span>.</p>
+<p><strong>3. Geocoding and Orthorectification</strong></p>
+<p>Geometric terrain correction (orthorectification) transforms radar images from slant range geometry to map coordinates, correcting foreshortening and compensating for terrain elevation <span class="citation" data-cites="small2012flattening">(<a href="#ref-small2012flattening" role="doc-biblioref"><strong>small2012flattening?</strong></a>)</span>. This process: - Requires a DEM to determine true ground positions - Corrects pixel spacing for terrain slope - Enables integration with GIS data and other sensors - Cannot recover information from layover or shadow, which remain as distortions</p>
+<p><strong>4. Masking Unreliable Areas</strong></p>
+<p>For quantitative analysis, pixels affected by severe layover or shadow are typically masked and excluded from analysis, as their values do not reliably represent surface properties <span class="citation" data-cites="santoro2015estimates">(<a href="#ref-santoro2015estimates" role="doc-biblioref"><strong>santoro2015estimates?</strong></a>)</span>.</p>
+<p>In forest applications, geometric distortions are less severe than in mountainous terrain, as forest canopy topography is gentler. However, even moderate slopes can create significant foreshortening effects that must be corrected for accurate biomass estimation or change detection <span class="citation" data-cites="cartus2012mapping">(<a href="#ref-cartus2012mapping" role="doc-biblioref"><strong>cartus2012mapping?</strong></a>)</span>.</p>
+</section>
+</section>
+<section id="speckle-coherent-noise-in-radar-images" class="level2" data-number="9">
+<h2 data-number="9"><span class="header-section-number">9</span> Speckle: Coherent Noise in Radar Images</h2>
+<p>Unlike optical images where pixel values represent incoherent addition of reflected energy from multiple scatterers within the resolution cell, radar images are formed from <strong>coherent</strong> summation of returns from all scatterers, preserving phase relationships <span class="citation" data-cites="goodman1976speckle">(<a href="#ref-goodman1976speckle" role="doc-biblioref"><strong>goodman1976speckle?</strong></a>)</span>. This coherent imaging process creates <strong>speckle</strong>—a granular noise pattern that is not sensor noise but rather an intrinsic consequence of coherent detection from random scatterers within a resolution cell.</p>
+<p><a href="#fig-speckle" class="quarto-xref">Figure 14</a> illustrates the physical origin of speckle. When multiple scatterers within a resolution cell reflect the radar signal, each reflection returns with a specific amplitude (determined by the scatterer’s radar cross section) and phase (determined by the distance traveled). Because radar preserves phase information, these individual returns coherently interfere—adding constructively where phases align and destructively where phases oppose <span class="citation" data-cites="lee2009polarimetric">(<a href="#ref-lee2009polarimetric" role="doc-biblioref"><strong>lee2009polarimetric?</strong></a>)</span>.</p>
+<div id="fig-speckle" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-speckle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/speckle_origin.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="Figure 14: Physical origin of radar speckle. Left panel: The radar signal interacts with multiple scatterers (represented by different colored waves) within a single resolution cell. Each scatterer returns a signal with amplitude (length of arrow) and phase (direction of arrow) determined by its size and distance. Center panel: Vector sum shows coherent addition of returns—phases matter. When phases align (top), constructive interference produces a large amplitude. When phases are random (bottom), vector summation produces smaller net amplitude. Right panel: Over many resolution cells, this random interference creates the characteristic speckle pattern—bright pixels where phases happened to align constructively, dark pixels where destructive interference occurred. This is not noise but deterministic interference from the specific arrangement of scatterers."><img src="RADAR_figures/speckle_origin.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-speckle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 14: Physical origin of radar speckle. Left panel: The radar signal interacts with multiple scatterers (represented by different colored waves) within a single resolution cell. Each scatterer returns a signal with amplitude (length of arrow) and phase (direction of arrow) determined by its size and distance. Center panel: Vector sum shows coherent addition of returns—phases matter. When phases align (top), constructive interference produces a large amplitude. When phases are random (bottom), vector summation produces smaller net amplitude. Right panel: Over many resolution cells, this random interference creates the characteristic speckle pattern—bright pixels where phases happened to align constructively, dark pixels where destructive interference occurred. This is not noise but deterministic interference from the specific arrangement of scatterers.
+</figcaption>
+</figure>
+</div>
+<section id="speckle-statistics" class="level3" data-number="9.1">
+<h3 data-number="9.1"><span class="header-section-number">9.1</span> Speckle Statistics</h3>
+<p>For a resolution cell containing many independent scatterers with random phases, the resulting intensity follows specific probability distributions <span class="citation" data-cites="goodman1976speckle lee1981refined">(<a href="#ref-goodman1976speckle" role="doc-biblioref"><strong>goodman1976speckle?</strong></a>; <a href="#ref-lee1981refined" role="doc-biblioref"><strong>lee1981refined?</strong></a>)</span>:</p>
+<p><strong>Single-look intensity</strong>: The backscatter intensity <em>I</em> from one image (one “look”) follows a negative exponential (gamma) distribution:</p>
+<p><span class="math display">\[p(I) = \frac{1}{\langle I \rangle} \exp\left(-\frac{I}{\langle I \rangle}\right)\]</span></p>
+<p>where ⟨<em>I</em>⟩ is the mean intensity. This distribution has standard deviation equal to the mean, creating a signal-to-noise ratio (SNR) of 1 (0 dB) <span class="citation" data-cites="lee2009polarimetric">(<a href="#ref-lee2009polarimetric" role="doc-biblioref"><strong>lee2009polarimetric?</strong></a>)</span>.</p>
+<p><strong>Multi-look intensity</strong>: Averaging <em>N</em> independent looks reduces speckle. The multi-look intensity follows a gamma distribution with shape parameter <em>N</em>:</p>
+<p><span class="math display">\[p(I_N) = \frac{N^N}{\Gamma(N)\langle I \rangle^N} I^{N-1} \exp\left(-\frac{NI}{\langle I \rangle}\right)\]</span></p>
+<p>The resulting SNR improves to <span class="math inline">\(\sqrt{N}\)</span> <span class="citation" data-cites="lee1981refined">(<a href="#ref-lee1981refined" role="doc-biblioref"><strong>lee1981refined?</strong></a>)</span>, making multi-looking the fundamental speckle reduction technique.</p>
+</section>
+<section id="visual-impact" class="level3" data-number="9.2">
+<h3 data-number="9.2"><span class="header-section-number">9.2</span> Visual Impact</h3>
+<p><strong>?@fig-speckle-example</strong> shows the characteristic appearance of speckle: a scene that should appear uniform (same surface type) exhibits random pixel-to-pixel intensity variation. This “salt and pepper” texture is present throughout radar images, obscuring fine spatial detail and complicating image interpretation and classification <span class="citation" data-cites="lee2009polarimetric">(<a href="#ref-lee2009polarimetric" role="doc-biblioref"><strong>lee2009polarimetric?</strong></a>)</span>.</p>
+<div id="fig-speckle_example" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-speckle_example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/speckle_example.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15" title="Figure 15: Speckle in radar imagery. This SAR image shows uniform forest cover, yet exhibits granular intensity variation—bright and dark pixels randomly intermixed. This speckle pattern is not sensor noise but results from coherent interference of signals from randomly distributed scatterers within each resolution cell. The speckle texture is multiplicative: its magnitude scales with the mean backscatter level, so brighter areas show proportionally larger speckle variations."><img src="RADAR_figures/speckle_example.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-speckle_example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 15: Speckle in radar imagery. This SAR image shows uniform forest cover, yet exhibits granular intensity variation—bright and dark pixels randomly intermixed. This speckle pattern is not sensor noise but results from coherent interference of signals from randomly distributed scatterers within each resolution cell. The speckle texture is multiplicative: its magnitude scales with the mean backscatter level, so brighter areas show proportionally larger speckle variations.
+</figcaption>
+</figure>
+</div>
+<p>Key characteristics of speckle <span class="citation" data-cites="goodman1976speckle">(<a href="#ref-goodman1976speckle" role="doc-biblioref"><strong>goodman1976speckle?</strong></a>)</span>:</p>
+<ul>
+<li><strong>Multiplicative</strong>: Speckle variance increases proportionally with signal level (unlike additive sensor noise)</li>
+<li><strong>Spatially correlated</strong>: Adjacent pixels show some correlation at scales comparable to the resolution</li>
+<li><strong>Fully developed</strong>: In single-look images, the speckle standard deviation equals the mean</li>
+<li><strong>Not random noise</strong>: Each speckle pattern is deterministic for a given scene and viewing geometry; repeated observations from identical geometry would produce identical speckle <span class="citation" data-cites="zebker1992decorrelation">(<a href="#ref-zebker1992decorrelation" role="doc-biblioref"><strong>zebker1992decorrelation?</strong></a>)</span></li>
+</ul>
+</section>
+<section id="speckle-reduction-strategies" class="level3" data-number="9.3">
+<h3 data-number="9.3"><span class="header-section-number">9.3</span> Speckle Reduction Strategies</h3>
+<p>Several approaches mitigate speckle’s impact on radar image analysis <span class="citation" data-cites="lee2009polarimetric lee1981refined">(<a href="#ref-lee2009polarimetric" role="doc-biblioref"><strong>lee2009polarimetric?</strong></a>; <a href="#ref-lee1981refined" role="doc-biblioref"><strong>lee1981refined?</strong></a>)</span>:</p>
+<p><strong>1. Multi-looking (Spatial Averaging)</strong></p>
+<p>Dividing the synthetic aperture into sub-apertures creates multiple independent images (“looks”) of the same scene. Averaging these looks reduces speckle at the cost of degraded spatial resolution <span class="citation" data-cites="oliver1991optimum">(<a href="#ref-oliver1991optimum" role="doc-biblioref"><strong>oliver1991optimum?</strong></a>)</span>:</p>
+<p><span class="math display">\[\text{Speckle reduction} = \sqrt{N_{looks}}\]</span> <span class="math display">\[\text{Resolution degradation} = \sqrt{N_{looks}}\]</span></p>
+<p>Typical operational SAR products use 3-5 looks in range and azimuth, trading ~3-5 dB speckle reduction for similar resolution loss <span class="citation" data-cites="torres2012gmes">(<a href="#ref-torres2012gmes" role="doc-biblioref"><strong>torres2012gmes?</strong></a>)</span>.</p>
+<p><strong>2. Spatial Filtering</strong></p>
+<p>Adaptive filters apply local averaging weighted by spatial statistics, attempting to smooth speckle while preserving edges and features <span class="citation" data-cites="lee1981refined frost1982model">(<a href="#ref-lee1981refined" role="doc-biblioref"><strong>lee1981refined?</strong></a>; <a href="#ref-frost1982model" role="doc-biblioref"><strong>frost1982model?</strong></a>)</span>. Common filters include:</p>
+<ul>
+<li><strong>Lee filter</strong>: Adapts averaging based on local coefficient of variation <span class="citation" data-cites="lee1981refined">(<a href="#ref-lee1981refined" role="doc-biblioref"><strong>lee1981refined?</strong></a>)</span></li>
+<li><strong>Frost filter</strong>: Uses exponential kernel weighted by local statistics <span class="citation" data-cites="frost1982model">(<a href="#ref-frost1982model" role="doc-biblioref"><strong>frost1982model?</strong></a>)</span></li>
+<li><strong>Gamma MAP filter</strong>: Maximum a posteriori estimation assuming gamma distribution <span class="citation" data-cites="lopes1993adaptive">(<a href="#ref-lopes1993adaptive" role="doc-biblioref"><strong>lopes1993adaptive?</strong></a>)</span></li>
+</ul>
+<p>These filters improve speckle suppression compared to simple averaging but still trade spatial resolution for speckle reduction.</p>
+<p><strong>3. Multi-temporal Averaging</strong></p>
+<p>Averaging images from different dates reduces speckle if scene properties remain stable, as speckle patterns differ between acquisitions <span class="citation" data-cites="quegan2000filtering">(<a href="#ref-quegan2000filtering" role="doc-biblioref"><strong>quegan2000filtering?</strong></a>)</span>:</p>
+<p><span class="math display">\[\text{Speckle reduction} = \sqrt{N_{dates}}\]</span></p>
+<p>This approach is particularly effective for forest monitoring where temporal change is slow, though care must be taken not to average over genuine changes of interest <span class="citation" data-cites="santoro2015estimates">(<a href="#ref-santoro2015estimates" role="doc-biblioref"><strong>santoro2015estimates?</strong></a>)</span>.</p>
+<p><strong>4. Transform-Domain Filtering</strong></p>
+<p>Sophisticated techniques decompose images into spatial or frequency domains, apply selective filtering, and reconstruct <span class="citation" data-cites="deledalle2014mulog">(<a href="#ref-deledalle2014mulog" role="doc-biblioref"><strong>deledalle2014mulog?</strong></a>)</span>. These include:</p>
+<ul>
+<li><strong>Wavelet-based methods</strong>: Exploit multi-scale speckle characteristics <span class="citation" data-cites="argenti2013tutorial">(<a href="#ref-argenti2013tutorial" role="doc-biblioref"><strong>argenti2013tutorial?</strong></a>)</span></li>
+<li><strong>Non-local means</strong>: Leverage image self-similarity for averaging <span class="citation" data-cites="deledalle2014mulog">(<a href="#ref-deledalle2014mulog" role="doc-biblioref"><strong>deledalle2014mulog?</strong></a>)</span></li>
+<li><strong>Total variation methods</strong>: Preserve edges while smoothing homogeneous areas <span class="citation" data-cites="dennis2006edge">(<a href="#ref-dennis2006edge" role="doc-biblioref"><strong>dennis2006edge?</strong></a>)</span></li>
+</ul>
+<p>These advanced methods achieve better feature preservation than traditional filters but at higher computational cost <span class="citation" data-cites="argenti2013tutorial">(<a href="#ref-argenti2013tutorial" role="doc-biblioref"><strong>argenti2013tutorial?</strong></a>)</span>.</p>
+</section>
+<section id="speckle-tracking-and-offset-tracking" class="level3" data-number="9.4">
+<h3 data-number="9.4"><span class="header-section-number">9.4</span> Speckle Tracking and Offset Tracking</h3>
+<p>Interestingly, speckle that complicates radiometric analysis can be exploited for motion detection. <strong>Speckle tracking</strong> (or offset tracking) measures displacement by correlating speckle patterns between repeat-pass images <span class="citation" data-cites="strozzi2002sar">(<a href="#ref-strozzi2002sar" role="doc-biblioref"><strong>strozzi2002sar?</strong></a>)</span>. Because each speckle pattern is unique and deterministic, surface displacement shifts the entire pattern, enabling measurement of:</p>
+<ul>
+<li><strong>Glacier flow</strong>: Surface velocity fields from pattern displacement <span class="citation" data-cites="rignot1995ice">(<a href="#ref-rignot1995ice" role="doc-biblioref"><strong>rignot1995ice?</strong></a>)</span></li>
+<li><strong>Landslide movement</strong>: Slow-moving slope failures detected by pattern shift <span class="citation" data-cites="singleton2014evaluating">(<a href="#ref-singleton2014evaluating" role="doc-biblioref"><strong>singleton2014evaluating?</strong></a>)</span><br />
+</li>
+<li><strong>Earthquake deformation</strong>: Co-seismic displacement fields exceeding interferometric limits <span class="citation" data-cites="michel1999measuring">(<a href="#ref-michel1999measuring" role="doc-biblioref"><strong>michel1999measuring?</strong></a>)</span></li>
+</ul>
+<p>This technique works even when interferometric coherence is lost, though with lower precision (~1/10 pixel) than interferometry (~1/100 wave) <span class="citation" data-cites="strozzi2002sar">(<a href="#ref-strozzi2002sar" role="doc-biblioref"><strong>strozzi2002sar?</strong></a>)</span>.</p>
+</section>
+<section id="implications-for-forest-monitoring-1" class="level3" data-number="9.5">
+<h3 data-number="9.5"><span class="header-section-number">9.5</span> Implications for Forest Monitoring</h3>
+<p>In forest remote sensing, speckle affects applications differently <span class="citation" data-cites="kasischke2019forest">(<a href="#ref-kasischke2019forest" role="doc-biblioref"><strong>kasischke2019forest?</strong></a>)</span>:</p>
+<ul>
+<li><strong>Biomass estimation</strong>: Speckle introduces estimation uncertainty; multi-looking and filtering are essential for reducing variance in biomass predictions <span class="citation" data-cites="santoro2021forest">(<a href="#ref-santoro2021forest" role="doc-biblioref"><strong>santoro2021forest?</strong></a>)</span></li>
+<li><strong>Change detection</strong>: Temporal filtering reduces false alarms from speckle-induced differences, but thresholds must account for speckle statistics <span class="citation" data-cites="reiche2015design">(<a href="#ref-reiche2015design" role="doc-biblioref"><strong>reiche2015design?</strong></a>)</span></li>
+<li><strong>Classification</strong>: Texture measures derived from speckle patterns can improve forest type discrimination <span class="citation" data-cites="kumar2010multicriteria">(<a href="#ref-kumar2010multicriteria" role="doc-biblioref"><strong>kumar2010multicriteria?</strong></a>)</span>, turning a challenge into a feature</li>
+</ul>
+<p>Understanding speckle as coherent interference rather than random noise is fundamental to developing effective processing strategies and correctly interpreting radar statistics in forest and other land cover applications.</p>
+</section>
+</section>
+<section id="phase-information-interferometry-and-beyond" class="level2" data-number="10">
+<h2 data-number="10"><span class="header-section-number">10</span> Phase Information: Interferometry and Beyond</h2>
+<p>Unlike optical and infrared sensors that detect only intensity (brightness), radar systems measure both the <strong>amplitude</strong> and <strong>phase</strong> of the returned signal <span class="citation" data-cites="bamler1998synthetic">(<a href="#ref-bamler1998synthetic" role="doc-biblioref"><strong>bamler1998synthetic?</strong></a>)</span>. While amplitude corresponds to backscatter intensity and relates to surface roughness and dielectric properties, phase carries information about the distance traveled by the radar signal. This phase information, preserved through coherent detection, enables a powerful set of techniques collectively known as <strong>radar interferometry</strong> that can measure surface topography, detect subtle surface displacements, and characterize vegetation structure with extraordinary precision <span class="citation" data-cites="rosen2000synthetic">(<a href="#ref-rosen2000synthetic" role="doc-biblioref"><strong>rosen2000synthetic?</strong></a>)</span>.</p>
+<section id="phase-fundamentals" class="level3" data-number="10.1">
+<h3 data-number="10.1"><span class="header-section-number">10.1</span> Phase Fundamentals</h3>
+<p>For a radar signal with wavelength <em>λ</em>, the two-way path to a target at range <em>R</em> creates a phase shift <span class="citation" data-cites="bamler1998synthetic">(<a href="#ref-bamler1998synthetic" role="doc-biblioref"><strong>bamler1998synthetic?</strong></a>)</span>:</p>
+<p><span class="math display">\[\phi = \frac{4\pi R}{\lambda}\]</span></p>
+<p>The factor of 4π (rather than 2π) appears because the signal travels to the target and back, covering distance <em>2R</em>. Any change in range—whether from topography, surface displacement, or atmospheric effects—creates a corresponding phase change <span class="citation" data-cites="hanssen2001radar">(<a href="#ref-hanssen2001radar" role="doc-biblioref"><strong>hanssen2001radar?</strong></a>)</span>.</p>
+<p><a href="#fig-phase-principle" class="quarto-xref">Figure 16</a> illustrates this concept. Two observations of the same point <em>P</em> at slightly different times (<em>t</em>₁ and <em>t</em>₂) show a change in range (Δ<em>R</em>) due to surface deformation. This range change produces a measurable phase difference:</p>
+<p><span class="math display">\[\Delta \phi = \frac{4\pi \Delta R}{\lambda}\]</span></p>
+<div id="fig-phase-principle" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-phase-principle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/phase_principle.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16" title="Figure 16: Principle of radar interferometry. Two SAR acquisitions at times t₁ and t₂ image the same point P on the surface. If the surface has moved (deformation ΔR) between acquisitions, the change in range causes a phase difference Δφ between the two measurements. The phase difference is proportional to displacement: Δφ = (4π/λ)ΔR. For typical radar wavelengths (centimeters), phase measurements are sensitive to millimeter-scale displacements. The inset shows the relationship between time, phase, and deformation for two returning signals."><img src="RADAR_figures/phase_principle.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-phase-principle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 16: Principle of radar interferometry. Two SAR acquisitions at times t₁ and t₂ image the same point P on the surface. If the surface has moved (deformation ΔR) between acquisitions, the change in range causes a phase difference Δφ between the two measurements. The phase difference is proportional to displacement: Δφ = (4π/λ)ΔR. For typical radar wavelengths (centimeters), phase measurements are sensitive to millimeter-scale displacements. The inset shows the relationship between time, phase, and deformation for two returning signals.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="interferometric-sar-insar" class="level3" data-number="10.2">
+<h3 data-number="10.2"><span class="header-section-number">10.2</span> Interferometric SAR (InSAR)</h3>
+<p><strong>Interferometric SAR</strong> creates an <strong>interferogram</strong> by multiplying one complex SAR image with the conjugate of another and extracting the phase difference <span class="citation" data-cites="bamler1998synthetic">(<a href="#ref-bamler1998synthetic" role="doc-biblioref"><strong>bamler1998synthetic?</strong></a>)</span>:</p>
+<p><span class="math display">\[\phi_{int} = \arg(S_1 \cdot S_2^*)\]</span></p>
+<p>where <em>S</em>₁ and <em>S</em>₂ are complex SAR images from two acquisitions. The resulting interferometric phase contains contributions from <span class="citation" data-cites="hanssen2001radar">(<a href="#ref-hanssen2001radar" role="doc-biblioref"><strong>hanssen2001radar?</strong></a>)</span>:</p>
+<p><span class="math display">\[\phi_{int} = \phi_{flat} + \phi_{topo} + \phi_{defo} + \phi_{atm} + \phi_{noise}\]</span></p>
+<p>where: - <em>φ</em><sub>flat</sub>: Phase from flat-earth ellipsoid (depends on imaging geometry) - <em>φ</em><sub>topo</sub>: Phase from surface topography - <em>φ</em><sub>defo</sub>: Phase from surface displacement between acquisitions - <em>φ</em><sub>atm</sub>: Phase from atmospheric path delay differences - <em>φ</em><sub>noise</sub>: Phase decorrelation and noise</p>
+<p><strong>?@fig-interferogram</strong> shows a striking example: an interferogram of volcanic activity on Fogo Island, Cape Verde <strong>?@fig-phase-volcano</strong>. The colored fringes—each cycle from blue through red to blue again represents one wavelength of phase change—map surface deformation with centimeter precision over the entire scene. The concentric fringe pattern centered on the volcano reveals inflation or deflation of the volcanic edifice.</p>
+<div id="fig-phase_volcano" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-phase_volcano-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/phase_volcano.png" class="lightbox" data-gallery="quarto-lightbox-gallery-17" title="Figure 17: Interferogram of Fogo volcano, Cape Verde. Each complete color cycle (fringe) represents λ/2 displacement in the line of sight direction. The concentric fringe pattern centered on the volcanic peak indicates inflation or deflation of the volcano between SAR acquisitions. The deformation field shows highest rates near the summit and gradual decrease radially outward. Note how a single SAR interferogram maps deformation across the entire scene with millimeter sensitivity—a capability unique to radar interferometry. Google Earth base map shown for geographic context."><img src="RADAR_figures/phase_volcano.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-phase_volcano-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 17: Interferogram of Fogo volcano, Cape Verde. Each complete color cycle (fringe) represents λ/2 displacement in the line of sight direction. The concentric fringe pattern centered on the volcanic peak indicates inflation or deflation of the volcano between SAR acquisitions. The deformation field shows highest rates near the summit and gradual decrease radially outward. Note how a single SAR interferogram maps deformation across the entire scene with millimeter sensitivity—a capability unique to radar interferometry. Google Earth base map shown for geographic context.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="applications-of-insar" class="level3" data-number="10.3">
+<h3 data-number="10.3"><span class="header-section-number">10.3</span> Applications of InSAR</h3>
+<p>The sensitivity of phase to sub-wavelength changes enables diverse applications <span class="citation" data-cites="rosen2000synthetic hanssen2001radar">(<a href="#ref-rosen2000synthetic" role="doc-biblioref"><strong>rosen2000synthetic?</strong></a>; <a href="#ref-hanssen2001radar" role="doc-biblioref"><strong>hanssen2001radar?</strong></a>)</span>:</p>
+<p><strong>1. Topographic Mapping</strong></p>
+<p>Two SAR acquisitions from slightly different positions (creating a spatial baseline) produce interferometric phase that depends on topography. After removing flat-earth phase, the remaining phase directly relates to elevation <span class="citation" data-cites="zebker1986topographic">(<a href="#ref-zebker1986topographic" role="doc-biblioref"><strong>zebker1986topographic?</strong></a>)</span>:</p>
+<p><span class="math display">\[h = \frac{\lambda R \sin \theta \Delta\phi_{topo}}{4\pi B_{\perp}}\]</span></p>
+<p>where <em>h</em> is elevation, <em>R</em> is range, <em>θ</em> is look angle, and <em>B</em><sub>⊥</sub> is the perpendicular baseline between acquisition positions.</p>
+<p>The <strong>TanDEM-X</strong> mission uses this principle with two satellites flying in close formation, achieving global topographic mapping with 12-meter posting and 2-meter relative vertical accuracy <span class="citation" data-cites="krieger2013tandem">(<a href="#ref-krieger2013tandem" role="doc-biblioref"><strong>krieger2013tandem?</strong></a>)</span>. <strong>?@fig-tandemx-greenland</strong> shows the extraordinary detail possible: an interferogram revealing ice sheet topography and glacier flow structures.</p>
+<div id="fig-tandemx_greenland" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-tandemx_greenland-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/tandemx_greenland.png" class="lightbox" data-gallery="quarto-lightbox-gallery-18" title="Figure 18: TanDEM-X interferogram of Greenland ice sheet. The dense fringe pattern encodes high-precision topographic information. Darker fringes indicate topographic lows (valleys, glacier beds), while lighter fringes show topographic highs (ridges, ice divides). The regular fringe spacing in uniform-slope areas contrasts with compressed fringes in high-relief zones. TanDEM-X’s bistatic configuration (simultaneous acquisition from two satellites) eliminates temporal decorrelation, enabling high-quality interferometry even over ice and snow."><img src="RADAR_figures/tandemx_greenland.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tandemx_greenland-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 18: TanDEM-X interferogram of Greenland ice sheet. The dense fringe pattern encodes high-precision topographic information. Darker fringes indicate topographic lows (valleys, glacier beds), while lighter fringes show topographic highs (ridges, ice divides). The regular fringe spacing in uniform-slope areas contrasts with compressed fringes in high-relief zones. TanDEM-X’s bistatic configuration (simultaneous acquisition from two satellites) eliminates temporal decorrelation, enabling high-quality interferometry even over ice and snow.
+</figcaption>
+</figure>
+</div>
+<p><strong>2. Surface Displacement Measurement</strong></p>
+<p>Time-series of SAR acquisitions enable measurement of surface motion through <strong>differential interferometry</strong> (DInSAR), where topographic phase is subtracted using a DEM, leaving displacement phase <span class="citation" data-cites="massonnet1993displacement">(<a href="#ref-massonnet1993displacement" role="doc-biblioref"><strong>massonnet1993displacement?</strong></a>)</span>:</p>
+<p><span class="math display">\[\Delta R = \frac{\lambda \Delta\phi_{defo}}{4\pi}\]</span></p>
+<p><strong>?@fig-insar-earthquake</strong> shows a dramatic example: the 2003 Bam, Iran earthquake produced an interferogram with more than 50 fringes near the epicenter, indicating ~1.5 meters of surface displacement <span class="citation" data-cites="funning2005surface">(<a href="#ref-funning2005surface" role="doc-biblioref"><strong>funning2005surface?</strong></a>)</span>. The complexity of the fringe pattern reveals details of fault geometry and slip distribution.</p>
+<div id="fig-insar_earthquake" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-insar_earthquake-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/insar_earthquake.png" class="lightbox" data-gallery="quarto-lightbox-gallery-19" title="Figure 19: InSAR measurement of the 2003 Bam earthquake, Iran. Each color cycle represents ~28 mm of surface displacement (C-band wavelength). The extremely dense fringe pattern near the center indicates up to 1.5 m of surface lowering from earthquake-induced subsidence. The circular pattern reveals a buried thrust fault. This interferogram enabled detailed analysis of fault geometry, slip distribution, and earthquake mechanism without ground-based measurements [@funning2005surface]."><img src="RADAR_figures/insar_earthquake.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-insar_earthquake-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 19: InSAR measurement of the 2003 Bam earthquake, Iran. Each color cycle represents ~28 mm of surface displacement (C-band wavelength). The extremely dense fringe pattern near the center indicates up to 1.5 m of surface lowering from earthquake-induced subsidence. The circular pattern reveals a buried thrust fault. This interferogram enabled detailed analysis of fault geometry, slip distribution, and earthquake mechanism without ground-based measurements <span class="citation" data-cites="funning2005surface">(<a href="#ref-funning2005surface" role="doc-biblioref"><strong>funning2005surface?</strong></a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p>Applications include: - <strong>Earthquake deformation</strong>: Co-seismic and post-seismic displacement fields <span class="citation" data-cites="massonnet1993displacement">(<a href="#ref-massonnet1993displacement" role="doc-biblioref"><strong>massonnet1993displacement?</strong></a>)</span> - <strong>Volcano monitoring</strong>: Magma inflation/deflation cycles <span class="citation" data-cites="massonnet1995deflation">(<a href="#ref-massonnet1995deflation" role="doc-biblioref"><strong>massonnet1995deflation?</strong></a>)</span> - <strong>Subsidence measurement</strong>: Groundwater extraction, mining, permafrost thaw <span class="citation" data-cites="galloway2011review">(<a href="#ref-galloway2011review" role="doc-biblioref"><strong>galloway2011review?</strong></a>)</span> - <strong>Glacier flow</strong>: Ice velocity through offset tracking and interferometry <span class="citation" data-cites="rignot1995ice">(<a href="#ref-rignot1995ice" role="doc-biblioref"><strong>rignot1995ice?</strong></a>)</span> - <strong>Landslide monitoring</strong>: Slow-moving slope instabilities <span class="citation" data-cites="singleton2014evaluating">(<a href="#ref-singleton2014evaluating" role="doc-biblioref"><strong>singleton2014evaluating?</strong></a>)</span></p>
+<p><strong>3. Operational Ground Motion Services</strong></p>
+<p>The European Ground Motion Service provides systematic InSAR-derived displacement measurements across Europe, updating regularly and freely available <span class="citation" data-cites="dehls2019european">(<a href="#ref-dehls2019european" role="doc-biblioref"><strong>dehls2019european?</strong></a>)</span>. <strong>?@fig-ground-motion-service</strong> shows the web interface enabling users to query displacement time series at any location.</p>
+<div id="fig-ground_motion_service" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-ground_motion_service-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/ground_motion_service.png" class="lightbox" data-gallery="quarto-lightbox-gallery-20" title="Figure 20: European Ground Motion Service interface. This operational service provides InSAR-derived displacement time series across Europe, updated regularly. Users can query displacement history at specific locations, accessing millimeter-precision measurements of ground stability. The service supports applications in infrastructure monitoring, hazard assessment, urban planning, and natural resource management. Source: https://land.copernicus.eu/pan-european/european-ground-motion-service"><img src="RADAR_figures/ground_motion_service.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ground_motion_service-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 20: European Ground Motion Service interface. This operational service provides InSAR-derived displacement time series across Europe, updated regularly. Users can query displacement history at specific locations, accessing millimeter-precision measurements of ground stability. The service supports applications in infrastructure monitoring, hazard assessment, urban planning, and natural resource management. Source: https://land.copernicus.eu/pan-european/european-ground-motion-service
+</figcaption>
+</figure>
+</div>
+<p><strong>4. Forest Structure and Biomass</strong></p>
+<p>In vegetated areas, interferometric phase becomes more complex. The phase center—the elevation from which the effective scattering originates—depends on wavelength-dependent penetration depth <span class="citation" data-cites="treuhaft1996vertical">(<a href="#ref-treuhaft1996vertical" role="doc-biblioref"><strong>treuhaft1996vertical?</strong></a>)</span>:</p>
+<ul>
+<li><strong>Short wavelengths</strong> (X, C-band): Phase center near canopy top</li>
+<li><strong>Long wavelengths</strong> (L, P-band): Phase center within canopy, sensitive to vertical structure</li>
+</ul>
+<p><strong>Polarimetric interferometry (PolInSAR)</strong> combines polarimetry and interferometry to separate ground and canopy contributions, enabling extraction of forest height, vertical profile, and biomass from the interferometric phase structure <span class="citation" data-cites="cloude2003three">(<a href="#ref-cloude2003three" role="doc-biblioref"><strong>cloude2003three?</strong></a>)</span>. <strong>?@fig-polinsar-forest</strong> shows forest height derived from this technique for the Sundarbans mangrove forest.</p>
+<div id="fig-polinsar_forest" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-polinsar_forest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/polinsar_forest.png" class="lightbox" data-gallery="quarto-lightbox-gallery-21" title="Figure 21: PolInSAR-derived forest height in Sundarbans, India/Bangladesh. The color scale shows canopy height (0-15 m) derived from L-band polarimetric interferometry. The technique exploits how different polarizations penetrate to different canopy depths, creating polarization-dependent phase centers. Modeling these relationships allows inversion for forest height and vertical structure. Rivers appear as gaps (zero height). This demonstrates radar’s unique capability to measure forest structure through the three-dimensional canopy volume. Source: ESA [@cloude2003three]."><img src="RADAR_figures/polinsar_forest.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polinsar_forest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 21: PolInSAR-derived forest height in Sundarbans, India/Bangladesh. The color scale shows canopy height (0-15 m) derived from L-band polarimetric interferometry. The technique exploits how different polarizations penetrate to different canopy depths, creating polarization-dependent phase centers. Modeling these relationships allows inversion for forest height and vertical structure. Rivers appear as gaps (zero height). This demonstrates radar’s unique capability to measure forest structure through the three-dimensional canopy volume. Source: ESA <span class="citation" data-cites="cloude2003three">(<a href="#ref-cloude2003three" role="doc-biblioref"><strong>cloude2003three?</strong></a>)</span>.
+</figcaption>
+</figure>
+</div>
+<p><strong>5. Soil Moisture Estimation</strong></p>
+<p>Changes in soil moisture alter the dielectric constant, changing penetration depth and thus phase. <strong>?@fig-soil-moisture</strong> shows an interferogram sensitive to sub-surface moisture changes, where phase variations correlate with irrigation patterns and moisture gradients <span class="citation" data-cites="de2014sar">(<a href="#ref-de2014sar" role="doc-biblioref"><strong>de2014sar?</strong></a>)</span>.</p>
+<div id="fig-soil_moisture" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-soil_moisture-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/soil_moisture.png" class="lightbox" data-gallery="quarto-lightbox-gallery-22" title="Figure 22: InSAR sensitivity to soil moisture. This TanDEM-X interferogram shows phase variations correlated with soil moisture differences across agricultural fields. Wetter soils (higher dielectric constant) create phase shifts through altered penetration depth. The clear field boundaries and systematic phase patterns demonstrate radar’s capability to map moisture variations, though distinguishing moisture from roughness changes requires careful analysis [@de2014sar]."><img src="RADAR_figures/soil_moisture.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-soil_moisture-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 22: InSAR sensitivity to soil moisture. This TanDEM-X interferogram shows phase variations correlated with soil moisture differences across agricultural fields. Wetter soils (higher dielectric constant) create phase shifts through altered penetration depth. The clear field boundaries and systematic phase patterns demonstrate radar’s capability to map moisture variations, though distinguishing moisture from roughness changes requires careful analysis <span class="citation" data-cites="de2014sar">(<a href="#ref-de2014sar" role="doc-biblioref"><strong>de2014sar?</strong></a>)</span>.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="coherence-and-decorrelation" class="level3" data-number="10.4">
+<h3 data-number="10.4"><span class="header-section-number">10.4</span> Coherence and Decorrelation</h3>
+<p>Interferometry requires that the two SAR images maintain <strong>coherence</strong>—the speckle patterns must remain sufficiently similar that phase differences are meaningful <span class="citation" data-cites="zebker1992decorrelation">(<a href="#ref-zebker1992decorrelation" role="doc-biblioref"><strong>zebker1992decorrelation?</strong></a>)</span>. The interferometric coherence is defined as:</p>
+<p><span class="math display">\[\gamma = \frac{|\langle S_1 S_2^* \rangle|}{\sqrt{\langle |S_1|^2 \rangle \langle |S_2|^2 \rangle}}\]</span></p>
+<p>ranging from 0 (completely decorrelated, phase meaningless) to 1 (perfectly coherent, phase precise) <span class="citation" data-cites="bamler1998synthetic">(<a href="#ref-bamler1998synthetic" role="doc-biblioref"><strong>bamler1998synthetic?</strong></a>)</span>.</p>
+<p>Decorrelation sources include: - <strong>Temporal decorrelation</strong>: Surface changes (vegetation growth, snow, moisture) between acquisitions <span class="citation" data-cites="zebker1992decorrelation">(<a href="#ref-zebker1992decorrelation" role="doc-biblioref"><strong>zebker1992decorrelation?</strong></a>)</span> - <strong>Geometric decorrelation</strong>: Different viewing angles create different scattering paths <span class="citation" data-cites="bamler1998synthetic">(<a href="#ref-bamler1998synthetic" role="doc-biblioref"><strong>bamler1998synthetic?</strong></a>)</span> - <strong>Volume decorrelation</strong>: In vegetation, scatterers distributed through depth create phase diversity <span class="citation" data-cites="treuhaft1996vertical">(<a href="#ref-treuhaft1996vertical" role="doc-biblioref"><strong>treuhaft1996vertical?</strong></a>)</span> - <strong>Processing errors</strong>: Co-registration errors, phase unwrapping mistakes <span class="citation" data-cites="hanssen2001radar">(<a href="#ref-hanssen2001radar" role="doc-biblioref"><strong>hanssen2001radar?</strong></a>)</span></p>
+<p>For vegetation, temporal coherence decays rapidly (days to weeks at C-band) due to wind-induced motion, growth, and moisture changes <span class="citation" data-cites="wegmuller1995sar">(<a href="#ref-wegmuller1995sar" role="doc-biblioref"><strong>wegmuller1995sar?</strong></a>)</span>. This limits repeat-pass interferometry over forests, though very short temporal baselines (1-day for Sentinel-1 over Europe) or longer wavelengths (L-band maintains coherence longer) mitigate this issue <span class="citation" data-cites="santoro2021forest">(<a href="#ref-santoro2021forest" role="doc-biblioref"><strong>santoro2021forest?</strong></a>)</span>.</p>
+</section>
+<section id="phase-unwrapping" class="level3" data-number="10.5">
+<h3 data-number="10.5"><span class="header-section-number">10.5</span> Phase Unwrapping</h3>
+<p>Measured interferometric phase is wrapped into the range [-π, +π], creating 2π ambiguities <span class="citation" data-cites="ghiglia1998two">(<a href="#ref-ghiglia1998two" role="doc-biblioref"><strong>ghiglia1998two?</strong></a>)</span>. <strong>Phase unwrapping</strong> resolves these ambiguities to recover the continuous phase field representing physical displacement or topography <span class="citation" data-cites="goldstein1988satellite">(<a href="#ref-goldstein1988satellite" role="doc-biblioref"><strong>goldstein1988satellite?</strong></a>)</span>. This challenging inverse problem requires:</p>
+<ul>
+<li>High coherence (phase quality)</li>
+<li>Sufficient spatial sampling (fringe density not exceeding Nyquist)</li>
+<li>Reliable algorithms to identify and integrate phase gradients correctly <span class="citation" data-cites="chen2001two">(<a href="#ref-chen2001two" role="doc-biblioref"><strong>chen2001two?</strong></a>)</span></li>
+</ul>
+<p>Unwrapping failures create errors that propagate through the phase field, potentially corrupting large image regions <span class="citation" data-cites="bamler1998synthetic">(<a href="#ref-bamler1998synthetic" role="doc-biblioref"><strong>bamler1998synthetic?</strong></a>)</span>. Quality-guided algorithms and statistical cost-flow approaches improve robustness <span class="citation" data-cites="goldstein1998satellite chen2001two">(<a href="#ref-goldstein1998satellite" role="doc-biblioref"><strong>goldstein1998satellite?</strong></a>; <a href="#ref-chen2001two" role="doc-biblioref"><strong>chen2001two?</strong></a>)</span>.</p>
+</section>
+</section>
+<section id="future-radar-missions-and-emerging-capabilities" class="level2" data-number="11">
+<h2 data-number="11"><span class="header-section-number">11</span> Future Radar Missions and Emerging Capabilities</h2>
+<p>The coming years will see a dramatic expansion in spaceborne radar capabilities, driven by missions specifically designed for vegetation monitoring, systematic change detection, and advanced interferometric techniques <span class="citation" data-cites="moreira2013tutorial">(<a href="#ref-moreira2013tutorial" role="doc-biblioref"><strong>moreira2013tutorial?</strong></a>)</span>. These next-generation systems will provide unprecedented temporal resolution, wavelength diversity, and measurement sophistication for forest and ecosystem applications.</p>
+<section id="near-term-operational-missions" class="level3" data-number="11.1">
+<h3 data-number="11.1"><span class="header-section-number">11.1</span> Near-Term Operational Missions</h3>
+<p><strong>NISAR (NASA-ISRO SAR)</strong> <span class="citation" data-cites="rosen2017nisar">(<a href="#ref-rosen2017nisar" role="doc-biblioref"><strong>rosen2017nisar?</strong></a>)</span>: Planned launch 2024, this joint NASA-ISRO mission will carry dual-frequency (L-band and S-band) SAR with 12-day repeat cycle and systematic global coverage. Key capabilities: - <strong>L-band</strong> (24 cm): Full polarimetry, 6-12 day repeat for biomass and forest structure - <strong>S-band</strong> (9 cm): Dual polarimetry for cropland and soil moisture monitoring - <strong>240 km swath</strong>: Near-global coverage every 12 days enables change detection and time series analysis</p>
+<p><a href="#fig-nisar" class="quarto-xref">Figure 23</a> shows the NISAR spacecraft with its large deployable antenna. NISAR’s systematic coverage and open data policy will revolutionize forest monitoring by providing consistent, high-quality L-band data globally <span class="citation" data-cites="rosen2017nisar">(<a href="#ref-rosen2017nisar" role="doc-biblioref"><strong>rosen2017nisar?</strong></a>)</span>.</p>
+<div id="fig-nisar" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-nisar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/nisar_mission.png" class="lightbox" data-gallery="quarto-lightbox-gallery-23" title="Figure 23: NISAR spacecraft rendering showing the large deployable L-band antenna (12-meter diameter) and S-band antenna. The mission will provide systematic global SAR coverage every 12 days with full polarimetric capability at L-band. NISAR specifically targets ecosystem structure, biomass, and change detection applications, with open data access enabling operational forest monitoring. Source: NASA/JPL-Caltech"><img src="RADAR_figures/nisar_mission.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nisar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 23: NISAR spacecraft rendering showing the large deployable L-band antenna (12-meter diameter) and S-band antenna. The mission will provide systematic global SAR coverage every 12 days with full polarimetric capability at L-band. NISAR specifically targets ecosystem structure, biomass, and change detection applications, with open data access enabling operational forest monitoring. Source: NASA/JPL-Caltech
+</figcaption>
+</figure>
+</div>
+<p><strong>BIOMASS (ESA)</strong> <span class="citation" data-cites="le2011relating">(<a href="#ref-le2011relating" role="doc-biblioref"><strong>le2011relating?</strong></a>)</span>: ESA’s first P-band spaceborne SAR, planned launch 2024, specifically designed for forest biomass estimation. Key innovations: - <strong>P-band</strong> (70 cm): Unprecedented penetration to ground even in dense tropical forests - <strong>Polarimetric and interferometric modes</strong>: Enable structure and height estimation - <strong>Tomographic capability</strong>: 3D imaging of forest vertical structure through repeated passes - <strong>Global forest mapping</strong>: Primary mission goal is global biomass estimation for carbon accounting</p>
+<p><strong>?@fig-biomass-mission</strong> shows the BIOMASS spacecraft with its distinctive large reflector antenna required for P-band operation. This mission will address the critical need for accurate tropical forest biomass estimates <span class="citation" data-cites="le2011relating">(<a href="#ref-le2011relating" role="doc-biblioref"><strong>le2011relating?</strong></a>)</span>.</p>
+<div id="fig-biomass_mission" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-biomass_mission-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/biomass_mission.png" class="lightbox" data-gallery="quarto-lightbox-gallery-24" title="Figure 24: BIOMASS mission spacecraft showing the large deployable P-band reflector antenna. The 70-cm wavelength requires a substantial antenna (12-meter diameter) but provides penetration through dense forest canopies to the ground, enabling biomass estimation in high-biomass tropical forests where shorter wavelengths saturate. BIOMASS will provide the first spaceborne P-band SAR data for forest monitoring. Source: ESA"><img src="RADAR_figures/biomass_mission.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-biomass_mission-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 24: BIOMASS mission spacecraft showing the large deployable P-band reflector antenna. The 70-cm wavelength requires a substantial antenna (12-meter diameter) but provides penetration through dense forest canopies to the ground, enabling biomass estimation in high-biomass tropical forests where shorter wavelengths saturate. BIOMASS will provide the first spaceborne P-band SAR data for forest monitoring. Source: ESA
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="advanced-sar-techniques-for-forests" class="level3" data-number="11.2">
+<h3 data-number="11.2"><span class="header-section-number">11.2</span> Advanced SAR Techniques for Forests</h3>
+<p><strong>SAR Tomography (TomoSAR)</strong>: By combining multiple SAR acquisitions from slightly different viewing angles (perpendicular baseline diversity), <strong>tomographic SAR</strong> reconstructs the three-dimensional distribution of scatterers <span class="citation" data-cites="reigber2000first">(<a href="#ref-reigber2000first" role="doc-biblioref"><strong>reigber2000first?</strong></a>)</span>. <a href="#fig-tomosar" class="quarto-xref">Figure 25</a> illustrates the principle: multiple flight tracks create a synthetic aperture in the vertical dimension, enabling resolution of scatterer height.</p>
+<div id="fig-tomosar" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-tomosar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/tomosar.png" class="lightbox" data-gallery="quarto-lightbox-gallery-25" title="Figure 25: SAR tomography principle and results. Left: Multiple SAR acquisitions from different flight tracks (or satellite orbits with varying baselines) create a synthetic aperture in the elevation dimension. Right: Resulting vertical reflectivity profiles show distinct scattering layers—ground, mid-canopy, and upper canopy—enabling 3D forest structure reconstruction. Horizontal and vertical slices through the tomographic volume reveal spatial patterns of vertical structure. Vertical point profiles show reflectivity as a function of height above ground. Source: EO-College SAR Tomography Tutorial"><img src="RADAR_figures/tomosar.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tomosar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 25: SAR tomography principle and results. Left: Multiple SAR acquisitions from different flight tracks (or satellite orbits with varying baselines) create a synthetic aperture in the elevation dimension. Right: Resulting vertical reflectivity profiles show distinct scattering layers—ground, mid-canopy, and upper canopy—enabling 3D forest structure reconstruction. Horizontal and vertical slices through the tomographic volume reveal spatial patterns of vertical structure. Vertical point profiles show reflectivity as a function of height above ground. Source: EO-College SAR Tomography Tutorial
+</figcaption>
+</figure>
+</div>
+<p>For forests, TomoSAR provides: - <strong>Vertical profile</strong>: Scattering intensity as function of height, related to biomass distribution <span class="citation" data-cites="tebaldini2012multibaseline">(<a href="#ref-tebaldini2012multibaseline" role="doc-biblioref"><strong>tebaldini2012multibaseline?</strong></a>)</span> - <strong>Ground-canopy separation</strong>: Unambiguous identification of ground and vegetation returns <span class="citation" data-cites="tebaldini2015canopy">(<a href="#ref-tebaldini2015canopy" role="doc-biblioref"><strong>tebaldini2015canopy?</strong></a>)</span> - <strong>Understory detection</strong>: Sensitivity to understory vegetation beneath dominant canopy <span class="citation" data-cites="banda2016forest">(<a href="#ref-banda2016forest" role="doc-biblioref"><strong>banda2016forest?</strong></a>)</span> - <strong>3D structure metrics</strong>: Canopy complexity, layering, gaps <span class="citation" data-cites="minh2016sar">(<a href="#ref-minh2016sar" role="doc-biblioref"><strong>minh2016sar?</strong></a>)</span></p>
+<p>Operational implementation requires: - <strong>Multiple baselines</strong>: At least 5-10 acquisitions with baseline diversity <span class="citation" data-cites="reigber2000first">(<a href="#ref-reigber2000first" role="doc-biblioref"><strong>reigber2000first?</strong></a>)</span> - <strong>High temporal coherence</strong>: Vegetation must remain stable across all acquisitions - <strong>Sophisticated processing</strong>: 3D focusing algorithms and parameter estimation <span class="citation" data-cites="fornaro2005three">(<a href="#ref-fornaro2005three" role="doc-biblioref"><strong>fornaro2005three?</strong></a>)</span></p>
+<p><strong>Differential Tomography</strong>: Combining TomoSAR with temporal series enables measurement of 3D structure changes, potentially detecting selective logging or degradation that leaves the upper canopy intact but alters vertical profile <span class="citation" data-cites="tebaldini2020monitoring">(<a href="#ref-tebaldini2020monitoring" role="doc-biblioref"><strong>tebaldini2020monitoring?</strong></a>)</span>.</p>
+<p><strong>Polarimetric Tomography</strong>: Integrating polarimetry with tomography provides polarization-dependent vertical profiles, enabling discrimination of scattering mechanisms (ground, trunk, branch, leaf) at different heights <span class="citation" data-cites="cloude2006polarization">(<a href="#ref-cloude2006polarization" role="doc-biblioref"><strong>cloude2006polarization?</strong></a>)</span>.</p>
+</section>
+<section id="emerging-commercial-constellations" class="level3" data-number="11.3">
+<h3 data-number="11.3"><span class="header-section-number">11.3</span> Emerging Commercial Constellations</h3>
+<p>Beyond government missions, several commercial SAR constellations are emerging <span class="citation" data-cites="moreira2013tutorial">(<a href="#ref-moreira2013tutorial" role="doc-biblioref"><strong>moreira2013tutorial?</strong></a>)</span>:</p>
+<p><strong>Capella Space</strong>: First commercial SAR constellation providing sub-meter resolution X-band imagery on-demand. <strong>?@fig-capella-sar</strong> shows an example of the extraordinary detail achievable: individual shipping containers at a port resolved at 50-cm resolution.</p>
+<div id="fig-capella_sar" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-capella_sar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/capella_sar.png" class="lightbox" data-gallery="quarto-lightbox-gallery-26" title="Figure 26: Capella Space SAR image showing 0.5-meter resolution X-band imagery of a port facility. Individual shipping containers, vehicles, and infrastructure are clearly visible. The image demonstrates the fine spatial resolution now available from commercial SAR systems. These on-demand capabilities enable near-real-time monitoring applications but face challenges over vegetation where temporal decorrelation limits repeat-pass interferometry. Source: Capella Space"><img src="RADAR_figures/capella_sar.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-capella_sar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 26: Capella Space SAR image showing 0.5-meter resolution X-band imagery of a port facility. Individual shipping containers, vehicles, and infrastructure are clearly visible. The image demonstrates the fine spatial resolution now available from commercial SAR systems. These on-demand capabilities enable near-real-time monitoring applications but face challenges over vegetation where temporal decorrelation limits repeat-pass interferometry. Source: Capella Space
+</figcaption>
+</figure>
+</div>
+<p><strong>ICEYE</strong>: Constellation of small X-band SAR satellites enabling rapid revisit and video-like monitoring. <strong>?@fig-iceye-video</strong> demonstrates SAR video capability—continuous illumination showing moving vessels on the ocean.</p>
+<div id="fig-iceye_video" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-iceye_video-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="RADAR_figures/iceye_video.png" class="lightbox" data-gallery="quarto-lightbox-gallery-27" title="Figure 27: ICEYE SAR video demonstration showing moving ships tracked over time through continuous SAR illumination. Sequential frames enable measurement of vessel velocity and trajectory. This “SAR video” capability represents a new frontier in radar remote sensing, though currently limited to non-vegetated surfaces due to coherence requirements. Source: ICEYE"><img src="RADAR_figures/iceye_video.png" class="img-fluid" style="width:100.0%" /></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-iceye_video-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 27: ICEYE SAR video demonstration showing moving ships tracked over time through continuous SAR illumination. Sequential frames enable measurement of vessel velocity and trajectory. This “SAR video” capability represents a new frontier in radar remote sensing, though currently limited to non-vegetated surfaces due to coherence requirements. Source: ICEYE
+</figcaption>
+</figure>
+</div>
+<p>While these commercial systems primarily target defense, maritime, and infrastructure monitoring, their high temporal resolution (potentially daily or better) could enable new forest monitoring applications, particularly for rapid deforestation detection or disaster response.</p>
+</section>
+</section>
+<section id="physical-and-semi-empirical-models" class="level2" data-number="12">
+<h2 data-number="12"><span class="header-section-number">12</span> Physical and Semi-Empirical Models</h2>
+<p>Quantitative interpretation of radar signatures for forest parameters requires models linking backscatter to biophysical properties. These range from purely empirical statistical relationships to physical models solving Maxwell’s equations for electromagnetic scattering from complex forest structures <span class="citation" data-cites="ulaby2014microwave">(<a href="#ref-ulaby2014microwave" role="doc-biblioref"><strong>ulaby2014microwave?</strong></a>)</span>.</p>
+<section id="the-water-cloud-model-wcm" class="level3" data-number="12.1">
+<h3 data-number="12.1"><span class="header-section-number">12.1</span> The Water Cloud Model (WCM)</h3>
+<p>The simplest physically motivated model represents vegetation as a uniform cloud of water droplets above a soil surface <span class="citation" data-cites="attema1978vegetation">(<a href="#ref-attema1978vegetation" role="doc-biblioref"><strong>attema1978vegetation?</strong></a>)</span>. The total backscatter is:</p>
+<p><span class="math display">\[\sigma° = \sigma°_{veg} + \tau^2 \sigma°_{soil}\]</span></p>
+<p>where <em>σ</em>°<sub>veg</sub> is vegetation volume scattering, <em>σ</em>°<sub>soil</sub> is soil surface scattering, and <em>τ</em>² is two-way transmissivity through the vegetation layer <span class="citation" data-cites="attema1978vegetation">(<a href="#ref-attema1978vegetation" role="doc-biblioref"><strong>attema1978vegetation?</strong></a>)</span>.</p>
+<p>The vegetation component is:</p>
+<p><span class="math display">\[\sigma°_{veg} = A V_1 (1 - \tau^2) \cos \theta\]</span></p>
+<p>and transmissivity is:</p>
+<p><span class="math display">\[\tau^2 = \exp(-2 B V_2 \sec \theta)\]</span></p>
+<p>where <em>V</em>₁ and <em>V</em>₂ are vegetation descriptors (often the same, e.g., LAI or biomass), <em>A</em> and <em>B</em> are fitting parameters, and <em>θ</em> is incidence angle <span class="citation" data-cites="bindlish2001multifrequency">(<a href="#ref-bindlish2001multifrequency" role="doc-biblioref"><strong>bindlish2001multifrequency?</strong></a>)</span>.</p>
+<p>Despite its simplicity, WCM provides reasonable backscatter predictions for crops and grasslands and has been extended for forest applications by including stem and ground interaction terms <span class="citation" data-cites="kumar2016water">(<a href="#ref-kumar2016water" role="doc-biblioref"><strong>kumar2016water?</strong></a>)</span>.</p>
+</section>
+<section id="the-michigan-microwave-canopy-scattering-model-mimics" class="level3" data-number="12.2">
+<h3 data-number="12.2"><span class="header-section-number">12.2</span> The Michigan Microwave Canopy Scattering Model (MIMICS)</h3>
+<p>MIMICS represents vegetation as discrete scatterers (leaves, branches, trunks) with specific sizes, orientations, and distributions, computing first-order scattering from each component plus ground interaction <span class="citation" data-cites="ulaby1990michigan">(<a href="#ref-ulaby1990michigan" role="doc-biblioref"><strong>ulaby1990michigan?</strong></a>)</span>. The model:</p>
+<ul>
+<li><strong>Discretizes canopy</strong>: Divides vegetation into layers and scatterer types</li>
+<li><strong>Computes scattering</strong>: Uses scattering theory for cylinders (branches), discs (leaves), ground</li>
+<li><strong>Sums contributions</strong>: Integrates over canopy depth accounting for attenuation</li>
+</ul>
+<p>MIMICS requires detailed canopy structure inputs (height, density, orientation distributions) but provides polarimetric backscatter predictions without empirical calibration <span class="citation" data-cites="ulaby1990michigan">(<a href="#ref-ulaby1990michigan" role="doc-biblioref"><strong>ulaby1990michigan?</strong></a>)</span>. This physical basis enables: - <strong>Sensitivity analysis</strong>: Determining which parameters affect backscatter most - <strong>Inversion</strong>: Retrieving canopy parameters from observed backscatter - <strong>Mission planning</strong>: Simulating expected performance of new sensors</p>
+</section>
+<section id="the-discrete-scattering-model" class="level3" data-number="12.3">
+<h3 data-number="12.3"><span class="header-section-number">12.3</span> The Discrete Scattering Model</h3>
+<p>More sophisticated models treat each tree as an assembly of discrete scatterers (trunk, branches at different hierarchies, leaves) and compute coherent scattering through the entire structure <span class="citation" data-cites="karam1995electromagnetic">(<a href="#ref-karam1995electromagnetic" role="doc-biblioref"><strong>karam1995electromagnetic?</strong></a>)</span>. These models:</p>
+<ul>
+<li><strong>Preserve phase</strong>: Enable interferometric simulation and coherence prediction</li>
+<li><strong>Handle complex geometry</strong>: Realistic tree architectures from growth models</li>
+<li><strong>Predict polarimetry</strong>: Full scattering matrix for all polarizations</li>
+</ul>
+<p><strong>?@fig-scattering-models-comparison</strong> shows the conceptual difference between these approaches. The discrete model most faithfully represents actual forest structure but requires enormous computational resources and detailed structural inputs <span class="citation" data-cites="saatchi2011benchmark">(<a href="#ref-saatchi2011benchmark" role="doc-biblioref"><strong>saatchi2011benchmark?</strong></a>)</span>.</p>
+<p>!<span class="citation" data-cites="shen2019">(Conceptual comparison of radar scattering models for forests. Left: Water Cloud Model represents vegetation as a homogeneous attenuating layer above soil. Center: MIMICS discretizes the canopy into layers containing scatterers of different types (leaves, branches, trunks) with statistical distributions. Right: Discrete scattering model represents each tree explicitly with realistic geometric structure, computing coherent scattering from all components. Model complexity increases from left to right, as does realism and computational cost. Source: Adapted from <a href="#ref-shen2019" role="doc-biblioref"><strong>shen2019?</strong></a>)</span>.](RADAR_figures/scattering_models_comparison.png){#fig-scattering_models_comparison width=“100%”}</p>
+</section>
+<section id="model-based-inversion" class="level3" data-number="12.4">
+<h3 data-number="12.4"><span class="header-section-number">12.4</span> Model-Based Inversion</h3>
+<p>These models enable <strong>model-based inversion</strong>: estimating forest parameters by fitting model predictions to observed backscatter <span class="citation" data-cites="chen2016retrieval">(<a href="#ref-chen2016retrieval" role="doc-biblioref"><strong>chen2016retrieval?</strong></a>)</span>. The inversion minimizes:</p>
+<p><span class="math display">\[\min_{\mathbf{p}} ||\sigma°_{obs} - \sigma°_{model}(\mathbf{p})||^2\]</span></p>
+<p>where <strong>p</strong> is the parameter vector (height, biomass, LAI, etc.), <em>σ</em>°<sub>obs</sub> is observed backscatter, and <em>σ</em>°<sub>model</sub> is model-predicted backscatter <span class="citation" data-cites="lucas2006integration">(<a href="#ref-lucas2006integration" role="doc-biblioref"><strong>lucas2006integration?</strong></a>)</span>.</p>
+<p>Challenges include: - <strong>Ill-posedness</strong>: Multiple parameter combinations can produce similar backscatter <span class="citation" data-cites="chen2016retrieval">(<a href="#ref-chen2016retrieval" role="doc-biblioref"><strong>chen2016retrieval?</strong></a>)</span> - <strong>Model assumptions</strong>: Real forests don’t perfectly match model assumptions - <strong>Computational cost</strong>: Physics-based models are slow; inversion requires many iterations</p>
+<p>Increasingly, <strong>machine learning approaches</strong> are replacing model-based inversion, using models to generate training data but learning flexible empirical relationships that can incorporate ancillary data and handle model discrepancies <span class="citation" data-cites="shen2019">(<a href="#ref-shen2019" role="doc-biblioref"><strong>shen2019?</strong></a>)</span>.</p>
+</section>
+</section>
+<section id="conclusion-the-radar-remote-sensing-toolbox" class="level2" data-number="13">
+<h2 data-number="13"><span class="header-section-number">13</span> Conclusion: The Radar Remote Sensing Toolbox</h2>
+<p>This theoretical overview has introduced the fundamental principles underlying radar remote sensing of forests and landscapes. The unique characteristics of microwave radiation—atmospheric penetration, surface and volume penetration, sensitivity to structure and moisture, and coherent detection preserving phase—create capabilities fundamentally complementary to optical remote sensing.</p>
+<p>Key principles to remember:</p>
+<ol type="1">
+<li><strong>Active illumination</strong> provides all-weather, day-night capability independent of solar illumination</li>
+<li><strong>Wavelength-dependent penetration</strong> determines which structural elements are sensed, from leaves (X-band) to trunks (P-band)</li>
+<li><strong>Polarization</strong> reveals scattering mechanisms, distinguishing surface, double-bounce, and volume scattering</li>
+<li><strong>Geometric effects</strong> (foreshortening, layover, shadow) require careful consideration in image interpretation and geometric correction</li>
+<li><strong>Speckle</strong> is an inherent characteristic of coherent imaging, requiring filtering or multi-temporal averaging for radiometric applications</li>
+<li><strong>Phase information</strong> enables interferometry for topography, displacement, and forest structure measurement with extraordinary precision</li>
+</ol>
+<p>The coming generation of radar missions—NISAR’s systematic L-band coverage, BIOMASS’s pioneering P-band measurements, commercial constellation’s rapid revisit—will provide unprecedented capabilities for forest monitoring. Combining these with advanced techniques like tomography, multi-temporal analysis, and machine learning will enable operational mapping of forest structure, biomass, and change at scales and precisions previously unattainable.</p>
+<p>Understanding the physical principles governing radar-vegetation interaction—as presented in this theoretical foundation—is essential for developing robust methods, correctly interpreting results, and advancing the science of radar remote sensing for Earth observation.</p>
+</section>
+<section id="references" class="level2" data-number="14">
+<h2 data-number="14"><span class="header-section-number">14</span> References</h2>
+<div id="refs" role="list">
+
+</div>
+<div id="quarto-navigation-envelope" class="hidden">
+<p><span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1zaWRlYmFyLXRpdGxl">Remote Sensing of Forests</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXItdGl0bGU=">Remote Sensing of Forests</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXI6SG9tZQ==">Home</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXI6L2luZGV4Lmh0bWw=">/index.html</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXI6SHlwZXJzcGVjdHJhbA==">Hyperspectral</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXI6SW50cm8=">Intro</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXI6L3RvcGljcy9oeXBlcnNwZWN0cmFsX2ludHJvLmh0bWw=">/topics/hyperspectral_intro.html</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXI6VGhlb3J5">Theory</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXI6L3RvcGljcy9oeXBlcnNwZWN0cmFsX3RoZW9yeS5odG1s">/topics/hyperspectral_theory.html</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXI6UHJhY3RpY2U=">Practice</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXI6L3RvcGljcy9oeXBlcnNwZWN0cmFsX3R1dG9yaWFsLmh0bWw=">/topics/hyperspectral_tutorial.html</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXI6UmFkaWF0aXZlIFRyYW5zZmVyIE1vZGVsaW5n">Radiative Transfer Modeling</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXI6L3RvcGljcy9EQVJUX2ludHJvLmh0bWw=">/topics/DART_intro.html</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXI6L3RvcGljcy9EQVJUX3RoZW9yeS5odG1s">/topics/DART_theory.html</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXI6L3RvcGljcy9EQVJUX3R1dG9yaWFsLmh0bWw=">/topics/DART_tutorial.html</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXI6U0FSIFRvbW9ncmFwaHk=">SAR Tomography</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXI6U0FSIFRvbW9ncmFwaHkgb2YgRm9yZXN0czogQW4gSW50cm9kdWN0aW9u">SAR Tomography of Forests: An Introduction</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXI6L3RvcGljcy9TQVJUX2ludHJvLmh0bWw=">/topics/SART_intro.html</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXI6VGhlb3JldGljYWwgQmFja2dyb3VuZDogU3ludGhldGljIEFwZXJ0dXJlIFJhZGFyIFRvbW9ncmFwaHkgb2YgRm9yZXN0cw==">Theoretical Background: Synthetic Aperture Radar Tomography of Forests</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXI6L3RvcGljcy9TQVJUX3RoZW9yeS5odG1s">/topics/SART_theory.html</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXI6U0FSIFRvbW9ncmFwaHkgb2YgVHJvcGljYWwgRm9yZXN0cw==">SAR Tomography of Tropical Forests</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXI6L3RvcGljcy9TQVJUX3R1dG9yaWFsLmh0bWw=">/topics/SART_tutorial.html</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXI6QXV0aG9ycw==">Authors</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXI6QWJvdXQgdGhlIEF1dGhvcnM=">About the Authors</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLWludC1uYXZiYXI6L2F1dGhvcnMuaHRtbA==">/authors.html</span></p>
+</div>
+<div id="quarto-meta-markdown" class="hidden">
+<p><span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLW1ldGF0aXRsZQ==">Theoretical Background: Radar Remote Sensing Fundamentals – Remote Sensing of Forests</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLXR3aXR0ZXJjYXJkdGl0bGU=">Theoretical Background: Radar Remote Sensing Fundamentals – Remote Sensing of Forests</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLW9nY2FyZHRpdGxl">Theoretical Background: Radar Remote Sensing Fundamentals – Remote Sensing of Forests</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLW1ldGFzaXRlbmFtZQ==">Remote Sensing of Forests</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLXR3aXR0ZXJjYXJkZGVzYw=="></span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="cXVhcnRvLW9nY2FyZGRkZXNj"></span></p>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id = "quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+</body>
+
+</html>
