@@ -1,0 +1,292 @@
+---
+title: "Theoretical Background: Synthetic Aperture Radar Tomography of Forests"
+author: "Xiao Liu"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    theme: cosmo
+    code-fold: false
+    embed-resources: true
+    lightbox: true
+    number-sections: true
+  pdf:
+    toc: true
+    number-sections: true
+---
+
+## Introduction: Tomography and Three-Dimensional Forest Structure
+
+Synthetic Aperture Radar (SAR) tomography, or TomoSAR, represents a powerful technique for reconstructing three-dimensional forest structure from radar observations. The term "tomography" derives from Greek: "tomos" (slice or section) and "graphia" (to describe or write). In essence, tomography enables the reconstruction of an object's internal structure by analyzing its projections from multiple viewing angles.
+
+The fundamental principle of tomography is well known from medical imaging, where techniques such as computed tomography (CT) or magnetic resonance imaging (MRI) reconstruct the internal structure of the human body by taking slice measurements from different angles. SAR tomography applies similar concepts to remote sensing of forests, using multiple radar acquisitions from different spatial positions to resolve the vertical structure within each image pixel.
+
+::: {.content-visible when-format="html"}
+![Tomographic reconstruction principle. Multiple projections through an object (in this case, showing projections through the Greek letter π) are combined to reconstruct the 2D or 3D structure. Each projection represents the integrated signal along a specific viewing angle. By combining projections from multiple angles, the internal structure can be recovered. This same principle applies to SAR tomography, where multiple SAR images from different baselines provide the "projections" needed to reconstruct the vertical structure of forests. Source: <https://en.wikipedia.org/wiki/Tomographic_reconstruction>.](SART_figures/slide2_tomography_concept.webm){#fig-tomo-principle width="80%"}
+:::
+
+::: {.content-visible when-format="pdf"}
+![Tomographic reconstruction principle. Multiple projections through an object (in this case, showing projections through the Greek letter π) are combined to reconstruct the 2D or 3D structure. Each projection represents the integrated signal along a specific viewing angle. By combining projections from multiple angles, the internal structure can be recovered. This same principle applies to SAR tomography, where multiple SAR images from different baselines provide the "projections" needed to reconstruct the vertical structure of forests. Source: <https://en.wikipedia.org/wiki/Tomographic_reconstruction>.](SART_figures/screenshot.png){#fig-tomo-principle width="80%"}
+:::
+
+
+As illustrated in @fig-tomo-principle, projections taken from various angles contain information about the object's internal structure. Through mathematical processing, including filtering techniques such as high-pass filters, a clear reconstruction of the original object can be achieved. While medical tomography scans a patient lying on a table through a rotating scanner, SAR tomography achieves similar results by acquiring radar images from different flight tracks or orbital positions.
+
+## Airborne and Spaceborne TomoSAR Systems
+
+### Airborne TomoSAR: High-Resolution Forest Mapping
+
+Airborne SAR tomography systems provide the highest resolution observations of forest structure. The F-SAR system operated by the German Aerospace Center (DLR) exemplifies this capability, offering full polarimetric data in four wavelength bands (X-, C-, S-, and L-band). 
+
+::: {#fig-airborne-tomo}
+{{< video https://www.youtube.com/embed/1XBtbSzYyYw?si=dbn8Aaq5MwZut0SM width="600" height="400" >}}
+
+Airborne TomoSAR visualization of forest structure using F-SAR L-band data. The tomographic reconstruction reveals detailed vertical structure, with surface terrain visible in flat areas and multi-layered forest structure in dense vegetation. Source: DLR/EO-College.
+:::
+
+@fig-airborne-tomo demonstrates airborne TomoSAR's ability to penetrate forest canopies and reveal both canopy structure and underlying terrain. When scanning flat terrain, a relatively uniform surface appears, while forest areas show distinct layering—returns from the canopy top, internal canopy structure, and the ground beneath. In particularly dense forests, complex vertical structure becomes visible, analogous to scanning a body in a medical tomography system.
+
+The advantage of airborne TomoSAR is complete forest coverage with fine spatial detail. However, compared to airborne lidar systems, the vertical resolution of SAR tomography is typically coarser, though it provides unique information about electromagnetic scattering properties related to forest structure, moisture content, and biomass.
+
+### Spaceborne TomoSAR: The BIOMASS Mission
+
+Until recently, no satellite mission was specifically designed for SAR tomography of forests. The European Space Agency's (ESA) BIOMASS mission, launched in 2024, represents the first satellite dedicated to tomographic forest observations.
+
+::: {#fig-spaceborne-tomo}
+{{< video https://www.youtube.com/embed/oyH3d5r5jLs?si=qKXarjqFnbZAo0P2 width="600" height="400" >}}
+
+Spaceborne TomoSAR concept with ESA's BIOMASS mission. The picture illustrates the satellite acquiring multiple images from different orbital positions to create the synthetic aperture needed for tomography. The satellite carries a large P-band SAR antenna and will acquire images repeatedly over the same area as its orbit naturally varies, building up the necessary baselines for 3D forest reconstruction. It enables deep canopy penetration for three-dimensional forest structure reconstruction and biomass estimation. Source: European Space Agency - ESA.
+:::
+
+The BIOMASS satellite, depicted in @fig-spaceborne-tomo, operates at P-band (longer wavelength around 70 cm), which provides superior penetration through forest canopies compared to shorter wavelengths. The mission strategy involves repeated observations of the same location—approximately seven acquisitions within an 18-day period—enabling tomographic reconstruction of forest vertical structure.
+
+A key innovation of P-band observations is the ability to image not only the upper canopy but also deeper structural elements including tree trunks and understory vegetation. This capability is essential for accurate forest height retrieval and above-ground biomass (AGB) estimation, particularly in dense tropical forests where shorter wavelengths may saturate.
+
+## Fundamental Principles: Phase and Interferometry
+
+### Phase as a Relative Distance Measure
+
+The foundation of SAR tomography lies in interferometry, which exploits phase measurements to determine relative distances. In radar systems, phase represents the position within a wave cycle and can be understood as a relative distance measurement.
+
+![Phase as a relative distance indicator. Left: Complex number representation showing phase angle φ. Center: Sinusoidal wave showing the relationship between wavelength λ and phase. Right: Phase difference between two points (A, B₁, B₂) separated by distance d relates to their relative positions. Source: Iain H. Woodhouse, 2017](SART_figures/slide5_phase_distance.png){#fig-phase width="100%"}
+
+As illustrated in @fig-phase, electromagnetic waves can be represented as rotating vectors (phasors) or sinusoidal functions. The key relationship is that one complete 2π rotation corresponds to one wavelength (λ) of propagation. If we know the phase difference (Δφ) between two observations, we can estimate the corresponding path difference:
+
+$$\Delta\phi = \frac{2\pi}{\lambda} \cdot 2\Delta R$$
+
+where ΔR is the range difference and the factor of 2 accounts for the two-way travel (to target and back).
+
+Consider two radar sensors (B₁ and B₂) observing the same forest target. The phase difference between their observations encodes information about the relative distance from each sensor to the target. This principle forms the basis of SAR interferometry (InSAR).
+
+### SAR Interferometry (InSAR)
+
+InSAR combines observations from two or more SAR acquisitions to measure surface topography and detect changes. The term "interferometry" refers to measuring properties through the interference of waves.
+
+![InSAR principle illustrated with interference patterns. Left: Two wave sources create characteristic fringe patterns where waves constructively or destructively interfere. Right: Applying this principle from space, two SAR acquisitions from slightly different positions create interferometric fringes that encode topographic information. Maxima occur when path difference ΔR = nλ, corresponding to phase difference Δφ = n·2π. Source: Iain H. Woodhouse, 2017](SART_figures/slide6_insar.png){#fig-insar width="100%"}
+
+@fig-insar demonstrates the interferometric principle. When two wave sources emit coherent radiation, regions where the waves arrive in phase create maxima (constructive interference), while regions where they arrive out of phase create minima (destructive interference). This creates characteristic fringe patterns.
+
+In spaceborne InSAR, even over completely flat terrain, fringe patterns emerge because different locations have different distances to the two sensor positions. Steep slopes facing the sensor produce dense fringes, while slopes facing away from the sensor show sparse fringes. These fringe patterns directly relate to surface topography.
+
+### From Phase Images to Elevation Models
+
+While individual SAR phase images appear chaotic and random, the phase difference between two carefully selected acquisitions reveals meaningful patterns.
+
+![From random phase to meaningful interferometric patterns. Left: Amplitude and phase of a single SAR image—the phase appears random. Center: Phase difference between two SAR images (wrapped interferogram) reveals systematic fringe patterns. Right: After unwrapping and further processing, a Digital Elevation Model (DEM) is derived. Source: DLR](SART_figures/slide8_insar_dem.png){#fig-phase-diff width="100%"}
+
+@fig-phase-diff illustrates this transformation. A single SAR image's phase appears as random noise, but when two images are properly aligned and their phases differenced, regular fringe patterns emerge (the wrapped interferogram). Through phase unwrapping and geometric processing, these fringes can be converted into topographic height information, producing a Digital Elevation Model (DEM).
+
+### Coherence: Quality of Interferometric Phase
+
+Not all interferometric phase measurements are equally reliable. Coherence quantifies the quality and consistency of the interferometric phase.
+
+![Coherence as an indicator of interferometric phase quality. Interferograms with different coherence values (1.0, 0.8, 0.4, 0.2) show progressively degraded fringe visibility. High coherence (γ ≈ 1) indicates clear, reliable phase patterns, while low coherence (γ ≈ 0) indicates noisy, unreliable phase information. Source: Irena Hajnsek](SART_figures/slide9_coherence.png){#fig-coherence width="70%"}
+
+Coherence ($\hat{\gamma}$) is calculated as:
+
+$$\hat{\gamma} = \frac{\sum_{n=1}^{N} y_1 y_2^*}{\sqrt{\sum_{n=1}^{N} |y_1|^2 \sum_{n=1}^{N} |y_2|^2}}$$
+
+where $y_1$ and $y_2$ are complex SAR observations, and the asterisk denotes complex conjugation. Coherence ranges from 0 (completely decorrelated) to 1 (perfectly correlated).
+
+As shown in @fig-coherence:
+
+- **Coherence = 1.0**: Perfect fringe visibility with minimal noise
+- **Coherence = 0.8**: Clear fringes with some degradation
+- **Coherence = 0.4**: Noisy fringes, information partially degraded
+- **Coherence = 0.2**: Fringes barely visible, unreliable phase
+
+High coherence indicates low phase noise and reliable distance measurements. In forest environments, coherence typically decreases over time as vegetation changes (temporal decorrelation) and varies with wavelength and environmental conditions. Coherence serves as a critical input parameter for TomoSAR processing, indicating which measurements are sufficiently reliable for tomographic inversion.
+
+## TomoSAR: Three-Dimensional Resolution Cells
+
+### From 2D Pixels to 3D Voxels
+
+Conventional SAR imaging collapses all scatterers within a resolution cell into a single pixel. TomoSAR extends this to resolve the vertical distribution of scatterers within each pixel, effectively creating three-dimensional resolution cells.
+
+  ![TomoSAR principle: achieving three-dimensional resolution. Multiple flight tracks or orbital passes create a synthetic aperture in the cross-range (elevation) direction, enabling vertical resolution within each SAR pixel. The 3D resolution cell dimensions depend on pulse bandwidth W (slant range), synthetic aperture in azimuth (Aaz), and synthetic aperture in cross-range elevation (Acr). Source: Nesrin Salepci, EO-College (lincense: CC BY-SA 4.0)](SART_figures/slide10_3d_resolution.png){#fig-3d-resolution width="100%"}
+
+@fig-3d-resolution illustrates the TomoSAR geometry. While conventional SAR creates a synthetic aperture along the flight direction (azimuth) to achieve fine azimuth resolution, TomoSAR adds multiple observations from different cross-track positions to create an additional synthetic aperture perpendicular to the line of sight. This elevation aperture enables vertical resolution.
+
+The three-dimensional resolution cell is characterized by:
+
+- **Slant range resolution** $\delta_{sr} = \frac{c}{2W}$, where $c$ is the speed of light and $W$ is the signal bandwidth
+- **Azimuth resolution** $\delta_{az} = \frac{\lambda r_0}{2A_{az}}$, where $r_0$ is the range distance and $A_{az}$ is the synthetic aperture in azimuth
+- **Cross-range elevation resolution** $\delta_{cr} = \frac{\lambda r_0}{2A_{cr}}$, where $A_{cr}$ is the synthetic aperture in elevation
+- **Vertical (height) resolution** $\delta_z = \delta_{cr} \sin(\theta_i)$, where $\theta_i$ is the incidence angle
+
+The tomographic resolution cell is oriented according to the radar viewing geometry, with the vertical extent depending on the number of flight tracks, their separation, and the wavelength used.
+
+## TomoSAR of Forests: Key Influencing Factors
+
+The reflectivity profiles retrieved through TomoSAR depend on multiple interacting factors related to the sensor, platform, processing algorithms, and forest characteristics themselves.
+
+![TomoSAR reflectivity profiles showing vertical forest structure. Left: 3D visualization of TomoSAR data over forest, with azimuth and slant range dimensions. Right: Vertical profiles at different height layers (0-50m), revealing surface, understory, and canopy scattering components. Key factors influencing these profiles include polarization, wavelength, flight configuration, inversion algorithms, and forest vertical structure. Source: Multiple](SART_figures/slide11_tomosar_factors.png){#fig-tomo-factors width="100%"}
+
+As illustrated in @fig-tomo-factors, TomoSAR provides vertical profiles of radar reflectivity, typically showing distinct peaks corresponding to the ground surface and canopy elements. However, the characteristics of these profiles are sensitive to:
+
+- **Sensor properties**: Polarization and wavelength
+- **Platform configuration**: Number and spacing of flight tracks or orbital passes
+- **Processing methods**: Choice of inversion algorithm (e.g., Capon, beamforming)
+- **Forest characteristics**: Vertical structure, biomass, and moisture content
+
+### Effect of Polarization
+
+Different polarizations interact with forest structure in distinct ways. HH polarization (horizontal transmit and receive) tends to penetrate more deeply, showing stronger ground returns. HV or VH cross-polarization emphasizes volume scattering from branches and foliage. VV polarization shows intermediate behavior.
+
+![TomoSAR profiles for different polarizations. Left: False-color composite (HH:Red, HV:Green, VV:Blue) showing structural differences. Right: Vertical profiles for HH, HV, and VV polarizations, and the combined RGB representation. F-SAR P-band data with 11 flight tracks. HH shows stronger ground return, HV shows more distributed volume scattering, VV is intermediate. Source: Multiple](SART_figures/slide12_polarization.png){#fig-polarization width="100%"}
+
+@fig-polarization demonstrates these polarimetric differences. In the false-color composite on the left, different forest types and structures appear in different colors because each exhibits distinct polarimetric scattering properties. The vertical profiles on the right reveal:
+
+- **HH polarization**: Strong ground peak, indicating penetration to the surface
+- **HV polarization**: More distributed scattering throughout the canopy volume, with reduced ground contribution
+- **VV polarization**: Intermediate characteristics between HH and HV
+
+This polarimetric sensitivity enables scattering mechanism decomposition, separating ground scattering from volume scattering.
+
+### Scattering Mechanism Decomposition
+
+Polarimetric TomoSAR can decompose the total radar return into contributions from different scattering mechanisms, primarily ground scattering and volume scattering.
+
+![Decomposition of TomoSAR profiles into ground and volume scattering mechanisms. Left: Top image shows mean reflectivity for HH polarization. Middle and bottom images show Capon-processed profiles for HH and HV. Right: Separated ground and volume scattering components for the first and second scattering mechanisms. Forest areas show strong volume scattering (canopy) while ground scattering dominates in cleared areas. Source: Tebaldini (2009)](SART_figures/slide13_scattering_decomposition.png){#fig-decomposition width="100%"}
+
+As illustrated in @fig-decomposition, advanced polarimetric-interferometric algorithms can separate:
+
+- **Ground scattering**: Surface returns from the soil or understory ground, appearing as a concentrated peak at low elevation
+- **Volume scattering**: Distributed returns from the canopy, appearing as a broader vertical distribution
+
+This decomposition is particularly valuable for accurate ground surface estimation beneath forests, which is essential for biomass retrieval and change detection.
+
+### Effect of Wavelength
+
+Different radar wavelengths penetrate forest canopies to different depths, resulting in distinct TomoSAR signatures.
+
+![TomoSAR profiles at different wavelengths. Top to bottom: P-band HV 2009, L-band HV 2009, L-band HV 2013, X-band HV 2013. P-band shows deepest penetration with clear ground returns even in dense forest. L-band shows moderate penetration. X-band shows minimal penetration, with scattering concentrated in the upper canopy. Source: Pardini et al. (2019). Tree illustrations on the right indicate the relative penetration depth of each wavelength. Source: Thuy Le Toan, CESBIO, France.](SART_figures/slide14_wavelength.png){#fig-wavelength width="100%"}
+
+@fig-wavelength compares profiles across wavelengths ranging from X-band (~3 cm) to P-band (~70 cm):
+
+- **X-band (HV, 2013)**: Minimal penetration, scattering concentrated in the uppermost canopy layer. Suitable for canopy surface mapping but limited for biomass estimation in dense forests.
+- **L-band (HV, 2009 and 2013)**: Moderate penetration, capturing both canopy and some ground returns. Sensitivity to forest structure and biomass, but may saturate in very dense forests.
+- **P-band (HV, 2009)**: Deep penetration, clear ground returns even beneath dense canopy. Strong sensitivity to forest height and biomass across a wide dynamic range.
+
+The wavelength selection profoundly affects TomoSAR's sensitivity to forest structure, height, and biomass. P-band is optimal for global forest mapping missions like BIOMASS, while L-band offers a good compromise between penetration and spatial resolution for regional studies.
+
+### Effect of Flight Configuration
+
+The number and spatial arrangement of flight tracks or orbital passes directly determine the tomographic resolution and ambiguity properties.
+
+![Effect of flight track number on TomoSAR profiles. Left: Results using 10 flight tracks showing high vertical resolution with clear separation of ground and canopy peaks. Right: Results using only 5 flight tracks showing degraded resolution and increased noise. Fewer tracks result in broader main lobes and higher sidelobes in the vertical profile, reducing the ability to separate close scatterers.](SART_figures/slide15_flight_config.png){#fig-flight-config width="100%"}
+
+As demonstrated in @fig-flight-config:
+
+- **10 flight tracks**: Sharp, well-defined vertical profiles with distinct ground and canopy peaks. Higher vertical resolution enables precise forest structure characterization.
+- **5 flight tracks**: Broader, noisier profiles with reduced ability to separate scatterers. Increased sidelobes can create ambiguous peaks.
+
+The vertical resolution improves with the total span of the synthetic aperture in elevation. More tracks also improve signal-to-noise ratio and reduce ambiguities. However, practical constraints (temporal decorrelation, mission complexity, cost) limit the number of acquisitions. Optimizing the baseline distribution—the spacing between flight tracks—is critical for achieving the desired vertical resolution while maintaining adequate coherence.
+
+### Effect of Inversion Algorithms
+
+Different tomographic inversion algorithms trade off between resolution, noise suppression, and computational complexity.
+
+![Comparison of Capon and beamforming algorithms for TomoSAR. Left: Capon algorithm provides higher resolution with sharper peaks and better separation of ground and canopy. Right: Beamforming (conventional) algorithm shows broader peaks and reduced resolution but is more robust to noise and requires less computation. The choice of algorithm affects the interpretability and quantitative use of TomoSAR profiles.](SART_figures/slide16_algorithms.png){#fig-algorithms width="100%"}
+
+@fig-algorithms compares two common approaches:
+
+- **Capon (adaptive) beamforming**: Provides superior resolution by adaptively minimizing contributions from directions other than the target. Sharper peaks enable better separation of close scatterers (e.g., ground and low canopy). More sensitive to noise and requires careful coherence estimation.
+- **Conventional (Fourier) beamforming**: Lower resolution but more robust. Broader peaks may merge close scatterers but provides stable estimates even with lower coherence.
+
+Other advanced algorithms include compressive sensing methods and model-based approaches. The algorithm selection depends on the data quality (coherence, number of acquisitions) and the application requirements (height precision, computational resources).
+
+## Sensitivity to Forest Height and Biomass
+
+A primary application of TomoSAR is estimating forest structural parameters, particularly tree height and above-ground biomass (AGB).
+
+![TomoSAR sensitivity to forest height and biomass. (a) Lidar reference data showing forest height (RH100, 0-50m) and AGB (0-600 Mg/ha) over Lopé, Gabon. (b) TomoSAR backscatter profiles for different height classes (0-15m, 15-30m, 30-45m, 45-60m) and AGB classes (0-200, 200-400, 400-600, 600-800 Mg/ha). Profiles systematically shift in height and shape with increasing forest height and biomass, demonstrating TomoSAR's sensitivity to forest structure. AfriSAR airborne campaign data. Source: Liu et al. (2024)](SART_figures/slide17_sensitivity.png){#fig-sensitivity width="100%"}
+
+@fig-sensitivity presents results from the AfriSAR airborne campaign in tropical forests of Gabon. Key observations:
+
+- **Height sensitivity**: Forests of different heights produce TomoSAR profiles with distinct vertical extents. Taller forests show peaks at higher elevations, while shorter forests concentrate scattering at lower heights.
+- **Biomass sensitivity**: As AGB increases, TomoSAR backscatter intensity and vertical extent change systematically. The distribution of scattering through the canopy relates to biomass density.
+- **Profile shape changes**: Not only peak position but also profile shape (width, skewness, secondary peaks) varies with forest structure.
+
+Quantitatively relating TomoSAR profiles to height and AGB requires careful analysis. The phase center of the profile is typically lower than the canopy top, necessitating correction factors. Various metrics can be extracted from profiles:
+
+- **Phase center height**: The centroid of the vertical reflectivity profile
+- **Backscatter intensity at specific heights**: E.g., reflectivity integrated from 20-30m
+- **Profile moments**: Height of maximum, variance, skewness
+- **Polarimetric-interferometric parameters**: Ground-to-volume ratio, extinction coefficient
+
+Machine learning approaches can combine multiple TomoSAR features with training data to develop robust height and biomass estimation models.
+
+## Environmental and Temporal Effects
+
+TomoSAR observations are not static—they respond to weather conditions, seasonal changes, and forest dynamics.
+
+![TomoSAR response to weather and seasonal effects. Left panels: Tomographic slices before and after rainfall, showing reduced ground power and increased phase center height after rain due to moisture absorption. Right panels: Spring (leaf-on) versus autumn (leaf-off) observations, showing increased ground power in autumn when leaves have fallen. Weather and phenology significantly affect TomoSAR profiles and must be considered in operational applications. Source: Pardini et al. (2014)](SART_figures/slide18_temporal_effects.png){#fig-temporal-effects width="100%"}
+
+@fig-temporal-effects illustrates two key temporal influences:
+
+### Weather Effects (Moisture)
+
+- **After rainfall**: Increased moisture content in canopy and soil enhances absorption, reducing radar penetration. Ground returns weaken relative to volume returns, and the apparent phase center height increases.
+- **Dry conditions**: Lower moisture content allows deeper penetration, strengthening ground returns and lowering the phase center.
+
+These effects are particularly pronounced at shorter wavelengths (X- and C-band) where water absorption is stronger. P-band is less affected but not immune. Consistency in environmental conditions across acquisitions is important for reliable tomographic reconstruction.
+
+### Seasonal Effects (Phenology)
+
+- **Leaf-on (spring/summer)**: Full canopy with maximum foliage density creates strong volume scattering, reducing ground visibility.
+- **Leaf-off (autumn/winter)**: In deciduous forests, leaf fall reduces volume scattering and dramatically increases ground returns. Bare branches scatter less, allowing better ground surface mapping.
+
+Seasonal effects are critical for deciduous and mixed forests in temperate and boreal regions. Tropical evergreen forests show less pronounced phenological variation but may respond to wet/dry season transitions. Understanding these temporal dynamics enables optimal acquisition planning and improved interpretation of multi-temporal TomoSAR data.
+
+## From Tomographic Profiles to Forest Metrics
+
+The theoretical principles presented here—phase-based distance measurement, interferometric coherence, multi-baseline tomographic inversion, and sensitivity to forest structure—provide the foundation for operational forest monitoring with TomoSAR. The key steps in translating tomographic radar data into forest structural information are:
+
+1. **Acquisition planning**: Selecting appropriate wavelength, polarization, and baseline configuration for the forest type and application
+2. **Coherence optimization**: Minimizing temporal decorrelation through rapid repeat acquisitions or simultaneous multi-antenna systems
+3. **Tomographic inversion**: Applying suitable algorithms to reconstruct vertical reflectivity profiles
+4. **Ground surface estimation**: Separating ground from volume scattering to establish terrain reference
+5. **Feature extraction**: Deriving height, biomass-sensitive metrics from profile characteristics
+6. **Validation and calibration**: Comparing with ground truth data (lidar, field measurements) to develop quantitative relationships
+7. **Scaling and mapping**: Applying validated models to produce forest height and biomass maps
+
+The integration of TomoSAR with complementary technologies—particularly lidar for validation and optical imagery for context—enables robust, multi-sensor forest monitoring systems. Spaceborne missions like BIOMASS will extend these capabilities globally, providing unprecedented insights into three-dimensional forest structure and its changes over time.
+
+---
+
+This theoretical foundation prepares you to interpret and apply TomoSAR methods in forest remote sensing, understanding both the physical principles underlying the technique and the practical factors that influence its performance. The [tutorial](SART_tutorial.qmd) section demonstrate these concepts through hands-on analysis of real TomoSAR data, transforming vertical reflectivity profiles into quantitative estimates of forest height and biomass.
+
+## References
+
+Key references for further reading:
+
+- Woodhouse, I.H. (2006). Introduction to Microwave Remote Sensing. CRC Press. <https://doi.org/10.1201/9781315272573>
+- Tebaldini, S. (2009). Algebraic Synthesis of Forest Scenarios From Multibaseline PolInSAR Data. IEEE Transactions on Geoscience and Remote Sensing, 47(12), 4132-4142.
+- Pardini, M., Cantini, A., Lombardini, F., & Papathanassiou, K. (2014). 3-D Structure Of Forests: First Analysis of Tomogram Changes Due to Weather and Seasonal Effects at L-Band. EUSAR 2014. 10th European Conference on Synthetic Aperture Radar, Berlin, Germany.
+- Pardini, M., Armston, J., Qi, W., et al. (2019). Early Lessons on Combining Lidar and Multi-baseline SAR Measurements for Forest Structure Characterization. Surveys in Geophysics, 40, 803-837. <https://doi.org/10.1007/s10712-019-09553-9>
+- Liu, X., Neigh, C.S.R., Pardini, M., & Forkel, M. (2024). Estimating forest height and above-ground biomass in tropical forests using P-band TomoSAR and GEDI observations. International Journal of Remote Sensing, 45(9), 3129-3148.<https://doi.org/10.1080/01431161.2024.2343134>
+- [EO-College SAR Tomography Tutorial](https:// github.com/EO College/tomography_tutorial , https://eo college.org/resource/sar
+tomography)
+- [ESA PolInSAR Workshop materials](https ://eo4society.esa.int/resources/6th advanced polarimetry 2021)

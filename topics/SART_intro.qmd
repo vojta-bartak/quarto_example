@@ -1,0 +1,50 @@
+---
+title: "SAR Tomography of Forests: An Introduction"
+author: "Xiao Liu"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    theme: cosmo
+    embed-resources: true
+  pdf:
+    toc: true
+    number-sections: true
+execute:
+  warning: false
+  message: false
+  cache: true
+editor: visual
+---
+
+## Introduction to SAR Tomography of Forests
+
+Forests are three-dimensional ecosystems, yet most remote sensing techniques observe them from above, collapsing their vertical structure into a single measurement. Synthetic Aperture Radar (SAR) tomography breaks through this limitation, using the phase information from multiple radar acquisitions to reconstruct the full three-dimensional structure of forests—from the ground surface through the understory to the canopy top.
+
+**From Medical Imaging to Forest Mapping**
+
+The concept of tomography—reconstructing an object's internal structure from its projections—originated in medical imaging with CT and MRI scans. SAR tomography applies the same principle to forests: by acquiring radar images from multiple slightly different positions (either from repeated aircraft passes or satellite orbits), we create a synthetic aperture perpendicular to the line of sight. This additional dimension enables us to resolve scatterers at different heights within each ground pixel, effectively creating a three-dimensional radar "CT scan" of the forest.
+
+**Penetrating the Canopy with Radar Waves**
+
+Unlike optical sensors that see only the canopy surface, and unlike lidar whose penetration is limited by vegetation density, long-wavelength radar—particularly P-band with its \~70 cm wavelength—can penetrate deep into forest canopies. Different polarizations interact with different structural elements: HH polarization tends to reach the ground, HV cross-polarization highlights volume scattering from branches and leaves, while VV shows intermediate behavior. By analyzing the vertical distribution of radar backscatter and separating ground from volume scattering, TomoSAR provides unique insights into forest structure, height, and biomass.
+
+**From Phase Patterns to Forest Metrics**
+
+The key to SAR tomography lies in interferometric phase—the relative distance encoded in the interference patterns between multiple acquisitions. Through coherence estimation, tomographic inversion algorithms (such as Capon beamforming), and careful calibration with ground truth data, these phase measurements transform into vertical reflectivity profiles. These profiles reveal not just forest height but also the distribution of biomass throughout the canopy, changes in structure over time, and responses to environmental conditions like moisture and seasonal phenology. With ESA's BIOMASS mission—the first satellite specifically designed for forest tomography—now operational, global-scale 3D forest monitoring has become a reality.
+
+## Where to go further?
+
+Watch the **video lecture** in which Dr. Xiao Liu introduces the key concepts for this lesson:
+
+{{< video https://youtu.be/uEUoPRLXK_w?si=gsVUiU_5oa38D5EC >}}
+
+View and download the **presentation** from the video:
+
+[![](SART_figures/thumbnail_tomosar.png){.border width="200px"}](https://drive.google.com/file/d/1p_Wg5RM1QuyV-CdStufTbki34T_VlCG9/view?usp=sharing)
+
+Read the [**theory**](SART_theory.qmd)
+
+Analyze real data with a [**practical tutorial in Python**](SART_tutorial.qmd)
