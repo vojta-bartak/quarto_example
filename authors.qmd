@@ -1,0 +1,40 @@
+---
+title: "About the Authors"
+format: html
+---
+
+## Giorgi Kozhoridze (Czech University of Life Sciences Prague – CZU)
+
+![](kozhoridze.jpeg)
+
+Giorgi Kozhoridze is a researcher at the Czech University of Life Sciences Prague focusing on environmental remote sensing and geospatial data analysis. His work includes the development of analytical workflows for forest and landscape monitoring, with a particular interest in integrating multispectral, hyperspectral, and LiDAR data for environmental applications.
+
+## David Moravec (Czech University of Life Sciences Prague – CZU)
+
+![](moravec.jpg)
+
+David Moravec is a remote sensing specialist at CZU with expertise in environmental appliactions of radar remote sensing. His research covers environmental sensing methods for biodiversity monitoring, forest structure analysis, and the integration of in-situ and remote sensing observations across scales.
+
+## Růžena Janoutová (CzechGlobe – Global Change Research Institute)
+
+![](janoutova.jpg)
+
+Růžena Janoutová is a researcher at CzechGlobe specialising in optical and thermal remote sensing of vegetation. Her work focuses on forest ecosystem monitoring, spectral analysis, and the development of methods for detecting environmental stress and changes in vegetation dynamics.
+
+## Xiao Liu (Technische Universität Dresden – TUD)
+
+![](liu.jpg)
+
+Xiao Liu finished his PhD at TU Dresden in 2025, working in environmental remote sensing. His research interests include radar and LiDAR processing, vegetation structure modelling, and the application of advanced machine learning techniques to monitor forest dynamics and biodiversity.
+
+## Fabian Fischer (Technical University of Munich – TUM)
+
+![](fischer.webp)
+
+Fabian Fischer is a researcher at the Technical University of Munich specializing in forest structure and dynamics, remote sensing (Airborne Laser Scanning), individual-based forest modeling, allometric models, and tropical forest ecology.
+
+## Vojtěch Barták (Czech University of Life Sciences Prague – CZU)
+
+![](bartak.jpg)
+
+Vojtěch Barták is a researcher and software developer at CZU specialising in geospatial analysis, remote sensing workflows, and reproducible scientific computing. He works on the integration of environmental sensing data, development of analytical tools, and preparation of educational materials for Earth Observation training.

@@ -1,10 +1,31 @@
 ---
-title: "Welcome"
+title: "Remote Sensing of Forests – E-learning Course"
 format: html
 ---
 
-# Welcome to Remote Sensing Lessons
+Welcome to the Remote Sensing of Forests e-learning course developed within the EarthBridge project (Horizon Europe, Grant Agreement 101079310). The course brings together the expertise of lecturers from CZU Prague, TU Dresden, Università di Bologna, and the University of Bonn, and builds directly on the EarthBridge Summer School focused on environmental Earth Observation and biodiversity monitoring.
 
-This site provides interactive tutorials in Python and R using real-world remote sensing data.
+This online resource provides an accessible entry point into advanced methods for analysing forest ecosystems using modern remote sensing technologies. Its goal is to support students, early-career researchers, and professionals who wish to deepen their understanding of environmental sensing and apply these methods in research and practice.
 
-Choose a lesson from the navigation bar to get started.
+The course is structured into thematic chapters covering key domains of forest remote sensing:
+
+- [Hyperspectral Remote Sensing](topics/hyperspectral_intro.qmd)
+- [Radiative Transfer Modelling](topics/DART_intro.qmd)
+- [Radar Remote Sensing]()
+- [SAR Tomography](topics/SART_intro.qmd)
+- [Lidar]()
+
+Each chapter combines:
+
+- a concise introduction to the topic
+- a theoretical overview based on recorded lectures
+- a practical, step-by-step tutorial using real data
+- links to presentations, datasets, and video recordings
+
+All materials are openly accessible and hosted on GitHub Pages. Presentations and datasets are provided through EarthBridge cloud storage, while lecture recordings are available via the EarthBridge YouTube channel.
+
+The course is designed as a living resource that will continue to evolve. Additional chapters, updated tutorials, and refinements may be added as new material becomes available and as feedback from users is incorporated.
+
+We hope that these materials support your learning, research, and exploration of remote sensing methods for understanding and monitoring forest ecosystems.
+
+---

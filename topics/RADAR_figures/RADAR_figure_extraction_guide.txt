@@ -1,0 +1,255 @@
+RADAR FIGURE EXTRACTION GUIDE
+============================
+
+This guide maps the 29 required figures to their content in the PDF presentation.
+Look for these characteristics on each slide:
+
+SECTION 1: INTRODUCTION & BASICS
+---------------------------------
+
+1. em_spectrum.png
+   LOOK FOR: Electromagnetic spectrum diagram showing:
+   - Frequency bands (Ka, K, Ku, X, C, S, L, P-band)
+   - Wavelengths from 1 mm to 1 m
+   - Atmospheric opacity graph below
+   - "Radio window" highlighted
+
+2. forest_importance.png
+   LOOK FOR: Diagram showing forest roles:
+   - Energy/water/carbon cycles
+   - Forest coverage statistics
+   - Biodiversity illustration
+   - Multiple interconnected concepts
+
+3. why_microwave.png
+   LOOK FOR: Side-by-side comparison:
+   - LEFT: Optical image with clouds blocking view
+   - RIGHT: Radar image penetrating clouds
+   - Same scene, different sensors
+
+4. energy_sources.png
+   LOOK FOR: Two-panel graph:
+   - TOP: Blackbody curves (Sun 6000K, Earth 300K)
+   - Red box highlighting "energy gap" at microwave frequencies
+   - BOTTOM: Atmospheric transmission spectrum
+
+SECTION 2: RADAR GEOMETRY
+--------------------------
+
+5. side_looking_geometry.png
+   LOOK FOR: Geometric diagram showing:
+   - Satellite/aircraft platform
+   - Side-looking antenna
+   - Slant range vs ground range
+   - Incidence angle θ
+   - Azimuth and range directions
+
+6. surface_geometry.png
+   LOOK FOR: Three different viewing geometries of the same scene:
+   - Buildings, water body, terrain
+   - Shows how appearance changes with look angle
+   - Multiple viewing directions illustrated
+
+SECTION 3: SCATTERING MECHANISMS
+---------------------------------
+
+7. scattering_mechanisms.png
+   LOOK FOR: 5 different scattering types illustrated:
+   a) Specular reflection (smooth surface)
+   b) Rough surface scattering
+   c) Corner reflector/dihedral (building corners)
+   d) Volume scattering (vegetation)
+   e) Bragg scattering (periodic structures)
+
+SECTION 4: WAVELENGTH EFFECTS
+------------------------------
+
+8. wavelength_penetration.png
+   LOOK FOR: Same tree shown at different wavelengths:
+   - X-band (3 cm) - surface interaction
+   - L-band (27 cm) - partial penetration
+   - P-band (70 cm) - deep penetration
+   - VHF (>3 m) - full penetration
+   - Progressive transparency illustrated
+
+9. radar_bands.png
+   LOOK FOR: Frequency band chart showing:
+   - X, C, S, L, P bands with wavelengths
+   - Satellite missions (KOMPSAT-5, TerraSAR-X, Sentinel-1, RADARSAT-2, NISAR, BIOMASS)
+   - Atmospheric transmission spectrum below
+
+10. wavelength_comparison.png
+    LOOK FOR: Side-by-side Greenland images:
+    - LEFT: RADARSAT C-band
+    - RIGHT: ALOS PALSAR L-band
+    - Ice/snow surface with different penetration depths
+
+SECTION 5: POLARIZATION
+------------------------
+
+11. polarization_modes.png
+    LOOK FOR: Satellite polarization capabilities:
+    - Sentinel-1: Single/dual pol
+    - Envisat: Alternating/dual pol
+    - RADARSAT-2: Quad pol (full)
+    - Antenna orientation diagrams (H and V)
+
+12. polarization_scattering.png
+    LOOK FOR: Three cylinder orientations:
+    - TOP: Horizontal cylinder (strong HH, weak VV)
+    - MIDDLE: Oblique cylinder (both HH+VV, HV signal)
+    - BOTTOM: Vertical cylinder (strong VV, weak HH)
+    - Color-coded responses (red, blue)
+
+13. polarimetric_decomposition.png
+    LOOK FOR: Three decomposition methods on RADARSAT-2 data:
+    - Pauli decomposition (RGB: surface/dihedral/volume)
+    - Freeman-Durden decomposition
+    - H/A/Alpha decomposition
+    - Same scene, three different visualizations
+
+SECTION 6: GEOMETRIC DISTORTIONS
+---------------------------------
+
+14. geometric_distortions.png
+    LOOK FOR: Three-panel diagram showing:
+    - LEFT: Foreshortening (slope compression)
+    - CENTER: Layover (mountain top before base)
+    - RIGHT: Shadow (blocked illumination)
+    - Ground range vs slant range illustrated
+
+15. mountain_distortions.png
+    LOOK FOR: Alaska SAR image showing:
+    - Bright compressed slopes (foreshortening)
+    - Dark shadow areas
+    - Mountains with clear distortion patterns
+    - Arrows indicating radar illumination direction
+
+SECTION 7: SPECKLE
+-------------------
+
+16. speckle_origin.png
+    LOOK FOR: Three-panel explanation:
+    - LEFT: Multiple scatterers in resolution cell
+    - CENTER: Vector addition (phasors)
+    - RIGHT: Resulting speckle pattern
+    - Constructive/destructive interference illustrated
+
+17. speckle_example.png
+    LOOK FOR: Forest SAR image showing:
+    - Uniform forest area
+    - Grainy/speckle texture
+    - Random bright and dark pixels
+    - No actual ground features causing variation
+
+SECTION 8: INTERFEROMETRY & PHASE
+----------------------------------
+
+18. phase_principle.png
+    LOOK FOR: InSAR geometry diagram:
+    - Two satellite positions (t₁ and t₂)
+    - Ground point P
+    - Displacement ΔR
+    - Phase difference Δφ = (4π/λ)ΔR equation
+    - Signal waveforms shown
+
+19. phase_volcano.png
+    LOOK FOR: Fogo volcano interferogram:
+    - Cape Verde island
+    - Concentric colored fringes
+    - Center on volcano peak
+    - Google Earth base map
+    - Deformation pattern
+
+20. tandemx_greenland.png
+    LOOK FOR: Greenland ice sheet interferogram:
+    - Dense fringe pattern
+    - Topographic information encoded
+    - Ice features visible
+    - TanDEM-X data
+
+21. insar_earthquake.png
+    LOOK FOR: 2003 Bam earthquake interferogram:
+    - Extremely dense fringes
+    - Circular/elliptical pattern
+    - Central subsidence area
+    - Iran location
+
+22. ground_motion_service.png
+    LOOK FOR: European Ground Motion Service screenshot:
+    - Map interface
+    - Copernicus logo
+    - Displacement measurement interface
+    - European coverage indicated
+
+23. polinsar_forest.png
+    LOOK FOR: Sundarbans forest height map:
+    - Color-coded height (0-15 m)
+    - Rivers visible as gaps
+    - India/Bangladesh region
+    - Forest canopy height visualization
+
+24. soil_moisture.png
+    LOOK FOR: TanDEM-X soil moisture interferogram:
+    - Agricultural fields with boundaries
+    - Phase variations
+    - Different field moisture levels
+    - Systematic patterns
+
+SECTION 9: FUTURE MISSIONS
+---------------------------
+
+25. nisar_mission.png
+    LOOK FOR: NISAR spacecraft rendering:
+    - Large deployable antenna (12 m)
+    - NASA/ISRO mission
+    - L-band and S-band antennas
+    - Solar panels visible
+
+26. biomass_mission.png
+    LOOK FOR: BIOMASS spacecraft rendering:
+    - Large deployable P-band reflector
+    - ESA mission
+    - 12-meter antenna
+    - Distinctive spacecraft design
+
+27. tomosar.png
+    LOOK FOR: SAR tomography explanation:
+    - LEFT: Multiple flight tracks/orbits
+    - RIGHT: Vertical reflectivity profiles
+    - 3D forest structure
+    - Ground/mid-canopy/upper canopy layers
+
+28. capella_sar.png
+    LOOK FOR: High-resolution port imagery:
+    - 0.5 m resolution
+    - Shipping containers visible
+    - Port facility details
+    - Very fine detail visible
+
+29. iceye_video.png
+    LOOK FOR: SAR video sequence:
+    - Moving ships
+    - Sequential frames
+    - Ship tracking demonstration
+    - Motion/velocity visualization
+
+TIPS FOR EXTRACTION:
+====================
+
+1. Save images at HIGH RESOLUTION (at least 1200px width)
+2. Use descriptive filenames exactly as shown above
+3. Save as PNG format for best quality
+4. Include any legends, scale bars, or annotations visible
+5. Crop to remove excess white space but keep all relevant content
+6. If a slide has multiple sub-figures, include all panels
+
+NAMING CONVENTION:
+==================
+All files must be saved exactly as listed (lowercase, underscores)
+Example: em_spectrum.png (NOT Em_Spectrum.png or em-spectrum.png)
+
+DIRECTORY STRUCTURE:
+====================
+Create directory: RADAR_figures/
+Place all 29 PNG files in this directory
