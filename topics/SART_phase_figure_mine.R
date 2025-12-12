@@ -1,0 +1,73 @@
+library(ggplot2)
+library(grid)
+library(gridExtra)
+library(patchwork)
+library(ggforce)
+
+# Define angle for the phasor (45 degrees = pi/4)
+phi <- pi/3.4
+
+# Set up the plot
+ggplot() + 
+  coord_fixed(ratio = 1) +
+  xlim(-1.5, 7) +
+  ylim(-1.5, 1.5) +
+  theme_void() +
+  theme(plot.margin = margin(10, 10, 10, 10)) +
+  
+  # circle
+  geom_path(data = data.frame(
+    x = cos(seq(0, 2*pi, length.out = 100)),
+    y = sin(seq(0, 2*pi, length.out = 100))
+  ), aes(x = x, y = y), 
+  linetype = "dotted", size = 0.5) +
+  
+  # Draw axes
+  geom_segment(aes(x = -1.5, xend = 1.5, y = 0, yend = 0), 
+               arrow = arrow(length = unit(0.2, "cm")), size = 0.3) +
+  geom_segment(aes(x = 0, xend = 0, y = -1.5, yend = 1.5), 
+               arrow = arrow(length = unit(0.2, "cm")), size = 0.3) +
+
+  # Draw E_0 vector (horizontal and vertical)
+  geom_segment(aes(x = 0, xend = 1, y = 0, yend = 0), 
+               arrow = arrow(length = unit(0.2, "cm")), 
+               size = 0.8, color = "black") +
+  geom_segment(aes(x = 0, xend = 0, y = 0, yend = 1), 
+               arrow = arrow(length = unit(0.2, "cm")), 
+               size = 0.8, color = "black") +
+
+  # Draw rotating vector E (at angle phi)
+  geom_segment(aes(x = 0, xend = cos(phi), y = 0, yend = sin(phi)), 
+               arrow = arrow(length = unit(0.2, "cm")), 
+               size = 0.8, color = "black") +
+
+  # Draw angle arc
+  geom_path(data = data.frame(
+    x = 0.5 * cos(seq(0, phi, length.out = 30)),
+    y = 0.5 * sin(seq(0, phi, length.out = 30))
+  ), aes(x = x, y = y), size = 0.4,
+  arrow = arrow(length = unit(0.2, "cm"))) +
+
+  # Add labels
+  annotate("text", x = 1.4, y = -0.1, label = "a") +
+  annotate("text", x = 0.1, y = 1.4, label = "b") +
+  annotate("text", x = -0.1, y = 1.15, label = "E[0]", parse = TRUE) +
+  annotate("text", x = - cos(phi) - 0.15, y = sin(phi) + 0.15, label = "E[y]", parse = TRUE) +
+  annotate("text", x = 0.4, y = 0.15, label = "phi", parse = TRUE) +
+  annotate("text", x = cos(phi) - 0.1, y = sin(phi)/2, label = "omega*t", parse = TRUE) +
+
+  # Draw horizontal dashed line from tip of vector
+  geom_segment(aes(x = - cos(phi) - 0.2, xend = 2.2, y = sin(phi), yend = sin(phi)), 
+               linetype = 4, size = 0.3, color = "black") +
+  
+  # Draw axes
+  geom_segment(aes(x = 2, xend = 6, y = 0, yend = 0), 
+               arrow = arrow(length = unit(0.2, "cm")), size = 0.3) +
+  geom_segment(aes(x = 2, xend = 2, y = 0, yend = 1.5), 
+               arrow = arrow(length = unit(0.2, "cm")), size = 0.3) +
+  geom_segment(aes(x=1.99, xend=2.1, y=1, yend=1))
+
+
+
+
+

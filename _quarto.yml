@@ -24,11 +24,14 @@ website:
             href: topics/DART_theory.qmd
           - text: "Practice"
             href: topics/DART_tutorial.qmd
-#      - text: "Radar"
-#        menu:
-#          - text: "Intro"
-#          - text: "Theory"
-#          - text: "Practice"
+      - text: "SAR Tomography"
+        menu:
+          - text: "Intro"
+          - href: topics/SART_intro.qmd
+          - text: "Theory"
+          - href: topics/SART_theory.qmd
+          - text: "Practice"
+          - href: topics/SART_tutorial.qmd
 #      - text: "Lidar"
 #        menu:
 #          - text: "Intro"

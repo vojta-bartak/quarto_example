@@ -1,0 +1,187 @@
+Thanks for the introduction and of course I'm not the biggest expert. But I'm sure after David's lecture you already know lots of information about SAR and almost expert. And now I would like to spend some time to show you a little bit more information about SAR and specifically we will start with synthetic amperature radar tomography and especially its application in forestry.
+
+So let's start first with this a little bit of weird name tomography and I know we have some colleagues from Greece and Tomo here means slice and section right so if I'm wrong correctly and graph graphy means something to describe some yeah so here actually means we are going to
+
+reconstruct the structure of an object by observing the slice or the projection of this object. For example, we have a letter in the middle, pi, and we want to reconstruct the structure of this letter. How can we do this? We take measurements from different angles and then we somehow use some mathematical processing
+
+to reconstruct the pipe. And sometimes you notice there are quite a lot of noise behind. But if we add some filter, for example this high pass filter, at the end we will get a quite clear image about this later. And maybe some of you want to go to the hospital and you do this computer tomography or MRT. So you line down on a table, let's call it, and then you go through a tuner.
+
+which is basically doing similar thing like here. So you take slice on different angle and then you get the projection and then you can reconstruct the structure of your body. So based on this idea we are going to do something not exactly same but something similar in the SAR field.
+
+And here I would like to show you an example from DRR FSAR system. It's an airborne SAR system and it has four different bands, wavelengths. But here we show an example using airborne. It looks like exactly what you are doing in a hospital. So the scanning, imagine this is your body and it scans different locations. You can see when there is terrain,
+
+quite flat and when there is forest you see something from the top, something from the bottom and especially when you go to a very dense forest you can see some structure, right? The advantage of this technique is you can get a full coverage of a forest. But some of you who have been grinding ladder you might notice it's very coarse in comparison with ladder, right?
+
+But still, yeah, so this is another example. Matthias already mentioned last Monday that the biomass mission from ESA was launched last month. And one of the primary innovations of this satellite is tomography. Because before this satellite, there is no satellite which is specifically designed for tomography. Some may can do this, but it's not perfect.
+
+And here we show another example. So we have biomass satellites flying and we take the image of same location several times, maybe seven times within 18 days. And you can see with P band, David also introduced to you, we see more under canopy. So not only in the top leaves, but also more trunk. And after several measurements, yeah, this is one measurement, for example, after several months,
+
+we are able to reconstruct the structure of the forest. For example here. So we get a slice of each location. Yeah, that's wonderful. And now I'm going to introduce some basic principles about this technique. When we are talking about tomography, we want to get three-dimensional information. And the three-dimensional means we need to know the distance between different objects to the sensors. And in the SAR,
+
+In this case, how can we measure distance? As you already learned from David, we have one measurement called "face". And face, you can understand it as a relative distance measurement. For example, if you imagine this, this stick rotates one circle and then
+
+the electromagnetic wave propagates forward one wavelength. So if we know this angle, then we can somehow know how long is the distance that this wave propagates. And based on this principle, what happens if we have two waves? And you know from today's lecture when two waves exactly simultaneously go up together, then you will get a very strong signal. If they are just one go up, one go down, you get nothing at the end.
+
+But in this case, if we know the difference between two waves, for example, if we imagine that A is a forest, is a tree, and B1 and B2 is two sensors, two radar sensors. And if we know the phase difference, then we can estimate the distance difference based on this phase. And this is also the principle of interferometry. So interferometry from the name,
+
+you see interferon and raw metering. Metering means something like measuring, right? And interferon is, and I understand it's like something, you measure something by the interferon waves, right? So here is an example, nice example from Ian Woodhouse. You see there are two sources of waves, and if these two waves
+
+meet each other, then you can get this bright black pattern in the far field. And based on this pattern, we can get some information of the distance, relative distance between the points to the source. What are we going to do with this principle? So if we put this to source, not source, in this case, if the platform emits a signal, then it's a receiver.
+
+if we do a similar thing in space, we can get the pattern. And you see, even when the terrain is totally flat, we still get some pattern, right? Because same place have different distance to the two sensors. And for the slope, which is
+
+not forwarding to the, which is another side to the direction of the line of sight of the sensor, you see very sparse fringe. But for the slope which is facing this, facing the sensor, you see quite dense fringe. Okay, so, and here is another example from DRR, you can see, okay, this is usually we get from one star image. We have amplitude, we have phase.
+
+And from the face is quite chaos, right? Maybe there are some technology to get information from a single image of face. But personally, I don't know yet. What is common is we use two images. For example, look at this. So this is face from two images. And when they are correctly created, you will get some very interesting pattern.
+
+And based on this pattern, we can further develop-- sorry, this is same. So from this pattern, we can do some process like unwrapping. Here is wrapped face, which means if you look on the color, it goes from blue to red and jump to blue again. So it's wrapped. But there are some technical details I will skip here, which you will finally get a digital elevation model. Yeah.
+
+And here comes another problem. So if you take two images from Sentinel-1 and you do this process, you will get a map of coherence. Oh, by the way, sorry. Coherence here is-- so you do this simple calculation, and you will get something called coherence. And coherence is a complex number. So it's an amplitude, but also has a phase.
+
+And the amplitude of coherence can be regarded as a flag of the quality of the face. For example here, if the coherence is very high, if the two images are basically marrying the same stuff, the coherence is very high, then you get a very nice face pattern. But when the coherence becomes very low, it's usually the case in Sentinel-1, for example in some tropical region,
+
+you get very low coherence, then you indeed get some pattern or phase, but it's very noisy, which is not so reliable to extract information about distance. Why explain coherence here? Because in the Thomas-Au processing later, we are going to use this metric as the input.
+
+Okay, now comes to Thomas. I took this slide from Nesrin. This is a very nice tutorial you can also find in EU college. So what basically Thomas is doing, we take images of the forest and different locations to simulate this kind of aperture, but from another direction. And what you get from the star measurements is
+
+So the information was collapsed to one pixel. For example, all the information along this circle basically ends at this one third pixel. But if we have multiple paths and then we can somehow do an inverse problem. We can calculate or retrieve the structure information of this circle based on multiple paths.
+
+acquisition and different locations. Yeah, there are some mathematics behind, but the basic concept is you see different stuff from different location and there is strict requirement for the flight configuration. Yeah, so here is an example of the Thomas R results. So what you can see here is based on multiple SAR images, we get the structure of the forest
+
+And you can see these two slides, the red line and the blue line, about the forest. For example, it's quite clear. For the terrain, there is almost nothing. And for the forest, you see some signal from top and in the underground. And I said before, one advantage of this technique is you can get full coverage of the structure, which means you can get the reflectivity and different heights.
+
+Yeah, this is so cool, but what can you do with this? I will show you later. But another thing I need to mention is for this technique, there are lots of factors which could influence the profile you get at the end. Something about sensor, for example, polarization, wavelengths. And also about the platform, sometimes you can, let's say, you can turn flight. Sometimes you can fail. Sometimes you also can turn, but they have different space between each other. It's very influence.
+
+resolution of the profile, also different algorithms. Yes, for some algorithms you are more interested in the geometric resolution, but for some algorithms you are more interested in the radiometric accuracy, right? And also for the forested structure, this is about objects, so different objects, different structure, leaf on, leaf off for the short wavelengths, for example, and also water content in the leaves, in the trunks may have some influence about the profile.
+
+And the points with this part are the points I will discuss in the exercise later. If you don't have time, you can also go through these points by yourself. Okay, now we are going to discuss the factors which influence Thomas-Sarr profile individually. And here is another example from F-Sarr. I think it's also from Lope. And you see...
+
+By the way, this is RGB composition, so we use different colors for different polarizations. And from that lecture, you already learned that HV polarization is quite sensitive to forest structure. Why? Because if you think of H polarization, there are so many branches which rotate a little bit, so it will cause depolarization. The polarization of the wave will change.
+
+And it's perfectly seen in this picture. So we have green in forests, green dominated, right? But what if we do a tomosar to this image or to this red line, to this slice? Okay, so we see HH polarization is quite sensitive to the ground. Why? Is this signal from ground? Yes, but also not truly yes. Because
+
+Here is quite a huge trees, which means they have very big trunk. And what happened here is like the double bonds you learned just a few hours ago. The signal go back, bond with trunk, bond with ground and go back. All the signals follow same pattern, that's why the signal here is so strong. But for HV, you get lots of
+
+signal from the top of the tree. And also, to be honest, VV and HV sometimes look very similar. Why? I'm not sure yet. But at least from HH and HV, there is a big difference. So if you want, you can do the same thing like the RGB composition for the image. You can do the same thing for the topography. So you end up with this profile. You see very white on the ground, yes, and some green.
+
+in the top. And there are also some quite advanced techniques. For example, this example from Stefano Tavadini. Using different algorithms, you can totally separate ground and canopy. For example, here. You can totally separate ground and the top of the tree, which is cool. Why? Because in this case,
+
+We can use this topography information to... no, sorry. Use this ground components to estimate the under canopy terrain, especially in very dense forests. But the one problem is this algorithm is... it depends on the parameters you set for the algorithm, for example, and you will end up with different results, which...
+
+maybe need some difficulties to explain what you get at the end, right? If you change a little bit something you will get... For the ground it's fine but for the volume part it's quite different. So after polarization there is also another very important factor is wavelength. And David told you, okay? P band is very sensitive to
+
+to the trunk. Why? Because long wavelengths and it determines the penetration depth of the signal. And I also took these nice images from Tuolantong for visualization at least. For example, if you compare P band with H band, you can see immediately the difference. For example, for P bands in this part, there is very weak signal from the top. But for the R band, it's already quite strong.
+
+And if you look at an air band at different time, you will see some growth or tree, maybe here, or here. And if you look at X band, you will notice immediate difference. For example, X band, most of the signal comes from top. But don't forget, even for X band, it's very interesting. You still see some signal from ground. And there's also another
+
+centers which are quite important for example the flight configuration. In this case I will show you an example of using 10 flights and using 5 flights. If we use 10 flights you get this profile of course different transects you see quite clear pattern you see two peaks so the ground and the top but if you just use five flights it will get very blurred immediately because
+
+The baseline or the distance between the flights were determined by the resolution of the profile. Imagine the biomass, I think there's only 7 tracks. It can look quite different from what we get from airborne ladder.
+
+Another factor is the inversion algorithm. And I said before, some people are more interested in the accuracy of the resolution, where you can distinguish the peak, the ground, and the top easily. But for some application, for them, for biomass retriever, we are more interested in the backscatter or the radiometric accuracy. So that's why there's also an algorithm like beamforming to keep this
+
+radiometric accuracy but to lose the geometric accuracy. For example here, if you use PIM for me, it's much faster than KAPN, but you will get some set loop signal. Yeah, it's not caused, maybe it's not caused by the objects, but just by the algorithm, right? Okay. And I said before, yeah, it's cool, amazing, but what can you do with this thing for us?
+
+And here I show some example from my work during my PhD study. We use this amphithar data from Lope in Gabon, in Africa. The tree here is quite tall if you look on this map. Sometimes it's go 40 meters at least. And also very high biomass. So I will show you an example of the profile over this region. You see, we get some information about the top and I said before, but what can you do with this?
+
+One thing is if you group this different profile by the height, for example here, you will immediately see when the height grows, the peak of the signal will also grow. But one thing is interesting is for the points which have heights between 45 to 60 meters, you will see indeed it has a higher peak in the profile, but it's not the height
+
+of its rear height. Why? Because the signal will penetrate. Penetrate means it will attenuate. So the strength peak in the profile is not exactly the top of the tree, which means we need to develop some methods to relate this height with the rear height of the tree, which may occur here. And another example is about the AGB.
+
+Which is something similar. So if you have higher AGB, the peak will also occur a little bit higher. Because it's logic. In tropical forest, if the AGB is higher, it usually means the trunk is higher. So all the canopy, the location of canopy is higher. So we also get more backscatter from top. Yes.
+
+And also other factors which may be interesting for people who are working about moisture content or the influence of water. But this is also very experimental. I think this is also from DRR, from Matteo Padini. Here is an example of both the profile in different ways, in sunny and in rainy. What you can see is
+
+In the running die, you immediately get lots of information from top. Why? Because you got lots of water on top, right? And the die electric property of the leaves will change, which will influence the signal. I'm not sure the wavelengths, maybe air band, yeah, maybe this air band and wavelength. In for air band, the water will influence. And of course, we also have a signal change of the leaves. Sometimes the leaf on, sometimes leaf drop. This will also influence your results for them here.
+
+When the leaf drops off, when there is no leaf, you get strong signal in the ground. Logic. Why? Because nothing stops it. So it can reach easily. Good. So here are some references I used for this presentation. And I would really recommend this tutorial if you want to go a little bit deeper to tomography.
+
+have a very good lecture also script but they use the example data in this lecture is some temperate forest so it's quite a little bit lower you know and also just single polarization but can look about this if you're really interested. yeah then basically the short introduction about tomography and we we are
+
+some excess, but I'm not sure should we do now or after lunch because I'm sure you are already very tired. Hello everybody again and welcome back. I'm sure after lunch you are very energetic and before you forgetting everything about SAR tomography, I think maybe it's better we do something practical and you will remember it's more longer. First, we need to download the
+
+material for this exercise. So do you already download? Cool. Nice. Then we unzip this file. Yes. And inside this folder there's another folder. And then also trunk it. Unzip it. Yes. And in this folder there's another folder. So please copy this code folder.
+
+Please copy this code to the seafood which you under this RSF folder you used before in the morning. So you copy the code one here. Yes. So no question? Very good. And now let's start. In this, if you open the Jupiter lamp you used before,
+
+you can find this code already, this footer code and then open there is one Jupyter notebook called thomas_mine so this is a script we are going through later. There are also two other scripts which is python called thomas_plotting so it's some functions I defined for plotting for the exercise and also the toolbox which you get some
+
+functions for calculating the Tomasar profile. So if you are very interested in the details how it's do, how the Tomasar is working, you can go deep inside this folder, inside this script later. And also requirements, txt. This file list the libraries you are going to use, but David already installs the package, so we can just use it, which is nice.
+
+Wow, okay. Okay, after you open the script, maybe we go to... Where is it? Yeah, go to run on the red top. No, sorry, kernel. Restart kernel and clear all outputs of all cells. And restart the kernel to make sure there's nothing left from Davi's access. And are you ready, everybody? Good, seems like.
+
+And now let's go through the scripts. So yeah, this exercise is about the soil tomography of tropical forests. And this study site is a small sub-site from the Amphoresa campaign in 2016. And the study site is located in Lopé National Park in Gabun. And if you still remember, in this region we have very tall trees, which is around 40, 50.
+
+Yeah, and this script is developed based on this tutorial from EU college, but I ended more... I used different datasets which has more polarization, which are also tropical forests, and I also ended some analysis about the forest height and the abut ground biomass in the end. Now we can... What I'm going to do is I will go through the script quite fast because of time.
+
+And there are some tasks you could do here or at home if you have time. But feel free to ask me if you have any questions. You can write me just per email. So first, we import the general thumb modules. You just enter and shift. Yeah, it should work. Control and shift and enter. Yeah.
+
+and then define the project path which is a path you... ah this is actually interesting this is the path of the... this is the path of the... yeah this this footer die for tomasar so if you control error you copy the path and then change its here yeah change the project path please also change the direction of the slash yeah
+
+So for this path here, already done. Good. Then we can start to import the basic functions we are going to use and define some parameters. Here are several important parameters. The first one is multi-look, which is the size of the window you are going to use for calculating the covariance matrix. And also the height. This is the range you used for the Thomas-Harp processing. Yes.
+
+And also the polarization, yeah, this is more important. So afterwards you can change different polarization and also different Thomas-Angry. And here is a flag for the terrain normalization. I will explain this later what does this mean. And then we have two paths of the outputs. So one is without terrain normalization and the one is with terrain normalization.
+
+Yeah, we define the input parameters and we read the SAR data. Does anybody have questions? OK, no. Very good. So after you read the SAR data, you can see the size of the data. So we have 1,100 pixels in the x direction and 1,000 pixels on the y direction. And we also have 10 images.
+
+And then we can look at the data, how does it look like. So we have amplitude. Where is the forest? Does anybody have any idea which part is forest? Dark or white? Correct. And why? Just guess. Okay. Because it's a forest, it has trunks.
+
+It's complex structure you get scattering back, right? So it's white. For other region maybe it's grass or I don't know background is quite flat in comparison to P-band that's why it's quite dark because reflects and leaves, no signal. And we see the face of this image. You can also change the ID to check other images.
+
+And there are two other datasets which is first one is vertical wave number. So it's a factor which transfer phase into distance. Yes, and another one is phase correction term, which is the terrain phase. So we are only interested in forest. That's why we need to remove the influence from topography, right? So we will use this field later.
+
+Good, everything is ready and now let's remove the terrain phase first. Which means we remove the influence from topography. And remove residue topography phase. Wait a minute. Yeah. So we skip this part first. We skip the step 8 first. We don't need it now. And you will see what will happen. And then for the step 9 we look at the interferometry phase. Okay.
+
+It's very clear. Before removing the topography face and flat earth, you see lots of fringes, lots of patterns. As I described in the introduction part, even there's no terrain, you can still see this kind of stuff. It's called flat earth. And after moving, you can see for the ground, it's almost zero face. So the elevation is...
+
+probably be zero. And most of the information comes from forest. And now let's calculate the covariance matrix, which is a matrix of coherence between different tracks. Maybe sounds complex, but if we plot it, it becomes a little bit clear. Yeah, this takes a little bit longer because we have 10 tracks. And until now, does anybody have questions or something doesn't work?
+
+Seems not. Yeah, okay, perfect. Good. Nice. Then we get this picture. What can you see? Yeah, it's quite colorful. What can you see? So, in the left lower corner is a coherence phase, which is a measurement of distance, right? And in the right upper, you see this amplitude coherence, which is a measure of the quality of this phase. And you can see,
+
+For adjacent peaks, for adjacent tracks or flights, so which the flights next to each other, you can see the coherence is very high in general. Why? Because they are very close. So the tree doesn't change a lot, I assume. But if you look at other, for example, this picture means the coherence between track 5 and track, well, this is 7 or 8. Between track 5 and track 8, you see this.
+
+What you can see here is in the ground the coherence is quite high, and in the forest it's already quite low, it's 0.5 or 0.4. But anyway, based on this coherence matrix we are going to do some magic stuff, so called Tomasar. And if you run this script, we got the Tomasar results and for the visualization to make it more clear,
+
+We will normalize each profile into 0 and 1. So you run this normalization and you can plot the results here, for example. Here is, I set this under ratio because if you change the window size, the number of pixels will change. So this means we take the middle of the animals, sorry, this is the range direction.
+
+We take the middle range direction, 60 percentage azimuth direction, we got this point. And you can see the profile of this point. What you can see, two peaks and list, right? This can be ground and this can be the center of the canopy. Not exactly the center, but the part of the canopy. And along these two slides, you can see the Tomasa profiles, right?
+
+Yeah, of course you can also comment this and... Where is comment? Yeah, you can comment this and randomly select some point. You also get this profile, right? Yeah, you can play around with this. Okay, what I want to say about this figure, if you look at this, there is something... Okay, if you look at this part, it's almost in zero. But for the part where you can forest...
+
+the ground is quite low. So because in the ladder, sometimes you also do this terrain normalization, right? So you put all the point close point clothing, same reference. So you put the terrain and the same level and here. But in this case, why this happens? Because in this data set, they use tandem X to estimate the topography phase.
+
+And you know tandem X works as X-band, so it ends up somewhere in the middle of the canopy. It doesn't reach the ground. So what you get from tandem X is not the real under-canopy terrain. But with Thomas Sa we can deal with this problem. How? If you look at this figure, it's already quite clear where the terrain is. So we just count the elevation of this terrain and use it as the true terrain.
+
+In order to do this, we go back to the top. And then change this terrain flag to 1. If you go to step 4, there is a parameter called terrain flag. So if you change this to 1, then we will estimate this error. Residue terrain component. So yeah, you can...
+
+Run this again from top, but maybe skip some visualization parts. And run step 7. Pay attention here. You need to run step 8 in this case, because we want to get rid of the terrain. Run this. And this is the terrain residue we estimated. So as you can see in the forest region,
+
+we have some negative residue of the terrain. Yeah, then you can plot this again in step 9 and compute the covariance matrix again. We will skip step 11 because it takes quite long. And then you go to the step 12 again to calculate the tomography. And then step 13, normalize it. And then we will
+
+get something very interesting. Right? So in this case, for most of pixels, the terrain is corrected. So it's normalized. Everything is on the same level, but you can still see in some part is not perfect. Right? You also get something in from very bottom. It's not something is hidden on the ground. It's just, I would say some residue from the
+
+the method we use to find the ground, right? So we use tomography itself to find the ground. It can introduce some bells. But in general, you see, everything looks quite OK, right? And in this case, we are already ready to compare our profiles with LIDAR metric, right? So-- and then we are going to do something with LIDAR? Does somebody have a problem until now, or questions? OK. Seems not. No, we--
+
+load some Lidar results, for example, forest height and biomass, and then we can overlap the Lidar height profile with tomography profile. So in this figure, the blank line is the height from Lidar. Yeah, you see there are some mismatch, of course, right? But in general, they fit to each other quite well.
+
+And one point I want to say is, also if you still remember in my lecture, the face center of the Tomasar profile is not exactly the canopy height. So we need to do something to correct this. You can also try just some random other place. So it's in general fits quite well. And then we move to step 17. So we match the Tomasar.
+
+with LIDAR products and do some very preliminary analysis. What we can do first is you take all the Tomasa pixels within different height range and calculate the media or mean profile of these pixels. You will see something I've showed before in the lecture, right? So the shape of the profile changes with the height of the biomass, right? Which gives us
+
+which implies that we can do something with Tomasar to retrieve height or AGV. But how? I will not tell you because it's still undergoing. I don't think there's some very well established method yet. So it's still in a empirical phase. But if you do some preliminary research, you can see, OK, yeah, there are some-- from the basic stuff, there are some correlation.
+
+Very coarse. This is the face center, which is the peak of the thermal sub-profile. And this is the Lidar height. For example here. Generally, it's lower than the height before, as I said. But also the AGB. You can compare the AGB from Lidar with the tomography, reflectivity and different height.
+
+And to have a look about the correlation, there's one method people are using which is they use the Thomas-Harris reflectivity and 30 meters for example to estimate biomass. Why? Nobody knows why. Some assumption is if you imagine there's a terrain, right? So the top and the bottom was a
+
+Thomasov profile is very heavily influenced by the terrain, but in the middle components, it's less influenced, I would assume like this. But anyway, if you noticed, we only use HH, I just showed HH polarization here. If you try yourself by using HV polarization, you might see something very different, or even better than this.
+
+So your task is-- not task, but just if you still have time and interest to further explore, you can do something. Try different polarization. Try different methods, or try different multi-look size, which is the size of the window we used for calculating the coherence. And also try to use the four data sets or only
+
+Let's say 5 tracks or 6 tracks. Yeah? Very good idea. You mean the biomass, this one. Here I just show an example to show that Thomas-style reflectivity and different height
+
+can have different sensitivity to biomass. Of course, if you look on this correlation, 30 meter has higher correlation, but it doesn't mean that 30 meter is the best layer. It can also, like you said, maybe if you sum up the
+
+the Thomas-Harris reflectivity between 20 to 30 meter maybe seem better. And I also said before I don't think there is an established way to relate this to metric. Okay, so this is basically our whole access and do you have any other questions? Or it's too quick? I think it's too quick.
+
+But did you already run the scripts to this step or you already stopped in step one? Okay, sorry. Okay, good. Seems no questions. And if you want to ask more, we can discuss later. And now I would like to introduce my colleague, Johanna. Thank you, John. Yeah, thanks.

@@ -33,7 +33,7 @@ The evolution of RTMs parallels advances in computational power and our understa
 
 **The DART Advantage**
 
-DART represents the state-of-the-art in 3D radiative transfer modeling. Developed by \[CESBIO\](<https://www.cesbio.cnrs.fr/>) (Centre d'Etudes Spatiales de la BIOsphère), it simulates the complete radiative budget of natural and urban landscapes. DART can generate synthetic remote sensing imagery—from optical reflectance to thermal emission to LiDAR waveforms—that mimics what satellites and aircraft would observe over real terrain. This capability enables researchers to test retrieval algorithms, optimize sensor designs, and understand which spectral bands contain information about specific vegetation traits.
+DART represents the state-of-the-art in 3D radiative transfer modeling. Developed by [CESBIO](https://www.cesbio.cnrs.fr/) (Centre d'Etudes Spatiales de la BIOsphère), it simulates the complete radiative budget of natural and urban landscapes. DART can generate synthetic remote sensing imagery—from optical reflectance to thermal emission to LiDAR waveforms—that mimics what satellites and aircraft would observe over real terrain. This capability enables researchers to test retrieval algorithms, optimize sensor designs, and understand which spectral bands contain information about specific vegetation traits.
 
 **The Challenge and Opportunity**
 
@@ -47,7 +47,7 @@ Watch the **video lecture** in which Dr. Růžena Janoutová introduces the key 
 
 View and download the **presentation** from the video:
 
-[![](DART_figures/fig_pres_front.png){.border width="200px"}](https://drive.google.com/file/d/1ITWr_ro29W5qk53jMQyPBlCvUL5-IToc/view?usp=drive_link)
+[![](DART_figures/fig_pres_front.png){.border width="200px"}](https://drive.google.com/file/d/1ITWr_ro29W5qk53jMQyPBlCvUL5-IToc/view?usp=sharing)
 
 Read the [**theory**](DART_theory.qmd) to understand:
 
