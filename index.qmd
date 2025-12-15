@@ -3,7 +3,9 @@ title: "Remote Sensing of Forests – E-learning Course"
 format: html
 ---
 
-Welcome to the Remote Sensing of Forests e-learning course developed within the EarthBridge project (Horizon Europe, Grant Agreement 101079310). The course brings together the expertise of lecturers from CZU Prague, TU Dresden, Università di Bologna, and the University of Bonn, and builds directly on the EarthBridge Summer School focused on environmental Earth Observation and biodiversity monitoring.
+![](forest_sumava.png)
+
+Welcome to the Remote Sensing of Forests e-learning course developed within the [EarthBridge project](https://earthbridge.eu) (Horizon Europe, Grant Agreement 101079310). The course brings together the expertise of lecturers from CZU Prague, TU Dresden, Czech Globe, and TU Munich, and builds directly on the [EarthBridge Summer School 2025](https://earthbridge.eu/summer-school) focused on environmental Earth Observation and biodiversity monitoring.
 
 This online resource provides an accessible entry point into advanced methods for analysing forest ecosystems using modern remote sensing technologies. Its goal is to support students, early-career researchers, and professionals who wish to deepen their understanding of environmental sensing and apply these methods in research and practice.
 
@@ -29,3 +31,5 @@ The course is designed as a living resource that will continue to evolve. Additi
 We hope that these materials support your learning, research, and exploration of remote sensing methods for understanding and monitoring forest ecosystems.
 
 ---
+
+![](logos.png)

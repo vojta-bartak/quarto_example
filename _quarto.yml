@@ -33,7 +33,7 @@ website:
           - text: "Practice"
           - href: topics/SART_tutorial.qmd
       - text: "Authors"
-      - href: authors.qmd
+        href: authors.qmd
 
 
 format:
