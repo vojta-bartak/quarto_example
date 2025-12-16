@@ -290,3 +290,7 @@ Key references for further reading:
 - [EO-College SAR Tomography Tutorial](https:// github.com/EO College/tomography_tutorial , https://eo college.org/resource/sar
 tomography)
 - [ESA PolInSAR Workshop materials](https ://eo4society.esa.int/resources/6th advanced polarimetry 2021)
+
+---
+
+![](logos.png)

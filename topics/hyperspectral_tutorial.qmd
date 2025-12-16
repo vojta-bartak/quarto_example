@@ -840,3 +840,7 @@ When applying these methods to your own data:
 ------------------------------------------------------------------------
 
 *This tutorial was designed to provide both theoretical understanding and practical implementation guidance for hyperspectral data analysis. The modular structure allows researchers to adapt specific components to their unique research questions and datasets.*
+
+---
+
+![](logos.png)

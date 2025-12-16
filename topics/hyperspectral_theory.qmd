@@ -221,3 +221,7 @@ This theoretical foundation prepares you to interpret the analytical methods dem
 
 ::: {#refs}
 :::
+
+---
+
+![](logos.png)

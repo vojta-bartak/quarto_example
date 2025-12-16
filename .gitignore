@@ -2,3 +2,6 @@
 
 **/*.quarto_ipynb
 .Rproj.user
+topics/worldimagery/
+topics/products
+topics/data

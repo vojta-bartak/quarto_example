@@ -21,10 +21,13 @@ bibliography: DART_references.bib
 
 Remote sensing provides us with unprecedented capabilities to observe Earth's ecosystems from above. However, the spectral signals captured by satellite and airborne sensors represent complex interactions between electromagnetic radiation and vegetation structures. To unlock the full information content of these signals, we need more than statistical relationships—we need physical understanding of how light interacts with plant canopies.
 
-Radiative Transfer Models (RTMs) are powerful tools that use physical equations to simulate light interaction within virtual scenes, including forests, agricultural fields, and urban environments. Unlike empirical models that rely on correlations between spectral data and field measurements, RTMs are based on the fundamental laws of physics governing light propagation, scattering, and absorption. This physical foundation makes RTMs invaluable for:
+Radiative Transfer Models (RTMs) are powerful tools that use physical equations to simulate light interaction within virtual scenes, including forests, agricultural fields, and urban environments. Unlike empirical models that rely on correlations between spectral data and field measurements, RTMs are based on the fundamental laws of physics governing light propagation, scattering, and absorption. 
+
+A critical advantage of RTMs is that **you control all the parameters** in your virtual scene—you know exactly what you are simulating and understand all the elements present. This complete knowledge of the system makes RTMs invaluable for:
 
 - **Interpreting remote sensing observations** by linking canopy reflectance to biophysical and biochemical properties
 - **Understanding ecosystem processes** related to light scattering and energy balance
+- **Conducting sensitivity analyses** to determine which structural or biochemical factors most strongly influence your remote sensing data
 - **Designing new sensors** and optimizing acquisition strategies
 - **Retrieving vegetation traits** that cannot be directly measured from space
 
@@ -33,6 +36,8 @@ The evolution from simple 1D turbid medium approximations to complex 3D ray-trac
 ## Types of Radiative Transfer Models
 
 RTMs operate at different spatial scales and levels of complexity, each designed for specific applications and data types. Understanding this hierarchy is essential for selecting the appropriate model for a given research question.
+
+**Hierarchical Relationship**: It's important to recognize that leaf-level and canopy-level RTMs are interconnected. While they produce different types of outputs, **canopy-level models typically require leaf-level models as inputs**. The optical properties (reflectance and transmittance) simulated by leaf-level RTMs serve as fundamental input parameters for canopy-level simulations. This hierarchical structure means that understanding leaf optics is essential for accurate canopy-scale modelling.
 
 ### Leaf-Level RTMs
 
@@ -141,11 +146,14 @@ RTMs can be categorized by their representation of canopy architecture:
 
 **1D Models (Turbid Medium):**
 
-The simplest approach treats vegetation as horizontally infinite, vertically stratified layers with uniformly distributed scatterers (@fig-model-complexity, left panel). Examples include SAIL [@verhoef1984light] and GeoSAIL. Advantages:
+The simplest approach treats vegetation as horizontally infinite, vertically stratified layers with uniformly distributed scatterers (@fig-model-complexity, left panel). Examples include SAIL [@verhoef1984light] and GeoSAIL. 
 
-- Computationally fast
+Advantages:
+
+- **Computationally very fast** - can run thousands of simulations quickly
 - Well-suited for homogeneous canopies (crops, grasslands)
 - Many analytical solutions available
+- **Easy to parameterize** - requires only basic canopy parameters
 
 Limitations:
 
@@ -153,13 +161,29 @@ Limitations:
 - Poor performance for forests and sparse vegetation
 - Neglects directional structure effects
 
+::: callout-tip
+## When to Use Simple Models
+
+Don't dismiss 1D models as "too simple." They serve important purposes:
+
+- **Exploratory analyses** where speed matters more than precision
+- **Operational applications** where computational efficiency is critical
+- **Homogeneous vegetation** where added complexity provides minimal benefit
+- **Situations where "good enough" accuracy** suffices for the research question
+
+Sometimes a fast, simple model that you can run many times is more valuable than a slow, complex model with slightly better accuracy.
+:::
+
 **3D Geometrical Models:**
 
-An intermediate approach represents trees as geometric primitives (cones, ellipsoids, cylinders) filled with turbid medium (@fig-model-complexity, center panel). Examples include FLIGHT [@north1996threefreedimensional] and discrete models. Advantages:
+An intermediate approach represents trees as geometric primitives (cones, ellipsoids, cylinders) filled with turbid medium (@fig-model-complexity, center panel). Examples include FLIGHT [@north1996threefreedimensional] and discrete models. This represents a **practical compromise** between simplicity and realism.
+
+Advantages:
 
 - Captures crown-scale structure and gaps
-- More realistic than 1D for forests
-- Moderate computational demands
+- **More realistic than 1D for forests** while remaining tractable
+- **Moderate computational demands** - good balance of speed and accuracy
+- Don't require detailed 3D models of individual trees
 
 Limitations:
 
@@ -169,7 +193,20 @@ Limitations:
 
 **3D Complex Models:**
 
-The most sophisticated approach explicitly represents 3D tree architecture using detailed geometric meshes or voxelized structures (@fig-model-complexity, right panel). Examples include DART-Lux [@gastellu2017dart], LESS [@qi2019less], and Helios++ [@bailey2020helios]. Advantages:
+The most sophisticated approach explicitly represents 3D tree architecture using detailed geometric meshes or voxelized structures (@fig-model-complexity, right panel). Examples include DART-Lux [@gastellu2017dart], LESS [@qi2019less], and Helios++ [@bailey2020helios]. 
+
+::: callout-note
+## 3D Model Input Formats
+
+3D complex models can accept scene descriptions in two primary formats:
+
+- **Voxels**: 3D grid cells (volume elements) with assigned optical properties, often derived from terrestrial laser scanning or computed tomography
+- **Facets/Vectors**: Explicit geometric surfaces (triangles, polygons) representing leaves, branches, and stems, typically from 3D modeling software or photogrammetry
+
+The choice between voxels and facets depends on your data source and the specific radiative transfer model you're using. Many modern RTMs support both representations.
+:::
+
+Advantages:
 
 - Highest realism and accuracy
 - Can incorporate terrestrial laser scanning (TLS) data
@@ -177,18 +214,34 @@ The most sophisticated approach explicitly represents 3D tree architecture using
 
 Limitations:
 
-- Computationally intensive
-- Requires detailed 3D vegetation data
-- Complex parameterization
+- **Computationally intensive** - simulations can take hours to days for large scenes
+- **Requires detailed 3D vegetation data** - not always available or feasible to collect
+- **Complex parameterization** - many parameters to set, more opportunities for errors
+- **Steep learning curve** - requires significant time investment to master the software
 
 ::: callout-important
-## Choosing the Right Model
+## Choosing the Right Model Complexity
 
-Model selection depends on:
+Model selection depends on finding the appropriate balance between accuracy and practicality:
 
+**Consider simpler models when:**
+- Computational resources are limited
+- You need to run many simulations quickly
+- Your vegetation is relatively homogeneous
+- Added complexity doesn't improve your specific outcomes
+- You're in exploratory/preliminary phases
+
+**Choose complex 3D models when:**
+- You have detailed structural data (e.g., from TLS)
+- Your research specifically requires high spatial detail
+- You're studying heterogeneous forests
+- You need to simulate LiDAR or detailed BRDF patterns
+- The research question justifies the computational investment
+
+**Key factors to consider:**
 - **Application scale**: Leaf, plot, landscape
 - **Available data**: Biochemical measurements, structural data, TLS point clouds
-- **Research questions**: What traits need to be retrieved?
+- **Research questions**: What traits need to be retrieved? What accuracy is required?
 - **Computational resources**: Runtime and memory constraints
 - **Ecosystem type**: Homogeneous crops vs. heterogeneous forests
 
@@ -594,6 +647,36 @@ When field measurements are limited, use databases:
 - ICP Forest, ICOS networks for forest plots
 - Published spectral libraries for common species
 
+::: callout-important
+## Two-Step Role of Field Measurements
+
+Field measurements serve dual purposes in RTM-based trait retrieval, corresponding to two distinct phases of the workflow:
+
+**Step 1: Scene Validation (One-Time Simulation)**
+
+- Use your **exact measured optical properties** (leaf, bark, ground spectra)
+- Set **exact measured structural parameters** (LAI, canopy cover, tree dimensions)
+- Set **exact biochemical properties** from lab analyses
+- Run a single simulation and compare with your **actual image data**
+- Goal: Verify that your virtual scene correctly represents reality
+- If simulation matches observations reasonably well → proceed to Step 2
+- If not → adjust scene parameters (check optical properties, structure, atmospheric settings)
+
+**Step 2: LUT Generation and Final Validation**
+
+- Keep optical properties and structure as validated in Step 1
+- Now vary **only the traits you want to retrieve** (e.g., chlorophyll ranges from 20-80 μg/cm²)
+- Include realistic combinations of other confounding parameters
+- Generate the LUT through many simulations
+- Apply retrieval algorithm to your image
+- **Validate final results** against field measurements, but remember:
+  - Field measurements are typically at leaf level (1-2 leaves)
+  - Image pixels represent crown or canopy scale
+  - You must **aggregate** field data appropriately (e.g., tree-level mean) for comparison
+  
+This two-step approach ensures your model is physically realistic before using it for trait estimation.
+:::
+
 ### Scene Configuration
 
 RTM simulations require careful scene parameterization. General parameters apply to all RTM studies:
@@ -614,19 +697,36 @@ RTM simulations require careful scene parameterization. General parameters apply
 
 For forest ecosystems, additional structural detail is required [@hanousek2024high]:
 
-**Two Approaches:**
+**Two Approaches to Scene Parameterization:**
 
-1. **General scene** (for LUT generation):
-   - Smaller scene extent (e.g., 30m × 30m)
-   - Multiple structural combinations (varying LAI and canopy cover)
-   - Captures full variability of the forest type
-   - Requires more simulations but creates comprehensive LUT
+The choice of parameterization strategy depends on your computational resources, data availability, and whether you need a general model or site-specific analysis:
 
-2. **Exact scene** (for site-specific simulation):
-   - Larger scene matching study site
-   - Fewer combinations (only realistic structural parameters for that site)
-   - Includes all factors affecting spectra at specific location
-   - Used when you have detailed field data for one location
+1. **General scene approach** (for LUT generation):
+   - **Scene extent**: Smaller subscene (e.g., 10m × 10m to 30m × 30m)
+   - **Structural combinations**: Many variations to capture full variability (multiple LAI values, canopy cover levels, tree arrangements)
+   - **Purpose**: Creates a comprehensive LUT applicable to diverse forest conditions of the same type
+   - **Advantage**: Once created, the LUT can be applied to any similar forest
+   - **Disadvantage**: Requires more simulations to cover the parameter space
+   - **Best for**: Creating transferable retrieval databases for operational use
+
+2. **Exact scene reconstruction** (for site-specific simulation):
+   - **Scene extent**: Larger, matching entire study site (e.g., 100m × 100m or more)
+   - **Structural combinations**: Fewer combinations—only the specific trait variations you want to retrieve, with fixed structural parameters matching your site
+   - **Purpose**: Accurately represents a specific location with all its unique characteristics
+   - **Advantage**: Fewer simulations needed (only trait variations, not structural variations)
+   - **Disadvantage**: Requires detailed site data and can be computationally intensive for large areas
+   - **Best for**: Validation studies, detailed site-specific analyses, or when you have comprehensive field measurements
+
+::: callout-important
+## Practical Consideration
+
+If you have a 100m × 100m site to analyze:
+
+- **Option A**: Reconstruct the entire 100m × 100m scene exactly → simulate only trait variations → fewer total simulations but large scene
+- **Option B**: Create 10m × 10m general scene → simulate many structural AND trait combinations → more simulations but smaller scenes
+
+The choice depends on your available computational power and whether you need results for one specific site or a generalizable approach for multiple sites.
+:::
 
 ![3D forest scene representation in DART. (a) Top-down view showing tree positions in systematic grid pattern with brown ground visible between crowns. (b) Oblique 3D view showing detailed tree architecture with individual crowns, trunks, and branches. Scene dimensions are 30m × 30m with trees positioned to achieve target canopy cover and LAI. Source: Hanousek et al. (2024).](DART_figures/fig_scene_parameters.png){#fig-scene-parameters width="100%"}
 
@@ -915,3 +1015,7 @@ RTMs enable quantitative ecosystem monitoring from space.
 ---
 
 *This theoretical background document is designed to accompany practical tutorials on RTM application. For hands-on guidance on using DART for forest scenes, see the companion "DART Forest Scene Setup Tutorial".*
+
+---
+
+![](logos.png)

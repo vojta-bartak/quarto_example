@@ -38,3 +38,7 @@ Fabian Fischer is a researcher at the Technical University of Munich specializin
 ![](bartak.jpg)
 
 Vojtěch Barták is a researcher and software developer at CZU specialising in geospatial analysis, remote sensing workflows, and reproducible scientific computing. He works on the integration of environmental sensing data, development of analytical tools, and preparation of educational materials for Earth Observation training.
+
+---
+
+![](logos.png)

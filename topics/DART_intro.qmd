@@ -66,3 +66,7 @@ Follow the [**practical tutorial**](DART_tutorial.qmd) to learn how to:
 -   Define spectral bands and sensor geometry
 -   Run simulations and generate synthetic imagery
 -   Create Look-Up Tables (LUTs) for trait retrieval
+
+---
+
+![](logos.png)

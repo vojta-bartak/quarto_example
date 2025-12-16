@@ -15,7 +15,7 @@ The course is structured into thematic chapters covering key domains of forest r
 - [Radiative Transfer Modelling](topics/DART_intro.qmd)
 - [Radar Remote Sensing]()
 - [SAR Tomography](topics/SART_intro.qmd)
-- [Lidar]()
+- [ALS Processing ]()
 
 Each chapter combines:
 

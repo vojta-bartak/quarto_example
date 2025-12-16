@@ -1,0 +1,712 @@
+---
+title: "ALS Processing Tutorial - Part I"
+author: "Fabian Jörg Fischer"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    theme: cosmo
+    embed-resources: true
+    number-sections: true
+  pdf:
+    toc: true
+    number-sections: true
+execute:
+  warning: false
+  message: false
+  cache: true
+editor: visual
+---
+
+## Owerview
+
+This is an Notebook for a tutorial on ALS processing in R.
+
+### Objective
+
+::: callout-note
+## What this aims to be
+
+-   a quick introduction
+-   overview over typical workflow
+-   overview over typical uncertainties and errors
+:::
+
+::: callout-important
+## What this does not aim to be
+
+-   fully developed and robust processing workflow
+-   full analysis framework
+:::
+
+### General guidance
+
+**Useful processing maxims:**
+
+-   prefer upper canopy data over within-canopy data
+-   prefer simple over complex metrics
+-   carry out sensitivity analyses (changes in parameters, changes in data)
+
+**Useful books/tutorials:**
+
+-   Interactive introduction by NOAA: <https://coast.noaa.gov/digitalcoast/training/intro-lidar.html>
+-   Excellent overview by NEON: <https://www.neonscience.org/resources/learning-hub/tutorials/lidar-basics>
+-   Excellent tutorial on open source processing: <https://r-lidar.github.io/lidRbook/>
+-   Standard software tool / LAStools + documentation: <https://rapidlasso.de/product-overview/> + <https://groups.google.com/g/lastools>
+-   Surface models guidance: Fischer et al. 2024, Methods in Ecology and Evolution, <https://doi.org/10.1111/2041-210X.14416>
+-   3D density processing: <https://amapvox.org/>
+
+::: callout-tip
+## Personal Coding Preferences
+
+I have a few personal preferences for coding in R. These preferences will be visible in the scripts, but you do not have to follow them. In particular:
+
+-   no "tidyverse" coding (no pipes, no dplyr, etc.) except ggplot
+-   using data.table for non-spatial data manipulation
+-   using terra for spatial data manipulation
+-   no use of "\<-" for assigning values, always using "=" operator
+:::
+
+### Setup and Loading Packages
+
+```{r setup}
+#| label: setup-packages
+#| output: false
+
+# standard libraries for our purposes
+library(lidR) # default lidar processing software in R, rasterizes point clouds
+library(terra) # for analyzing rasterized products
+library(data.table) # fast data manipulation 
+library(ggplot2) # plotting
+library(viridis) # plotting
+library(patchwork) # plotting
+library(RCSF) # ground classification CSF
+# library(RMCC) # ground classification MCC
+library(future)
+
+
+
+```
+
+## Sample Data: ALS Point Clouds from G-LiHT and NEON at Harvard Forest
+
+Throughout this document, we will focus on 8 square kilometres of forest in the U.S. The data are available [here](https://drive.google.com/file/d/1VYg0pwRWS1jPqHQ31z53nVxwl7pMmSPK/view?usp=sharing). Unzip the dowloaded folder into your working directory and keep the directory structure as it is.
+
+### Study Site: Harvard Forest
+
+Located in the Worcester ecoregion, vegetation is consistent with those of transition hardwoods-white pine-hemlock forests. Due to historical logging and hurricanes, the forest is second-growth and many of the trees are under 100 years old. The dominant vegetation is regenerating Eastern Deciduous temperate forest comprised of red oak (*Quercus rubra*), red maple (*Acer rubrum*), and white pine (*Pinus strobus*). Understory shrubs, trees, ferns, and flowering herbs are common in areas with higher moisture.
+
+![Harvard Forest canopy view](ALS_figures/img2.png)
+
+![Harvard Forest location](ALS_figures/img1.png)
+
+::: callout-note
+## Data Source
+
+Directly taken from: <https://www.neonscience.org/field-sites/harv>
+:::
+
+**View from above:**
+
+```{r orthophoto}
+#| label: plot-orthophoto
+#| echo: false
+#| message: false
+#| eval: true
+
+# plot orthophoto
+ext_harv = vect("data/ext_harv.shp")
+harv_rgb = rast("worldimagery/basemap_20250601161611.986751.tif")
+harv_rgb = crop(harv_rgb, project(ext_harv, harv_rgb))
+plot(harv_rgb)
+```
+
+### Data: Airborne Laser Scans
+
+Harvard Forest is probably one of the most-scanned sites. Some parts of it have been scanned with airborne lasers 12 times between 2012 and 2024, and these are just the openly available ones.
+
+There are three types of scanning agencies:
+
+-   **NEON**: National Ecological Observatory Network - continuous surveys of ecologically interesting sites (8 scans, all summer)
+-   **GLiHT**: NASA laser scanning - mostly satellite validation (3 scans, all summer)
+-   **3DEP**: General U.S. national survey (1 scan, winter)
+
+## Guiding Question: What is the Typical Forest Structure at Harvard Forest?
+
+**Motivation:**
+
+-   relevance for biomass
+-   relevance for disturbance monitoring
+-   relevance for habitat/biodiversity assessments
+
+**Questions:**
+
+-   how do we process ALS point clouds to obtain estimates of height?
+-   what do you expect the typical tree height to be?
+
+## Processing
+
+The different steps here are modelled on the lidR handbook (<https://r-lidar.github.io/lidRbook/>). For this exercise, we rely on an early NEON scan from 2012, as this is a lower quality scan and faster to process. However, for those that would like to compare two scans, there is also a GLiHT scan from 2012 in the folder.
+
+### Reading in Point Cloud Data and Quality Checks
+
+When reading in point cloud data, there are several things to consider:
+
+-   **Data types**: .las, .laz, .asc, .xyz
+-   **Coordinate Reference Systems (CRS)**: usually UTM coordinates
+-   **GPS times**: GPS week time vs. adjusted standard time
+-   **Data quality**: pulse density (more important than point density)
+
+```{r read-data}
+#| label: read-las-data
+#| eval: true
+
+# read in a single tile and examine it.
+las = readLAS("data/NEON/2012/731000_4712000.laz")
+
+# clip the tile to a smaller extent for quicker processing
+las = clip_rectangle(las, 731400, 4712175, 731700, 4712475)
+
+# check sumstats
+print(las)
+summary(las)
+
+# check the underlying structure (data.table)
+las_dt = las@data
+class(las_dt)
+str(las_dt)
+```
+
+We can visualize the point cloud:
+
+```{r visualize-cloud}
+#| label: visualize-point-cloud
+#| eval: true
+
+# visualize the point cloud
+# this may not work, especially for large point clouds
+plot(las) 
+```
+
+We can automatically check the quality of the files:
+
+```{r quality-check}
+#| label: check-quality
+#| eval: true
+
+# check quality
+las_check(las)
+```
+
+::: callout-warning
+## Common Warnings
+
+You will notice a few warnings. Duplicate and degenerate points are normal and usually occur when the laser scanner samples densely, but the resolution of the coordinates is low (rounding of digits). We often remove true duplicates, but it's not super important.
+
+More worrying are:
+
+-   outliers
+-   missing coordinate reference systems (CRS)
+-   inconsistencies in return numbers (may indicate missing points)
+:::
+
+#### Pulse Density Analysis
+
+We can create simple maps that evaluate the scan quality. For example, we can get an estimate of the pulse density of scans. This is the shots per unit area (usually reported per sqm), and indicates how well an area has been sampled. This is usually calculated as the density of first or last returns per square metre, because there is only one first and one last return for each pulse.
+
+```{r pulse-density}
+#| label: calculate-pulse-density
+#| fig-cap: "Pulse density map showing variation across the scan area"
+#| eval: true
+
+# evaluate pulse density
+# set desired resolution of rasterization
+res_pd = 5
+pd = grid_metrics(las, ~sum(ReturnNumber == 1), res = res_pd) # calculate the sum of first returns in each 5 x 5 m2 window
+pd = pd / (res_pd * res_pd) # normalize by area (pd per sqm)
+plot(pd, col = viridis(100, option = "turbo"), main = "Pulse density")
+```
+
+::: callout-note
+## Pulse Density Patterns
+
+Notice how pulse density can vary strongly within scans - airplanes fly back and forth and some areas are sampled twice (much higher pulse density in the centre of the map), while areas underneath the plane may only be sampled once (left and right side).
+
+Based on our own research:
+
+-   Areas with pulse densities \< 2 are not sufficiently sampled for high resolution analysis (\~ 1m)
+-   Pulse densities \> 5 are generally recommended
+-   \> 10-15 in very dense forests
+-   If scanners have a low ground penetration rate (most pulses only generate one return), higher pulse densities may be necessary
+:::
+
+You can also check out the scan angle. We plot the absolute scan angle to identify areas where points are mostly scanned from oblique angles.
+
+```{r scan-angle}
+#| label: calculate-scan-angle
+#| fig-cap: "Absolute scan angle map"
+#| eval: true
+
+# evaluate scan angle
+# set desired resolution of rasterization
+scanangle = grid_metrics(las, ~abs(mean(ScanAngleRank)), res = 5)
+plot(scanangle, col = viridis(100, option = "turbo"), main = "Absolute scan angle")
+```
+
+### Digital Terrain Model / Ground Classification
+
+A key requirement of most ALS-based analysis is to derive a high-resolution model of the terrain, a so-called digital terrain model (DTM).
+
+::: callout-tip
+## DTM Recommendations
+
+A few recommendations:
+
+-   use default classification provided by companies / agencies that acquired data
+-   if you need to classify yourself, use commercial software
+-   if no access to commercial software, use Cloth Simulation Filter (CSF)
+-   evaluate uncertainties
+:::
+
+First, we check ground classification for a single tile:
+
+```{r check-ground}
+#| label: check-ground-classification
+#| eval: true
+
+# check classifications
+las@data[,.N,Classification] # ground classification is 2, noise is 7
+plot(las, color = "Classification", size = 3, bg = "white") 
+```
+
+Then, we derive a digital terrain model for the tile:
+
+```{r create-dtm}
+#| label: create-digital-terrain-model
+#| eval: true
+
+# derive the DTM
+dtm = rasterize_terrain(las, res = 1, algorithm = tin(), use_class = 2L)
+plot(dtm, col = viridis(100, option = "turbo"), main = "Elevation (m)")
+```
+
+### Digital Surface Model and Canopy Height Model
+
+A canopy height model (CHM) shows the height of the vegetation above the ground. It is calculated as the difference between a digital surface model (DSM, height of the canopy) and the digital terrain model (DTM, height of the ground).
+
+```{r chm-highest}
+#| label: create-chm-highest
+#| fig-cap: "Canopy Height Model using highest point method"
+#| eval: true
+
+# remove noise (class 7 and 18)
+las_nonoise = filter_poi(las, Classification != 7L & Classification != 18L)
+
+# create CHM (use highest point per grid cell) 
+dsm_highest = rasterize_canopy(las_nonoise, res = 1, algorithm = p2r())
+chm_highest = dsm_highest - dtm
+plot(chm_highest, main = "CHM (highest point)")
+```
+
+::: callout-warning
+## CHM Limitations
+
+Notice that there are a few NA values and a few small "holes" in the CHM. This happens often with "highest point" CHMs when the scan quality is low. They are generally susceptible to differences in pulse density and should be avoided for comparisons across scans.
+:::
+
+Now we create another CHM, but interpolate the canopy with a so-called Delaunay-triangulation (create a mesh of triangles between the nearest points in xy space). When applied only to the first returns, this is a robust (albeit not always aesthetically pleasing) way of inferring canopy height.
+
+::: callout-note
+## TIN Preprocessing
+
+Note that lidR by default carries out a pre-selection of "highest" points before the interpolation. In our experience, this makes the CHM less robust, so it needs to be specifically deactivated.
+:::
+
+```{r chm-tin}
+#| label: create-chm-tin
+#| fig-cap: "Canopy Height Model using TIN method"
+#| eval: true
+
+# create a more robust CHM by using only first returns
+las_nonoise_first = filter_first(las_nonoise)
+dsm_tin = rasterize_canopy(las_nonoise_first, res = 1, algorithm = dsmtin(highest = FALSE))
+chm_tin = dsm_tin - dtm
+plot(chm_tin, main = "CHM (tin)")
+```
+
+Now plot the difference between the two CHMs:
+
+```{r chm-comparison}
+#| label: compare-chm-methods
+#| fig-cap: "Comparison of CHM methods"
+#| fig-width: 10
+#| fig-height: 5
+#| eval: true
+
+# compare the differences between the two CHMs
+chm_diff = chm_highest - chm_tin
+(mindiff = as.numeric(global(chm_diff, "min", na.rm = T)))
+(maxdiff = as.numeric(global(chm_diff, "max", na.rm = T)))
+(meandiff = as.numeric(global(chm_diff, "mean", na.rm = T)))
+plot(chm_diff, col = viridis(100, option = "turbo"), main = "Canopy height difference (m)")
+```
+
+```{r chm-histogram}
+#| label: chm-difference-histogram
+#| fig-cap: "Distribution of CHM differences"
+#| eval: true
+
+hist(chm_diff, main = "Canopy height difference (m)", breaks = seq(floor(mindiff), ceiling(maxdiff), 0.25))
+```
+
+### Processing of Entire ALS Collection
+
+Usually, we do not just want to process data with a single small point cloud, but large areas (e.g., many square kilometres). In this case, we can read the tiles in all together as LAScatalog:
+
+```{r read-catalog}
+#| label: read-las-catalog
+#| eval: true
+
+# read in a full catalog of LAS files
+las_ctg = readLAScatalog("data/NEON/2012")
+```
+
+```{r catalog-summary}
+#| label: catalog-summary-stats
+#| eval: true
+
+# evaluate summary statistics
+print(las_ctg)
+summary(las_ctg)
+las_check(las_ctg)
+plot(las_ctg, main = "Tiles in the LAScatalog")
+```
+
+We can plot pulse density for the entire scan area. Note that this will take a bit of time on your computer. To speed it up, we use parallel processing.
+
+```{r catalog-pulse-density}
+#| label: catalog-pulse-density
+#| eval: true
+
+# rasterize pulse density
+# we pick a coarser resolution than before
+res_pd = 20
+
+# we process on 4 cores
+# Set up a parallel plan (adjust number of workers as needed)
+plan(multisession, workers = 4)   # if it creates problems, deactivate
+
+pd = grid_metrics(las_ctg, ~sum(ReturnNumber == 1), res = res_pd) # calculate the sum of first returns
+```
+
+```{r normalize-pd}
+#| label: normalize-pulse-density
+#| eval: true
+
+pd = pd / (res_pd * res_pd) # normalize by area (pd per sqm)
+```
+
+Plot the pulse density:
+
+```{r plot-catalog-pd}
+#| label: plot-catalog-pulse-density
+#| fig-cap: "Pulse density across the entire study area"
+#| eval: true
+
+# plot it again
+plot(pd, col = viridis(100, option = "turbo"), main = "Pulse density")
+```
+
+Now we rasterize a DTM for the entire area:
+
+```{r catalog-dtm}
+#| label: create-catalog-dtm
+#| eval: true
+
+# derive digital terrain model
+dtm_ctg = rasterize_terrain(las = las_ctg, res = 1, algorithm = tin(), use_class = 2L)
+```
+
+Plot the DTM:
+
+```{r plot-dtm}
+#| label: plot-catalog-dtm
+#| fig-cap: "Digital Terrain Model for the full study area"
+#| eval: true
+
+# plot DTM
+plot(dtm_ctg, col = viridis(100, option = "turbo"), main = "Elevation (m, full area)")
+```
+
+Now we rasterize a CHM for the entire area:
+
+```{r catalog-chm}
+#| label: create-catalog-chm
+#| eval: true
+
+# derive a canopy height model
+# now we also restrict only to first returns and drop noise classes --> this works differently for LAScatalog
+opt_filter(las_ctg) = "-keep_first -drop_class 7 18"
+dsm_ctg_tin = rasterize_canopy(las_ctg, res = 1, algorithm = dsmtin(highest = FALSE))
+```
+
+```{r calculate-catalog-chm}
+#| label: calculate-catalog-chm
+#| eval: true
+
+chm_ctg_tin = dsm_ctg_tin - dtm_ctg
+```
+
+Plot the CHM:
+
+```{r plot-catalog-chm}
+#| label: plot-catalog-chm
+#| fig-cap: "Canopy Height Model for the full study area"
+#| eval: true
+
+# plot the CHM
+plot(chm_ctg_tin)
+```
+
+### Analysis: Forest Structure at Harvard Forest
+
+**What is the typical forest height?**
+
+The best way to find out is to use the CHM, and functions implemented in the "terra" package in R. Here's a few functions that might be helpful:
+
+::: callout-tip
+## Useful Terra Functions
+
+```{r terra-functions}
+#| label: helpful-terra-functions
+#| eval: false
+
+# check functions
+?terra::global # calculate statistics for the entire raster
+?terra::clamp # restrict the range of the data 
+?terra::zoom # zoom into a specific place, use only after terra::plot 
+?terra::draw # draw a polygon 
+?terra::crop # crop a scan to a polygon extent
+?terra::mask # mask out areas with a polygon
+?terra::extract # extract properties with a polygon
+```
+:::
+
+### Tree-Based Analysis (Optional)
+
+#### Using an Existing Data Set
+
+We can use an existing dataset (<https://zenodo.org/records/10926344>) of AI-predicted tree crowns in the area. Note that the tree crowns were derived in 2022, so there is a 10 year difference to the scan date. Also note that the AI-derived tree crown extensions are given as rectangles. This is just an approximation.
+
+```{r load-trees}
+#| label: load-tree-crowns
+#| eval: false
+
+# load pre-classified tree layer
+trees = vect("data/trees_Weinstein2022/2022_HARV.shp")
+trees = crop(trees, ext(chm_tin))
+plot(crop(chm_tin, ext(chm_tin) * 0.1))
+plot(crop(trees,ext(chm_tin) * 0.1), cex = 0.5, add = T)
+```
+
+We can also extract crown height (mean/max) from different CHMs:
+
+```{r extract-heights}
+#| label: extract-tree-heights
+#| fig-cap: "Distribution of tree heights extracted from AI-predicted crowns"
+#| eval: false
+
+# extract tree height
+trees$height_tin_mean = terra::extract(chm_tin, trees, fun = "mean", ID = F)
+trees$height_tin_max = terra::extract(chm_tin, trees, fun = "max", ID = F)
+trees$height_highest_mean = terra::extract(chm_highest, trees, fun = "mean", ID = F)
+trees$height_highest_max = terra::extract(chm_highest, trees, fun = "max", ID = F)
+
+ggplot() + 
+  geom_histogram(data = as.data.table(trees), aes(x = height_tin_mean), fill = "red", alpha = 0.5) + 
+  theme_classic() + 
+  xlab("Tree height (m)")
+```
+
+#### Raster-Based Tree Segmentation
+
+We can also segment trees ourselves. The idea is to first find tree tops and then segment trees. The approach works generally well in more open canopies, specifically conifer-dominated ones, but the approach does not work as well in closed canopy mixed and broadleaf forests. Trees are self-similar, so it is very hard to distinguish branches from crowns, or trees from each other.
+
+::: callout-important
+## Tree Segmentation Challenges
+
+**A simple test:** If segmenting trees would be hard manually/visually, an AI/deterministic algorithm will probably not do better.
+
+**A general guideline:** The best segmentations are usually achieved with:
+
+-   high-resolution photography (\< 20 cm resolution), or
+-   a combination of photography and laser scanning point clouds
+:::
+
+```{r segment-tin}
+#| label: tree-segmentation-tin
+#| fig-cap: "Tree tops detected on TIN-based CHM"
+#| eval: false
+
+# now we try our own tree segmentation
+kernel = matrix(1,5,5)
+
+# remove noisy pits and spikes
+chm_tin_smoothed = terra::focal(chm_tin, w = kernel, fun = median, na.rm = TRUE)
+
+# locate tree tops
+ttops_tin = locate_trees(chm_tin, lmf(5))
+
+# plot CHM + tree tops
+plot(crop(chm_tin, ext(chm_tin) * 0.1))
+plot(crop(vect(ttops_tin),ext(chm_tin) * 0.1), col = "black", cex = 0.5, add = T)
+```
+
+Try again, now with "highest" CHM (note: not robust to pulse density, but can be better for preserving canopy structure).
+
+```{r segment-highest}
+#| label: tree-segmentation-highest
+#| fig-cap: "Tree tops detected on highest-point CHM"
+#| eval: false
+
+# repeat with highest CHM
+kernel = matrix(1,5,5)
+chm_highest_smoothed = terra::focal(chm_highest, w = kernel, fun = median, na.rm = TRUE)
+ttops_highest = locate_trees(chm_highest, lmf(5))
+
+plot(crop(chm_highest, ext(chm_highest) * 0.1))
+plot(crop(vect(ttops_highest),ext(chm_highest) * 0.1), col = "black", cex = 0.5, add = T)
+```
+
+Then we segment the trees:
+
+```{r segment-crowns}
+#| label: segment-tree-crowns
+#| fig-cap: "Segmented tree crowns"
+#| fig-width: 10
+#| fig-height: 5
+#| eval: false
+
+# now segment tree crowns around the tree tops
+algo_tin = dalponte2016(chm = chm_tin, treetops = ttops_tin)
+algo_highest = dalponte2016(chm = chm_highest, treetops = ttops_highest)
+
+# this uses the CHM to delineate crowns, a point cloud could also be used
+trees_tin = rast(algo_tin()) # segment point cloud
+trees_highest = rast(algo_highest()) # segment point cloud
+
+# plot results
+plot(trees_tin, col = pastel.colors(200))
+```
+
+```{r plot-highest-crowns}
+#| label: plot-highest-crowns
+#| fig-cap: "Segmented tree crowns (highest point method)"
+#| eval: false
+
+plot(trees_highest, col = pastel.colors(200))
+```
+
+Also convert to polygons:
+
+```{r crowns-to-polygons}
+#| label: convert-crowns-to-polygons
+#| fig-cap: "Tree crown polygons overlaid on CHM"
+#| fig-width: 10
+#| fig-height: 10
+#| eval: false
+
+# convert to polygons / SpatVector data
+trees_tin = as.polygons(trees_tin)
+trees_highest = as.polygons(trees_highest)
+
+# plot results
+plot(chm_tin)
+plot(trees_tin,, cex = 0.5, add = T)
+
+plot(chm_highest)
+plot(trees_highest, cex = 0.5, add = T)
+```
+
+**How stable are these segmentations?**
+
+## Summary and Key Takeaways
+
+::: panel-tabset
+## Data Quality
+
+-   Always check pulse density before analysis
+-   Evaluate scan angle and coverage patterns
+-   Remove noise and outliers systematically
+-   Consider temporal effects when comparing scans
+
+## Processing Workflow
+
+-   Start with ground classification (DTM)
+-   Create robust canopy height models (CHM)
+-   Use TIN method for more stable results
+-   Validate results across different methods
+
+## Tree Detection
+
+**Automated segmentation works best with:**
+
+-   Open canopy forests
+-   High pulse density scans (\> 10 pulses/m²)
+-   Conifer-dominated stands
+-   High-resolution photography integration
+
+**Challenges:**
+
+-   Closed canopy mixed forests
+-   Self-similar tree structures
+-   Distinguishing branches from crowns
+
+## Best Practices
+
+-   Prefer upper canopy data over within-canopy data
+-   Use simple metrics over complex ones
+-   Always conduct sensitivity analyses
+-   Document all processing steps
+-   Validate with field measurements when possible
+:::
+
+## Conclusion
+
+This tutorial provides a practical workflow for processing airborne laser scanning (ALS) data in R using the lidR and terra packages. The methods demonstrated here can be applied to various forest structure analyses and remote sensing applications.
+
+The key steps covered include:
+
+1.  **Data quality assessment** - evaluating pulse density and scan characteristics
+2.  **Terrain modeling** - creating digital terrain models using ground-classified points
+3.  **Canopy analysis** - generating canopy height models using different algorithms
+4.  **Tree detection** - locating individual trees and segmenting crowns
+
+::: callout-note
+## Next Steps
+
+To further develop your ALS processing skills:
+
+-   **Temporal analysis**: Compare multiple scans over time to detect forest changes
+-   **Structural metrics**: Calculate additional forest structure metrics (e.g., LAI, canopy cover, vertical profiles)
+-   **Integration**: Combine ALS with other remote sensing data (multispectral, hyperspectral)
+-   **Validation**: Conduct field surveys to validate remote sensing products
+-   **Automation**: Develop scalable processing pipelines for operational monitoring
+
+## Additional Resources
+
+-   **lidR handbook**: <https://r-lidar.github.io/lidRbook/>
+-   **NEON tutorials**: <https://www.neonscience.org/resources/learning-hub/tutorials/lidar-basics>
+-   **LAStools**: <https://rapidlasso.de/product-overview/>
+-   **Terra package**: <https://rspatial.org/terra/>
+:::
+
+------------------------------------------------------------------------
+
+*This tutorial was designed to provide hands-on experience with ALS data processing, focusing on practical applications in forest structure analysis. The modular approach allows adaptation to specific research questions and study systems.*
+
+------------------------------------------------------------------------
+
+![](logos.png)

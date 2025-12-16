@@ -1,0 +1,611 @@
+---
+title: "ALS Processing Tutorial - Part II"
+author: "Fabian Jörg Fischer"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    theme: cosmo
+    embed-resources: true
+    number-sections: true
+  pdf:
+    toc: true
+    number-sections: true
+execute:
+  warning: false
+  message: false
+  cache: true
+  eval: true
+editor: visual
+---
+
+::: callout-important
+## Before You Begin: Data Requirements
+
+This tutorial requires pre-processed ALS raster products. The data are available [here](https://drive.google.com/file/d/1VYg0pwRWS1jPqHQ31z53nVxwl7pMmSPK/view?usp=sharing). Ensure you have:
+
+-   `products/dtms_8km2_12scans.tif`
+-   `products/dsms_8km2_12scans.tif`
+-   `products/chms_8km2_12scans.tif`
+:::
+
+## Introduction
+
+This is a Notebook for a tutorial on ALS processing in R (Part II). In this part we analyze **forest structural changes** with ALS-derived rasters. The idea is for each group to experiment with different datasets.
+
+### Setup and Loading Packages
+
+```{r setup}
+#| label: setup-packages
+#| message: false
+#| eval: true
+
+
+
+# Load libraries in this specific order to avoid conflicts
+library(terra)      # for analyzing rasterized products
+library(data.table) # fast data manipulation 
+library(viridis)    # plotting colors
+library(ggplot2)    # plotting
+library(patchwork)  # plotting layout
+
+
+```
+
+## Sample Data: ALS Point Clouds from G-LiHT, NEON, 3DEP at Harvard Forest
+
+As before, we will focus on Harvard Forest, but now the full 8 km², and all of them pre-processed into raster files. Note that we used a maximally robust CHM algorithm. That means it is calibrated to not be influenced by pulse density differences or scan angle differences, among other things.
+
+::: callout-note
+## Dataset Composition
+
+There are **12 scans** available:
+
+-   **1 scan** from 3DEP in winter 2013/2014
+-   **3 scans** from GLiHT (2012, 2017, 2021)
+-   **8 scans** from NEON
+:::
+
+### Loading Pre-processed Rasters
+
+```{r load-rasters}
+#| label: load-raster-data
+#| message: false
+#| eval: true
+
+# read in rasters
+dtms = rast("products/dtms_8km2_12scans.tif")
+dsms = rast("products/dsms_8km2_12scans.tif")
+chms = rast("products/chms_8km2_12scans.tif")
+
+# plot DTMs
+terra::plot(dtms, col = viridis(100, option = "turbo"), main = "Digital Terrain Models")
+
+# plot CHMs
+terra::plot(chms, col = viridis(100), main = "Canopy Height Models")
+```
+
+We can also zoom in to examine specific areas:
+
+```{r zoom-in}
+#| label: zoom-analysis
+#| message: false
+#| eval: true
+
+# zoom in
+ext_full = ext(chms)
+ext_reduced = ext(731200, 731500, 4713900, 4714200)
+chms_reduced = crop(chms, ext_reduced)
+
+# select only a few NEON scans
+chms_NEON = subset(chms_reduced, c("NEON_2012", "NEON_2017", "NEON_2022", "NEON_2024"))
+
+# plot these scans
+terra::plot(chms_NEON, col = viridis(100), main = "NEON Scans (2012, 2017, 2022, 2024)")
+```
+
+### Summary Statistics
+
+We can calculate summary statistics for the DTMs:
+
+```{r dtm-stats}
+#| label: dtm-summary-stats
+#| eval: true
+
+# calculate summary statistics
+# mean elevation from each scan
+means_dtms = global(dtms, "mean", na.rm = TRUE)
+print(means_dtms)
+```
+
+We can also calculate summary statistics for the CHMs:
+
+```{r chm-stats}
+#| label: chm-summary-stats
+#| eval: true
+
+# mean canopy height from each scan
+means_chms = global(chms, "mean", na.rm = TRUE)
+print(means_chms)
+```
+
+### Temporal Comparison
+
+We notice that there is some variation. Luckily (and this is rare), we have acquisitions from different institutions over similar time periods, so we can compare changes in time.
+
+```{r temporal-comparison}
+#| label: compare-temporal-changes
+#| eval: true
+
+# calculate changes in time both for GLiHT and NEON canopy height estimates from 2012 to 2017
+means_chms_dt = data.table(flight = rownames(means_chms), hmean = round(means_chms$mean, 2))
+print(means_chms_dt[flight %like% "2017" | flight %like% "2012"])
+
+deltaheight_GLiHT = as.numeric(means_chms_dt[flight == "GLiHT_2017", "hmean"] - 
+                                means_chms_dt[flight == "GLiHT_2012", "hmean"])
+deltaheight_NEON = as.numeric(means_chms_dt[flight == "NEON_2017", "hmean"] - 
+                               means_chms_dt[flight == "NEON_2012", "hmean"])
+
+cat("GLiHT height change 2012-2017:", deltaheight_GLiHT, "m\n")
+cat("NEON height change 2012-2017:", deltaheight_NEON, "m\n")
+```
+
+::: callout-warning
+## Interesting Observation
+
+Something is a bit odd. For example, if we look at GLiHT scans, then height has increased from 2012 to 2017, but using NEON, it has remained stable. Let's investigate further by examining the digital terrain models.
+:::
+
+```{r dtm-temporal}
+#| label: dtm-temporal-comparison
+#| eval: true
+
+# calculate changes in time both for GLiHT and NEON from 2012 to 2017, now for the digital terrain models
+means_dtms_dt = data.table(flight = rownames(means_dtms), hmean = round(means_dtms$mean, 2))
+print(means_dtms_dt[flight %like% "2017" | flight %like% "2012"])
+
+deltaheight_GLiHT_dtm = as.numeric(means_dtms_dt[flight == "GLiHT_2017", "hmean"] - 
+                                    means_dtms_dt[flight == "GLiHT_2012", "hmean"])
+deltaheight_NEON_dtm = as.numeric(means_dtms_dt[flight == "NEON_2017", "hmean"] - 
+                                   means_dtms_dt[flight == "NEON_2012", "hmean"])
+
+cat("GLiHT DTM change 2012-2017:", deltaheight_GLiHT_dtm, "m\n")
+cat("NEON DTM change 2012-2017:", deltaheight_NEON_dtm, "m\n")
+```
+
+::: callout-note
+## DTM Accuracy Considerations
+
+Both show a similar change in topography, so that does not explain the canopy height changes. But we can also see that, in practice, we have a change of \~30 cm in absolute elevation values in time (which may be an artefact), but also a \~30 cm difference for the scans in the same years. This is larger than the often claimed accuracy of 10 cm for ALS data.
+:::
+
+Note that we could also directly calculate the difference between rasters:
+
+```{r spatial-diff}
+#| label: spatial-height-difference
+#| fig-cap: "Spatial distribution of height differences between 2012 and 2017"
+#| eval: true
+
+# spatial plotting of height differences between two scans
+hdiff_2012_2017 = chms$NEON_2017 - chms$NEON_2012
+terra::plot(hdiff_2012_2017, col = viridis(100, option = "turbo"), 
+            main = "Height difference (m): NEON 2017 - NEON 2012")
+```
+
+## Guiding Question: How Does Forest Structure Change at Harvard Forest?
+
+**Motivation:**
+
+-   Relevance for disturbance monitoring
+-   Relevance for carbon monitoring
+
+**Research Questions:**
+
+1.  What is the typical annual height growth rate of young trees at Harvard Forest, in meters per year?
+2.  Is Harvard Forest growing in height, balanced, or is it losing height?
+3.  What percentage of Harvard Forest experiences disturbance?
+4.  What are the typical noise levels between ALS acquisitions? (compare GLiHT and NEON)
+
+## Approaches
+
+### Regrowth Analysis
+
+We define young forests and assess height growth.
+
+```{r regrowth-2m}
+#| label: regrowth-analysis-2m-threshold
+#| fig-cap: "Annual height growth for areas initially below 2m"
+#| eval: true
+
+# height growth with NEON
+# define a threshold for what's considered disturbed
+threshold_growing = 2
+
+# define areas that were below threshold previously and are above it 5 years later 
+# and assign the 2012 canopy height to them
+neon_2012regrowing = ifel(chms$NEON_2012 <= threshold_growing & 
+                           chms$NEON_2017 >= threshold_growing, 
+                           chms$NEON_2012, NA)
+
+# now calculate the regrowth with both layers
+hdiff_regrowing = chms$NEON_2017 - neon_2012regrowing
+hdiff_regrowing_peryear = hdiff_regrowing / 5
+
+# calculate statistics
+cat("Mean annual growth:", global(hdiff_regrowing_peryear, "mean", na.rm = TRUE)$mean, "m/year\n")
+cat("Max annual growth:", global(hdiff_regrowing_peryear, "max", na.rm = TRUE)$max, "m/year\n")
+
+# plot a histogram
+ggplot(data = as.data.table(hdiff_regrowing_peryear)) + 
+  geom_histogram(aes(x = NEON_2017), alpha = 0.5, fill = "red", bins = 30) + 
+  theme_classic() + 
+  xlab("Annual height growth (m / year)") +
+  ylab("Frequency")
+```
+
+Now what if we take a different threshold?
+
+```{r regrowth-5m}
+#| label: regrowth-analysis-5m-threshold
+#| fig-cap: "Annual height growth for areas initially below 5m"
+#| eval: true
+
+# height growth with NEON
+# define a threshold for what's considered disturbed
+threshold_growing = 5
+
+# define areas that were below threshold previously and are above it 5 years later 
+neon_2012regrowing = ifel(chms$NEON_2012 <= threshold_growing & 
+                           chms$NEON_2017 >= threshold_growing, 
+                           chms$NEON_2012, NA)
+
+# now calculate the regrowth with both layers
+hdiff_regrowing = chms$NEON_2017 - neon_2012regrowing
+hdiff_regrowing_peryear = hdiff_regrowing / 5
+
+# calculate statistics
+cat("Mean annual growth (5m threshold):", global(hdiff_regrowing_peryear, "mean", na.rm = TRUE)$mean, "m/year\n")
+cat("Max annual growth (5m threshold):", global(hdiff_regrowing_peryear, "max", na.rm = TRUE)$max, "m/year\n")
+
+# plot a histogram
+ggplot(data = as.data.table(hdiff_regrowing_peryear)) + 
+  geom_histogram(aes(x = NEON_2017), alpha = 0.5, fill = "red", bins = 30) + 
+  theme_classic() + 
+  xlab("Annual height growth (m / year)") +
+  ylab("Frequency")
+```
+
+What if we calculate it with GLiHT?
+
+```{r regrowth-gliht}
+#| label: regrowth-analysis-gliht
+#| fig-cap: "Annual height growth using GLiHT data"
+#| eval: true
+
+# height growth with GLiHT
+# define a threshold for what's considered disturbed
+threshold_growing = 5
+
+# define areas that were below threshold previously and are above it 5 years later
+gliht_2012regrowing = ifel(chms$GLiHT_2012 <= threshold_growing & 
+                            chms$GLiHT_2017 >= threshold_growing, 
+                            chms$GLiHT_2012, NA)
+
+# now calculate the regrowth with both layers
+hdiff_regrowing = chms$GLiHT_2017 - gliht_2012regrowing
+hdiff_regrowing_peryear = hdiff_regrowing / 5
+
+# calculate statistics
+cat("Mean annual growth (GLiHT):", global(hdiff_regrowing_peryear, "mean", na.rm = TRUE)$mean, "m/year\n")
+cat("Max annual growth (GLiHT):", global(hdiff_regrowing_peryear, "max", na.rm = TRUE)$max, "m/year\n")
+
+# plot a histogram
+ggplot(data = as.data.table(hdiff_regrowing_peryear)) + 
+  geom_histogram(aes(x = GLiHT_2017), alpha = 0.5, fill = "red", bins = 30) + 
+  theme_classic() + 
+  xlab("Annual height growth (m / year)") +
+  ylab("Frequency")
+```
+
+What if we calculate it with GLiHT, and over a longer time period?
+
+```{r regrowth-gliht-long}
+#| label: regrowth-analysis-gliht-longterm
+#| fig-cap: "Comparison of growth rates over 5 and 9 years"
+#| eval: true
+
+# height growth with GLiHT over multiple time periods
+threshold_growing = 5
+
+# define areas that were below threshold in 2012
+gliht_2012regrowing = ifel(chms$GLiHT_2012 <= threshold_growing & 
+                            chms$GLiHT_2017 >= threshold_growing, 
+                            chms$GLiHT_2012, NA)
+
+# now calculate the regrowth with both 2017 and 2021 scans
+hdiff_regrowing = subset(chms, c("GLiHT_2017", "GLiHT_2021")) - gliht_2012regrowing
+hdiff_regrowing_peryear = hdiff_regrowing / c(5, 9)
+
+# calculate statistics
+cat("Mean annual growth 2012-2017:", global(hdiff_regrowing_peryear$GLiHT_2017, "mean", na.rm = TRUE)$mean, "m/year\n")
+cat("Mean annual growth 2012-2021:", global(hdiff_regrowing_peryear$GLiHT_2021, "mean", na.rm = TRUE)$mean, "m/year\n")
+
+# plot a histogram
+ggplot(data = as.data.table(hdiff_regrowing_peryear)) + 
+  geom_histogram(aes(x = GLiHT_2017), alpha = 0.5, fill = "red", bins = 30) + 
+  geom_histogram(aes(x = GLiHT_2021), alpha = 0.5, fill = "blue", bins = 30) + 
+  theme_classic() + 
+  xlab("Annual height growth (m / year)") +
+  ylab("Frequency") +
+  labs(subtitle = "Red = 2012-2017 (5 years), Blue = 2012-2021 (9 years)")
+```
+
+### One-Year Changes
+
+What about analyzing one-year changes?
+
+```{r oneyear-2016-2017}
+#| label: one-year-growth-2016-2017
+#| fig-cap: "Annual height growth between 2016 and 2017"
+#| eval: true
+
+# height growth with NEON, but only for one year
+threshold_growing = 2
+
+# define areas that were below threshold previously and are above it 1 year later
+neon_2016regrowing = ifel(chms$NEON_2016 <= threshold_growing & 
+                           chms$NEON_2017 >= threshold_growing, 
+                           chms$NEON_2016, NA)
+
+# now calculate the regrowth with both layers
+hdiff_regrowing = chms$NEON_2017 - neon_2016regrowing
+hdiff_regrowing_peryear = hdiff_regrowing
+
+# calculate statistics
+cat("Mean annual growth 2016-2017:", global(hdiff_regrowing_peryear, "mean", na.rm = TRUE)$mean, "m/year\n")
+cat("Max annual growth 2016-2017:", global(hdiff_regrowing_peryear, "max", na.rm = TRUE)$max, "m/year\n")
+
+# plot a histogram
+ggplot(data = as.data.table(hdiff_regrowing_peryear)) + 
+  geom_histogram(aes(x = NEON_2017), alpha = 0.5, fill = "red", bins = 30) + 
+  theme_classic() + 
+  xlab("Annual height growth (m / year)") +
+  ylab("Frequency")
+```
+
+Now what about the following year?
+
+```{r oneyear-2017-2018}
+#| label: one-year-growth-2017-2018
+#| fig-cap: "Annual height growth between 2017 and 2018"
+#| eval: true
+
+# height growth with NEON
+threshold_growing = 2
+
+# define areas that were below threshold previously and are above it 1 year later
+neon_2017regrowing = ifel(chms$NEON_2017 <= threshold_growing & 
+                           chms$NEON_2018 >= threshold_growing, 
+                           chms$NEON_2017, NA)
+
+# now calculate the regrowth with both layers
+hdiff_regrowing = chms$NEON_2018 - neon_2017regrowing
+hdiff_regrowing_peryear = hdiff_regrowing
+
+# calculate statistics
+cat("Mean annual growth 2017-2018:", global(hdiff_regrowing_peryear, "mean", na.rm = TRUE)$mean, "m/year\n")
+cat("Max annual growth 2017-2018:", global(hdiff_regrowing_peryear, "max", na.rm = TRUE)$max, "m/year\n")
+
+# plot a histogram
+ggplot(data = as.data.table(hdiff_regrowing_peryear)) + 
+  geom_histogram(aes(x = NEON_2018), alpha = 0.5, fill = "red", bins = 30) + 
+  theme_classic() + 
+  xlab("Annual height growth (m / year)") +
+  ylab("Frequency")
+```
+
+::: callout-important
+## Critical Questions
+
+**Is this true regrowth?**
+
+**How could we better describe this?**
+
+Consider:
+
+-   Are we measuring actual tree growth or just detection artifacts?
+-   Could lateral crown expansion be confounding our measurements?
+-   What role do measurement uncertainties play in these estimates?
+:::
+
+### Addressing Lateral Ingrowth
+
+One idea: find areas without lateral ingrowth by removing buffer areas around low vegetation.
+
+```{r remove-edge-effects}
+#| label: remove-lateral-ingrowth
+#| fig-cap: "Height growth after removing edge effects"
+#| eval: true
+
+# slightly adjusted procedure
+# set neon_2017regrowing to 1 or NA to create a mask
+threshold_growing = 5
+neon_2017regrowing = ifel(chms$NEON_2017 <= threshold_growing & 
+                           chms$NEON_2018 >= threshold_growing, 
+                           1, NA)
+terra::plot(neon_2017regrowing, col = "black", main = "Areas with regrowth (before filtering)")
+
+# now remove buffer areas around low areas, by using a focal filter 
+# that sets everything to NA at the borders
+neon_2017regrowing = focal(neon_2017regrowing, w = 3, "mean", na.rm = FALSE) # 3 pixel window size 
+terra::plot(neon_2017regrowing, col = "black", main = "Areas with regrowth (after filtering)")
+
+# fill in height
+neon_2017regrowing = ifel(!is.na(neon_2017regrowing), chms$NEON_2017, NA)
+
+# now calculate the regrowth with both layers
+hdiff_regrowing = chms$NEON_2018 - neon_2017regrowing
+hdiff_regrowing_peryear = hdiff_regrowing
+
+# calculate statistics
+cat("Mean annual growth (filtered):", global(hdiff_regrowing_peryear, "mean", na.rm = TRUE)$mean, "m/year\n")
+cat("Max annual growth (filtered):", global(hdiff_regrowing_peryear, "max", na.rm = TRUE)$max, "m/year\n")
+
+# plot a histogram
+ggplot(data = as.data.table(hdiff_regrowing_peryear)) + 
+  geom_histogram(aes(x = NEON_2018), alpha = 0.5, fill = "red", bins = 30) + 
+  theme_classic() + 
+  xlab("Annual height growth (m / year)") +
+  ylab("Frequency") +
+  labs(subtitle = "After removing edge effects")
+```
+
+::: callout-note
+## Discussion Points
+
+**What are we missing? What could be the issue?**
+
+Think about:
+
+-   Edge detection artifacts
+-   Sensor noise and uncertainties
+-   Seasonal effects (leaf-on vs leaf-off)
+-   Co-registration errors between scans
+-   Natural variability in growth rates
+:::
+
+### Disturbance Analysis
+
+*To be developed in class discussion*
+
+### Tree-Based Changes
+
+*To be developed in class discussion*
+
+## Summary and Discussion
+
+::: panel-tabset
+## Key Findings
+
+**Growth Rate Estimates:**
+
+-   Threshold selection significantly affects results
+-   One-year vs multi-year comparisons show different patterns
+-   GLiHT and NEON data produce different estimates
+-   Edge effects and lateral ingrowth confound measurements
+
+**Measurement Uncertainties:**
+
+-   DTM differences between scans: \~30 cm
+-   Larger than commonly cited 10 cm accuracy
+-   Systematic biases between different sensors
+-   Temporal artifacts in elevation measurements
+
+## Methodological Challenges
+
+**Sources of Uncertainty:**
+
+-   **Sensor differences**: GLiHT vs NEON vs 3DEP
+-   **Temporal mismatches**: Different acquisition dates and times
+-   **Phenological effects**: Leaf-on vs leaf-off conditions
+-   **Co-registration errors**: Alignment between scans
+-   **Threshold sensitivity**: Growth detection depends heavily on cutoff values
+
+**Confounding Factors:**
+
+-   Lateral crown expansion vs vertical growth
+-   Edge effects at transition zones
+-   Detection vs actual growth
+-   Noise vs signal in one-year changes
+
+## Best Practices
+
+**For Growth Analysis:**
+
+-   Use multiple time intervals to validate patterns
+-   Compare results from different sensors
+-   Account for edge effects and lateral expansion
+-   Consider measurement uncertainties in interpretation
+-   Validate with field data when possible
+
+**For Disturbance Detection:**
+
+-   Define clear thresholds based on ecology and error
+-   Account for sensor noise levels
+-   Use spatial context (focal operations)
+-   Combine multiple temporal snapshots
+-   Ground-truth selected areas
+
+## Research Questions
+
+Consider these questions for your analysis:
+
+1.  **What is a realistic annual growth rate for this forest type?**
+    -   Compare with field studies
+    -   Consider forest age and species composition
+    -   Account for measurement uncertainties
+2.  **How can we separate growth from measurement artifacts?**
+    -   Use multiple temporal baselines
+    -   Compare sensors in the same year
+    -   Apply spatial filters
+3.  **What level of change is detectable given sensor noise?**
+    -   Estimate minimum detectable change
+    -   Consider signal-to-noise ratios
+    -   Validate against independent data
+:::
+
+## Exercises and Extensions
+
+::: callout-tip
+## Try These Analyses
+
+1.  **Compare different time intervals:**
+    -   Calculate growth rates for 1, 5, and 10-year periods
+    -   How do estimates change with time interval?
+2.  **Test threshold sensitivity:**
+    -   Try thresholds from 1-10 m
+    -   Plot how results vary
+    -   What threshold seems most reasonable?
+3.  **Sensor comparison:**
+    -   Compare GLiHT, NEON, and 3DEP for the same time period
+    -   Quantify systematic differences
+    -   Which is most reliable?
+4.  **Spatial analysis:**
+    -   Map areas of growth vs decline
+    -   Identify disturbance hotspots
+    -   Relate to topography or other factors
+5.  **Validation:**
+    -   Compare with published growth rates for similar forests
+    -   Identify field plots for ground-truthing
+    -   Assess realism of your estimates
+:::
+
+## Conclusion
+
+This tutorial demonstrates the challenges and opportunities of using multi-temporal ALS data to monitor forest structural changes. While ALS provides unprecedented spatial coverage and detail, careful attention to measurement uncertainties, sensor differences, and methodological artifacts is essential for robust conclusions.
+
+**Key Takeaways:**
+
+-   ALS can detect forest height changes, but with significant uncertainties
+-   Sensor choice, threshold selection, and temporal baseline all strongly affect results
+-   Edge effects and lateral expansion confound vertical growth estimates
+-   Multiple lines of evidence and validation are essential
+-   Critical thinking about data quality is as important as analytical technique
+
+**Future Directions:**
+
+-   Integration with other data sources (optical imagery, field plots)
+-   Machine learning for change detection
+-   Improved co-registration methods
+-   Individual tree tracking across time
+-   Uncertainty quantification frameworks
+
+------------------------------------------------------------------------
+
+*This tutorial was designed to encourage critical thinking about ALS-based change detection. The emphasis is on understanding limitations and uncertainties, not just applying methods.*
+
+---
+
+![](logos.png)

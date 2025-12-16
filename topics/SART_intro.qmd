@@ -48,3 +48,7 @@ View and download the **presentation** from the video:
 Read the [**theory**](SART_theory.qmd)
 
 Analyze real data with a [**practical tutorial in Python**](SART_tutorial.qmd)
+
+---
+
+![](logos.png)

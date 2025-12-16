@@ -656,3 +656,7 @@ The skills developed in this tutorial provide a foundation for more advanced DAR
 
 **Problem:** Optical properties not applied - Confirm optical property names match - Check database file paths - Verify group assignments in 3D objects
 :::
+
+---
+
+![](logos.png)
