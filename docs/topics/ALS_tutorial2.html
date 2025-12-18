@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Fabian Jörg Fischer">
-<meta name="dcterms.date" content="2025-12-16">
+<meta name="dcterms.date" content="2025-12-18">
 
 <title>ALS Processing Tutorial - Part II – Remote Sensing of Forests</title>
 <style>
@@ -3958,7 +3958,10 @@ vertical-align: -.125em;
  <span class="menu-text">ALS Processing</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-als-processing">    
-        <li class="dropdown-header">Intro</li>
+        <li>
+    <a class="dropdown-item" href="../topics/ALS_intro.html">
+ <span class="dropdown-text">Intro</span></a>
+  </li>  
         <li>
     <a class="dropdown-item" href="../topics/ALS_theory.html">
  <span class="dropdown-text">Theory</span></a>
@@ -4040,7 +4043,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 16, 2025</p>
+      <p class="date">December 18, 2025</p>
     </div>
   </div>
   
@@ -4199,6 +4202,21 @@ NEON_2022   18.36571
 NEON_2024   18.11678</code></pre>
 </div>
 </div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Interpreting These Numbers
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Look at the mean canopy heights across different scans and years:</p>
+<p><strong>Questions to consider:</strong> - What is the typical mean canopy height? Does it match your pre-analysis estimate? - Is there variation between different sensors (NEON vs GLiHT vs 3DEP)? - Do the values change over time, or are they relatively stable? - The winter scan (3DEP) - how does it compare to summer scans?</p>
+<p><strong>Write down your answers:</strong> - <strong>Mean canopy height:</strong> _____ meters - <strong>Range of variation:</strong> _____ to _____ meters - <strong>Maximum tree height observed:</strong> _____ meters (you can calculate this with <code>global(chms, &quot;max&quot;, na.rm = TRUE)</code>)</p>
+</div>
+</div>
 </section>
 <section id="temporal-comparison" class="level3" data-number="2.3">
 <h3 data-number="2.3" class="anchored" data-anchor-id="temporal-comparison"><span class="header-section-number">2.3</span> Temporal Comparison</h3>
@@ -4355,6 +4373,22 @@ NEON_2024   18.11678</code></pre>
 <figcaption>Annual height growth for areas initially below 2m</figcaption>
 </figure>
 </div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Interpreting Growth Rates (2m threshold)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Look at your calculated growth rates:</p>
+<p><strong>Questions:</strong> - What is the mean annual growth rate you calculated? - What is the maximum growth rate observed? - Does the distribution look realistic? - Compare with your pre-analysis estimate - how close were you?</p>
+<p><strong>Ecological context:</strong> - Temperate deciduous trees typically grow 0.3-0.8 m/year when young (&lt; 5m tall) - Growth rates &gt; 1.5 m/year are suspicious and may indicate measurement artifacts - Think about: what percentage of pixels show “reasonable” vs “unreasonable” growth?</p>
+<p><strong>Record your values:</strong> - <strong>Mean growth rate (2m threshold, 5 years):</strong> _____ m/year - <strong>Does this seem realistic?</strong> Yes / No / Uncertain</p>
 </div>
 </div>
 <p>Now what if we take a different threshold?</p>

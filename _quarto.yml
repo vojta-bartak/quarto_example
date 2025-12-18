@@ -36,6 +36,7 @@ website:
       - text: "ALS Processing"
         menu:
           - text: "Intro"
+            href: topics/ALS_intro.qmd
           - text: "Theory"
             href: topics/ALS_theory.qmd
           - text: "Practice - Part I"

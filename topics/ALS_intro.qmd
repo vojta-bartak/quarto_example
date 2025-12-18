@@ -1,0 +1,54 @@
+---
+title: "Airborne Laser Scanning: An Introduction"
+author: "Fabian Jörg Fischer, Vojtěch Barták"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    theme: cosmo
+    embed-resources: true
+  pdf:
+    toc: true
+    number-sections: true
+execute:
+  warning: false
+  message: false
+  cache: true
+editor: visual
+---
+
+## Introduction to Airborne Laser Scanning of Forest Structure
+
+Imagine mapping an entire forest in three dimensions—not just the canopy surface visible from above, but the intricate vertical architecture from forest floor to treetop. Airborne Laser Scanning (ALS), also known as LiDAR, does exactly this by sending millions of laser pulses downward from aircraft, measuring the precise time each pulse takes to bounce back from leaves, branches, and ground. The result is a detailed point cloud revealing the hidden geometry of forest ecosystems.
+
+**From Light Pulses to Forest Architecture**
+
+Unlike passive optical sensors that capture reflected sunlight, ALS is an active technology that generates its own illumination. A laser sensor mounted on an aircraft emits rapid pulses—often hundreds of thousands per second—toward the forest below. As each pulse encounters vegetation, some energy reflects from the canopy top (first return), some penetrates deeper to reflect from mid-canopy branches and understory (intermediate returns), and some reaches the ground surface (last return). By recording these multiple returns from a single pulse, ALS can "see through" forest canopies in ways that traditional photography cannot, creating detailed 3D maps of forest structure from ground to crown.
+
+**From Point Clouds to Ecological Understanding**
+
+These millions of georeferenced points encode fundamental information about forest ecosystems: canopy height and complexity, ground surface topography beneath dense vegetation, individual tree locations and dimensions, vertical stratification of foliage, and biomass distribution. Whether working at the scale of individual trees or entire landscapes, ALS provides unprecedented detail about forest structure—information critical for understanding carbon storage, wildlife habitat quality, forest dynamics, and ecosystem functioning. The continuous, high-resolution coverage ALS provides fills a crucial gap between intensive but spatially limited field measurements and globally extensive but coarser satellite observations.
+
+**The Analysis Challenge**
+
+Working with ALS data requires navigating important trade-offs: processing billions of points efficiently, accounting for differences in sensors and acquisition conditions, choosing appropriate methods for different forest types, and understanding when results are reliable versus uncertain. This tutorial demonstrates how to transform raw point clouds into meaningful ecological metrics, from generating Digital Terrain Models and Canopy Height Models to analyzing forest structural changes over time, while understanding the limitations and best practices that ensure robust interpretation.
+
+## Where to go further?
+
+Watch the **video lecture** in which Dr. Fabian Jörg Fischer introduces the key concepts for this lesson:
+
+{{< video https://www.youtube.com/embed/mFKOgjQgbjY?si=91E7k7uXA_cjSHHP >}}
+
+View and download the **presentation** from the video:
+
+[![](ALS_figures/tumbnail_pres_als.png){.border width="200px"}](https://drive.google.com/file/d/1Vs7J2P62M4ICO2oym7GfAf1b0q20yJrf/view?usp=sharing)
+
+Read the [**theory**](ALS_theory.qmd)
+
+Analyze real data with [**practical tutorials in R**](ALS_tutorial1.qmd): - [Part I: Point Cloud Processing](ALS_tutorial1.qmd) - [Part II: Change Analysis](ALS_tutorial2.qmd)
+
+------------------------------------------------------------------------
+
+![](logos.png)

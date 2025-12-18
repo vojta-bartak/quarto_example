@@ -51,10 +51,11 @@ ggplot() +
   # Add labels
   annotate("text", x = 1.4, y = -0.1, label = "a") +
   annotate("text", x = 0.1, y = 1.4, label = "b") +
-  annotate("text", x = -0.1, y = 1.15, label = "E[0]", parse = TRUE) +
+  annotate("text", x = -0.2, y = 1.2, label = "E[0]", parse = TRUE) +
   annotate("text", x = - cos(phi) - 0.15, y = sin(phi) + 0.15, label = "E[y]", parse = TRUE) +
   annotate("text", x = 0.4, y = 0.15, label = "phi", parse = TRUE) +
   annotate("text", x = cos(phi) - 0.1, y = sin(phi)/2, label = "omega*t", parse = TRUE) +
+  annotate("text", x = 1.8, y = 1.2, label = "E[0]", parse = TRUE) +
 
   # Draw horizontal dashed line from tip of vector
   geom_segment(aes(x = - cos(phi) - 0.2, xend = 2.2, y = sin(phi), yend = sin(phi)), 
@@ -65,7 +66,7 @@ ggplot() +
                arrow = arrow(length = unit(0.2, "cm")), size = 0.3) +
   geom_segment(aes(x = 2, xend = 2, y = 0, yend = 1.5), 
                arrow = arrow(length = unit(0.2, "cm")), size = 0.3) +
-  geom_segment(aes(x=1.99, xend=2.1, y=1, yend=1))
+  geom_segment(aes(x=1.7, xend=2.1, y=1, yend=1))
 
 
 

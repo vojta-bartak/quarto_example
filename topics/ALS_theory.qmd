@@ -1,6 +1,6 @@
 ---
-title: "Study Materials: Airborne Laser Scanning - A Global Perspective"
-author: "Fabian Jörg Fischer, Vojtěch Barták"
+title: "Airborne Laser Scanning - A Global Perspective"
+author: "Fabian Jörg Fischer"
 date: today
 format:
   html:
@@ -21,21 +21,30 @@ bibliography: ALS_references.bib
 
 Airborne Laser Scanning (ALS), also known as LiDAR (Light Detection and Ranging), is a remote sensing technology that uses pulsed laser light to measure distances to the Earth's surface. It has become a critical tool for characterizing forest structure and mapping terrain at high resolution.
 
-This document provides an overview of ALS technology, its applications in forest ecology, important considerations when working with ALS data, and resources for further learning.
+This document provides an overview of ALS technology, its applications in forest ecology, important considerations when working with ALS data, and resources for further learning. **The perspective presented here draws from analysis of a global collection of airborne laser scanning data** spanning diverse forest types and ecosystems, from tropical rainforests to boreal forests, providing insights into both the capabilities and limitations of ALS across different environments.
 
 ## Terminology and Technology
 
 ### What is ALS?
 
-**Airborne Laser Scanning** (also referred to as **lidar**, **LiDAR**, or **ALS**) is an active remote sensing technology that operates from aircraft or drones. The system emits rapid laser pulses toward the ground and measures the time it takes for the light to return to the sensor.
+**Airborne Laser Scanning** (also referred to as **lidar**, **LiDAR**, or **ALS**) is an active remote sensing technology that operates from airborne platforms. **When we refer to "airborne laser scanning" or "airborne LiDAR," this includes both traditional aircraft/helicopter-based systems and UAV-based LiDAR systems.** The system emits rapid laser pulses toward the ground and measures the time it takes for the light to return to the sensor.
 
 ::: {.callout-note}
-## Key Terms
+## Key Terms and Terminology
 
--   **ALS / LiDAR**: Airborne Laser Scanning / Light Detection and Ranging
+**Interchangeable terms** (all mean the same thing):
+- Airborne Laser Scanning (ALS)
+- Airborne LiDAR 
+- lidar
+- LiDAR
+
+Don't be confused by the different spellings and capitalizations!
+
+**Additional important terms:**
 -   **Point Cloud**: Three-dimensional collection of georeferenced points representing surfaces
--   **Terrestrial LiDAR**: Ground-based variant for high-resolution local measurements [@jucker2023terrestrial]
+-   **Terrestrial LiDAR (TLS)**: Ground-based variant for high-resolution local measurements [@jucker2023terrestrial]
 -   **Full Waveform**: Complete energy distribution of returned laser pulse
+-   **Returns**: Individual reflections detected from a laser pulse (first return, last return, etc.)
 :::
 
 ![Figure 1: Terrestrial LiDAR system. Adapted from @jucker2023terrestrial](ALS_figures/slide02_terrestrial_lidar.png){width="80%"}
@@ -44,14 +53,20 @@ This document provides an overview of ALS technology, its applications in forest
 
 ### How It Works: Full Waveform vs. Point Clouds
 
-ALS systems can operate in two main modes:
+ALS systems technically record complete waveforms, but most applications use discretized data:
 
-1.  **Full Waveform LiDAR**: Records the complete energy distribution of the returned laser pulse, providing detailed information about vegetation structure at multiple heights
+1.  **Full Waveform LiDAR**: Records the complete energy distribution of the returned laser pulse, providing detailed information about vegetation structure at multiple heights. However, this is very information-rich and computationally demanding.
 
-2.  **Discrete Return (Point Clouds)**: Processes the waveform into individual return points, typically capturing:
+2.  **Discrete Return (Point Clouds)**: Processes the waveform into individual return points using algorithms (usually provided by manufacturers). **Approximately 99% of ALS applications** use this discretized version, which is more compressed, easier to analyze, and simpler to share. Discrete returns typically capture:
     -   **First return**: Top of canopy
     -   **Intermediate returns**: Mid-canopy vegetation
     -   **Last return**: Ground surface
+
+::: {.callout-note}
+## Waveform to Point Cloud Conversion
+
+The conversion from full waveform to discrete returns involves identifying peaks in the returned energy signal. This discretization makes the data more manageable while retaining most of the useful structural information for forest analysis.
+:::
 
 ![Figure 2: Comparison of full waveform data and discrete point cloud returns. Adapted from @yan2015fullwaveform](ALS_figures/slide03_waveform_vs_pointcloud.png){width="100%"}
 
@@ -111,6 +126,20 @@ Large collections of ALS data are increasingly available through open-access pla
 
 :::
 
+::: {.callout-warning}
+## A Critical Warning About Global Canopy Height Models
+
+Recent years have seen the emergence of global-scale canopy height models that combine satellite LiDAR (GEDI) with optical imagery. While these represent important progress, **users should exercise extreme caution when using them for ecological analyses at present.**
+
+**Current limitations of major global models:**
+
+- **Meta/Facebook model** (high resolution, ~30m): Consistently underestimates canopy height, has substantial artifacts (e.g., clouds mistaken for gaps in tropical regions)
+- **Lang model** (10m resolution): Overestimates canopy height and smooths out landscape-scale variation
+- **Potapov model** (Landsat-based, 30m): Better estimates of mean height but loses fine-scale resolution
+
+While these models capture general trends between biomes, they are **not operationally useful for most ecological studies at present.** For local to landscape-scale research, high-quality ALS data remains essential.
+:::
+
 ### Advantages Over Other Methods
 
 | Method | Coverage | Resolution | Canopy Penetration | Cost |
@@ -161,6 +190,8 @@ In these environments:
 -   Ground detection becomes unreliable
 -   Tree segmentation is highly uncertain
 -   Individual tree metrics may be impossible to extract
+
+**Note on AI and deep learning approaches:** Even advanced AI techniques struggle with individual tree segmentation in closed-canopy forests. A fundamental limitation applies here: **if human experts cannot reliably delineate individual tree crowns, AI methods are unlikely to perform better.** This is not a temporary technical limitation but rather reflects the physical reality of overlapping, intertwined canopies in dense forests.
 :::
 
 ![Figure 11: Dense tropical forest: a lot of methods do not work so well in dense, closed-canopy deciduous forests 
@@ -209,10 +240,28 @@ ALS data quality and characteristics depend heavily on:
 **Key sensor parameters affecting data quality:**
 
 -   **Pulse density**: Higher is generally better (5-15+ pulses/m² recommended)
--   **Wavelength**: Near-infrared (1064 nm) vs. green (532 nm)
--   **Beam divergence**: Affects footprint size and penetration
+-   **Wavelength**: Near-infrared (1064 nm) vs. green (532 nm) - different wavelengths interact differently with vegetation and water
+-   **Beam divergence**: Affects footprint size and penetration. Wide beams are more sensitive to upper canopy elements (hitting something at the top), while narrow beams can penetrate small gaps more easily
 -   **Scan angle**: Central scan (nadir) vs. oblique angles
 -   **Flight altitude**: Trade-off between coverage and resolution
+
+::: {.callout-warning}
+## Cross-Sensor Comparisons Require Caution
+
+**Within a single study area scanned with the same system**, you can use relatively complex structural metrics safely. However, **when comparing across different sensors or acquisition campaigns**, you must be much more careful:
+
+- **Simple metrics** (e.g., mean canopy height, percentile heights) are generally comparable across sensors
+- **Complex structural metrics** (e.g., entropy, fractal dimension, box dimension) can be problematic when comparing different scans
+- **Risk**: You may inadvertently measure differences between sensors rather than differences between environments
+
+**Recommendation:** When working across multiple sensors or platforms, prioritize simple, interpretable metrics over complex ones. If you use structural complexity metrics, ensure you understand exactly how they work and validate that sensor differences don't drive your results.
+:::
+
+::: {.callout-note}
+## Commercial Software for Ground Classification
+
+For ground point classification specifically, commercial software (such as LAStools) often still outperforms open-source alternatives. If you receive point clouds that have been pre-classified by a company, **use those classifications rather than re-classifying** with your own tools. Commercial providers often employ manual corrections and have refined their algorithms over many years, making their ground classifications more reliable.
+:::
 
 ## Robust Interpretation Approaches
 
@@ -220,7 +269,15 @@ To maximize reliability and minimize artifacts, different modeling approaches ca
 
 ### Surface Models (Pixels)
 
-**Raster-based** approach creating 2D gridded products. This is the most common and well-established method.
+**Raster-based** approach creating 2D gridded products. This is **the most common product from airborne laser scanning** and what ALS analysis historically started with.
+
+**The basic concept:** Imagine draping a cloth over your point cloud. The cloth falls and settles onto the points, creating a continuous surface. You can control how far the cloth drops into gaps by adjusting weights - strong weights let it fall into small gaps, while lighter weights create a smoother surface that bridges over gaps.
+
+This same process is applied to:
+- **All returns** → creates Digital Surface Model (DSM) representing the top of the canopy
+- **Last returns** (ground points) → creates Digital Terrain Model (DTM) representing the terrain
+
+The difference between DSM and DTM gives you the Canopy Height Model (CHM).
 
 ![Figure 14: Example of pixel-based surface model approach. Source: @neon2024.](ALS_figures/slide15_neon_surface_model.png){width="80%"}
 
@@ -234,6 +291,19 @@ To maximize reliability and minimize artifacts, different modeling approaches ca
 -   **Intensity**: Laser return strength
 
 ![Figure 15: Example of elevation (left) and canopy height (right).](ALS_figures/slide16_elevation_map.png){width="80%"} 
+
+::: {.callout-note}
+## Ecological Patterns Visible in Canopy Structure
+
+An interesting observation from processing ALS data globally: **you can often recognize terrain patterns directly from canopy height models**, even without looking at the elevation data. This is particularly evident in areas with subtle topography (like the Congo example above, with only 20-25m elevation change).
+
+**Why this happens:** Forest structure is frequently determined by water availability. Trees grow taller and more vigorously in areas with better water access. As a result, you can sometimes trace:
+- River courses through taller forest
+- Valley bottoms with increased height
+- Ridge tops with lower canopy heights
+
+This demonstrates that canopy height models capture not just structure but also underlying ecological processes and resource distribution patterns.
+::: 
 
 
 
@@ -354,12 +424,19 @@ To maximize reliability and minimize artifacts, different modeling approaches ca
 -   **USGS 3DEP**: <https://www.usgs.gov/3d-elevation-program> (USA nationwide)
 -   **National Programs**: Many countries have open lidar programs
 
+**Regional Coverage Notes:**
+
+-   **United States**: Extensive coverage, with most areas scanned at least once. Many locations have multiple temporal acquisitions available through OpenTopography
+-   **Europe**: Variable - some countries like **Spain** provide excellent open access with multiple temporal scans, while others like **Germany** have mixed policies (some states provide open access, others do not)
+-   **Other regions**: Check national mapping agencies and research institutions for available data
+
 **Tips for Data Access:**
 
 -   Check if your study area has existing coverage
 -   Consider acquisition date and season
 -   Review metadata for pulse density and accuracy
 -   Download sample data before committing to large datasets
+-   For multi-temporal studies, check if multiple acquisitions exist for your area
 :::
 
 ## Practical Applications and Exercises
@@ -489,6 +566,11 @@ Airborne Laser Scanning has revolutionized our ability to measure forest structu
 5.  **Stay current**: Methods and best practices continue to evolve
 
 The resources provided in this document offer pathways for deeper learning, from introductory tutorials to advanced methodological papers. The combination of openly available data and open-source processing tools makes ALS analysis increasingly accessible to the research community.
+
+## References
+
+::: {#refs}
+:::
 
 ------------------------------------------------------------------------
 

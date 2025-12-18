@@ -20,9 +20,9 @@ execute:
 editor: visual
 ---
 
-## Owerview
+## Overview
 
-This is an Notebook for a tutorial on ALS processing in R.
+This is a tutorial on ALS processing in R.
 
 ### Objective
 
@@ -84,10 +84,12 @@ library(viridis) # plotting
 library(patchwork) # plotting
 library(RCSF) # ground classification CSF
 # library(RMCC) # ground classification MCC
-library(future)
+library(future) # parallel processing
+```
 
-
-
+```{r no_progress}
+#| include: false
+options(lidR.progress = FALSE)
 ```
 
 ## Sample Data: ALS Point Clouds from G-LiHT and NEON at Harvard Forest
@@ -141,10 +143,29 @@ There are three types of scanning agencies:
 -   relevance for disturbance monitoring
 -   relevance for habitat/biodiversity assessments
 
-**Questions:**
+::: callout-note
+## Pre-Analysis Exercise
 
--   how do we process ALS point clouds to obtain estimates of height?
--   what do you expect the typical tree height to be?
+Before diving into the data processing, consider these questions about Harvard Forest:
+
+**Background information:** - Location: Eastern United States (Worcester ecoregion) - Climate: Temperate deciduous - Forest type: Regenerating Eastern Deciduous forest (second-growth) - Dominant species: Red oak (*Quercus rubra*), red maple (*Acer rubrum*), white pine (*Pinus strobus*) - Age: Most of the forest is roughly 100 years old (post-logging/hurricane disturbance) - Management: Ongoing management activities
+
+**Questions to estimate (write down your answers before analyzing!):**
+
+1.  What do you expect the **maximum tree height** to be? (in meters)
+2.  What do you expect the **mean canopy height** to be? (in meters)
+3.  What do you expect the **annual height growth rate** to be for young trees (\< 5m)? (in meters per year)
+4.  Is the forest overall **growing, balanced, or losing height**?
+5.  What percentage of the forest do you expect has experienced recent **disturbance** (e.g., tree falls, management)?
+
+*Note: The actual tree maximum height limit is \~120 m (very rare trees), but most forests don't reach anywhere close to this.*
+:::
+
+**Processing Questions:**
+
+-   How do we process ALS point clouds to obtain reliable estimates of height?
+-   How do different algorithms affect our results?
+-   What uncertainties should we be aware of?
 
 ## Processing
 
@@ -162,6 +183,7 @@ When reading in point cloud data, there are several things to consider:
 ```{r read-data}
 #| label: read-las-data
 #| eval: true
+#| message: false
 
 # read in a single tile and examine it.
 las = readLAS("data/NEON/2012/731000_4712000.laz")
@@ -361,6 +383,116 @@ plot(chm_diff, col = viridis(100, option = "turbo"), main = "Canopy height diffe
 hist(chm_diff, main = "Canopy height difference (m)", breaks = seq(floor(mindiff), ceiling(maxdiff), 0.25))
 ```
 
+### Understanding CHM Algorithm Robustness and Stability
+
+The choice of CHM algorithm has important implications for both the visual quality of your canopy height model and its robustness to changes in data quality. This section explores these trade-offs in detail.
+
+#### Visual Quality vs. Robustness Trade-off
+
+::: callout-note
+## Key Insight from Global Analysis
+
+From processing airborne laser scanning data globally across different forest types and sensor configurations, we've found that **the "highest point" CHM looks visually appealing and preserves fine-scale canopy structure well, but it degrades significantly when pulse density decreases**.
+
+In contrast, **the TIN-based CHM is more robust to changes in pulse density** and remains stable even with lower-quality scans, though it may not capture small-scale canopy details as well.
+:::
+
+#### Example: Robson Creek, Australia
+
+Let's examine a concrete example from an ecological super site in Australia (Robson Creek) where we compared different CHM algorithms across simulated decreases in sampling intensity:
+
+**Algorithms compared:** 1. **"Highest point" algorithm** - Takes the highest point within each pixel 2. **TIN (Triangulated Irregular Network)** - Interpolates between first returns using triangulation 3. **Spike-free algorithm** (custom robust version) - Attempts to preserve the visual quality of "highest" while maintaining stability
+
+**Key findings:**
+
+```{r algorithm-comparison-concept}
+#| label: conceptual-algorithm-comparison
+#| eval: false
+#| echo: false
+
+# This is conceptual code showing how algorithms perform differently
+# at different pulse densities (not meant to run with current data)
+
+# Simulated pulse densities: 16 → 8 → 4 → 2 → 1 → 0.5 pulses/m²
+
+# "Highest point" CHM:
+# - Looks excellent at high pulse density (16 pulses/m²)
+# - Visually stable down to ~2 pulses/m²
+# - Degrades significantly below 1 pulse/m²
+# - Shows increasing "holes" and artifacts at low density
+
+# TIN-based CHM:
+# - Less visually detailed than "highest"
+# - But remains stable even at 0.5 pulses/m²
+# - Can pick up leaf phenology effects (e.g., dry season leaf loss)
+# - More consistent for cross-sensor comparisons
+```
+
+::: callout-warning
+## Phenological Effects in TIN CHMs
+
+An interesting observation: **TIN-based CHMs can sometimes capture phenological signals**. For example, in the Robson Creek scan (conducted during dry season onset), some trees had already lost leaves. The TIN algorithm picked up this change, showing slightly lower canopy heights for these trees compared to the "highest" algorithm which might still be influenced by a few remaining high leaves.
+
+This means TIN CHMs may be more sensitive to seasonal timing of acquisition!
+:::
+
+#### Impact on Ecological Metrics: Gap Analysis Example
+
+The choice of CHM algorithm doesn't just affect visual appearance - **it fundamentally changes the interpretation of ecological metrics**. Here's a striking example:
+
+**Setup:** Calculate canopy gaps in a tropical forest - **Gap definition:** Everything below 50% of mean height - **Example:** If mean forest height is 20m, gaps are areas \< 10m
+
+**Results with different algorithms:**
+
+| Algorithm | Estimated Gaps per km² | Stability at Low Pulse Density |
+|:-----------------------|:-----------------------|:-----------------------|
+| **Spike-free (robust)** | \~1,000 gaps | High - remains stable |
+| **TIN** | \~2,000 gaps | High - remains stable |
+| **Highest point** | Increases dramatically | Low - unreliable at low density |
+
+::: callout-important
+## Critical Implications
+
+**Within a single site:** You can work with any algorithm consistently, though you need to be aware of what you're measuring.
+
+**Across multiple sites or sensors:** Algorithm choice becomes critical! You might inadvertently measure **differences between algorithms or sensors** rather than actual ecological differences between sites.
+
+**The pattern:** - Both TIN and spike-free algorithms remain stable as pulse density decreases - The "highest point" algorithm shows a massive increase in detected gaps at low pulse density - This happens because lower sampling creates more apparent gaps that aren't real
+:::
+
+#### Algorithm Selection Guidelines
+
+::: callout-tip
+## When to Use Each Algorithm
+
+**Use "highest point" CHM when:** - Working within a single, high-quality scan (\> 10 pulses/m²) - Visual detail and structure preservation are critical - Not comparing across different sensors or time periods - Primarily interested in top-canopy metrics (maximum height, percentiles)
+
+**Use TIN-based CHM when:** - Comparing across different sensors or acquisitions - Working with variable or lower pulse density (\< 5 pulses/m²) - Calculating gap metrics or spatial connectivity - Need maximum robustness and reproducibility - Working across multiple sites or in operational settings
+
+**Use spike-free or custom robust algorithms when:** - Need both visual quality AND robustness - Working on research requiring reproducibility across conditions - Comparing temporal changes (growth, disturbance)
+:::
+
+::: callout-note
+## Top Canopy Metrics Are More Stable
+
+**Good news:** Regardless of algorithm choice, **metrics based on top-canopy height** (maximum height in a hectare, 95th percentile height, mean of top 10% of heights) tend to be quite stable and less sensitive to algorithm choice.
+
+**Be cautious with:** Gap metrics, spatial connectivity measures, structural complexity metrics - these are much more sensitive to algorithm choice and should only be compared within consistent processing pipelines.
+:::
+
+#### What We Use in Our Research
+
+For the global ALS analysis presented earlier, we typically:
+
+1.  Calculate **THREE CHM versions** for each scan:
+    -   TIN-based (for robustness and cross-site comparison)
+    -   Spike-free (for research requiring both quality and robustness)
+    -   Highest-point (for comparison with historical literature)
+2.  **Primarily use TIN and spike-free** for actual analysis
+3.  Keep highest-point as a **reference for comparison** with other studies
+
+**Making data available:** For most of the open ALS data shown in the theory presentation, we plan to make these pre-processed, robust CHM products publicly available on a server in the coming months.
+
 ### Processing of Entire ALS Collection
 
 Usually, we do not just want to process data with a single small point cloud, but large areas (e.g., many square kilometres). In this case, we can read the tiles in all together as LAScatalog:
@@ -368,6 +500,7 @@ Usually, we do not just want to process data with a single small point cloud, bu
 ```{r read-catalog}
 #| label: read-las-catalog
 #| eval: true
+#| message: false
 
 # read in a full catalog of LAS files
 las_ctg = readLAScatalog("data/NEON/2012")
@@ -376,6 +509,7 @@ las_ctg = readLAScatalog("data/NEON/2012")
 ```{r catalog-summary}
 #| label: catalog-summary-stats
 #| eval: true
+#| message: false
 
 # evaluate summary statistics
 print(las_ctg)
@@ -386,9 +520,29 @@ plot(las_ctg, main = "Tiles in the LAScatalog")
 
 We can plot pulse density for the entire scan area. Note that this will take a bit of time on your computer. To speed it up, we use parallel processing.
 
+```{r catalog-pulse-density-hidden}
+#| label: catalog-pulse-density-hidden
+#| eval: true
+#| message: false
+#| include: false
+
+# rasterize pulse density
+# we pick a coarser resolution than before
+res_pd = 20
+
+# we process on 4 cores
+# Set up a parallel plan (adjust number of workers as needed)
+plan(multisession, workers = 4)   # if it creates problems, deactivate
+
+invisible(capture.output({
+  pd = grid_metrics(las_ctg, ~sum(ReturnNumber == 1), res = res_pd)
+}, type = "output"))
+```
+
 ```{r catalog-pulse-density}
 #| label: catalog-pulse-density
-#| eval: true
+#| eval: false
+#| message: false
 
 # rasterize pulse density
 # we pick a coarser resolution than before
@@ -421,9 +575,22 @@ plot(pd, col = viridis(100, option = "turbo"), main = "Pulse density")
 
 Now we rasterize a DTM for the entire area:
 
+```{r catalog-dtm-hidden}
+#| label: create-catalog-dtm-hidden
+#| eval: true
+#| message: false
+#| include: false
+
+# derive digital terrain model
+invisible(capture.output({
+  dtm_ctg = rasterize_terrain(las = las_ctg, res = 1, algorithm = tin(), use_class = 2L)
+}, type = "output"))
+```
+
 ```{r catalog-dtm}
 #| label: create-catalog-dtm
-#| eval: true
+#| eval: false
+#| message: false
 
 # derive digital terrain model
 dtm_ctg = rasterize_terrain(las = las_ctg, res = 1, algorithm = tin(), use_class = 2L)
@@ -442,9 +609,24 @@ plot(dtm_ctg, col = viridis(100, option = "turbo"), main = "Elevation (m, full a
 
 Now we rasterize a CHM for the entire area:
 
+```{r catalog-chm-hidden}
+#| label: create-catalog-chm-hidden
+#| eval: true
+#| message: false
+#| include: false
+
+# derive a canopy height model
+# now we also restrict only to first returns and drop noise classes --> this works differently for LAScatalog
+opt_filter(las_ctg) = "-keep_first -drop_class 7 18"
+invisible(capture.output({
+  dsm_ctg_tin = rasterize_canopy(las_ctg, res = 1, algorithm = dsmtin(highest = FALSE))
+}, type = "output"))
+```
+
 ```{r catalog-chm}
 #| label: create-catalog-chm
-#| eval: true
+#| eval: false
+#| message: false
 
 # derive a canopy height model
 # now we also restrict only to first returns and drop noise classes --> this works differently for LAScatalog

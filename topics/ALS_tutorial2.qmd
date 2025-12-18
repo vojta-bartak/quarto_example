@@ -131,6 +131,16 @@ means_chms = global(chms, "mean", na.rm = TRUE)
 print(means_chms)
 ```
 
+::: callout-note
+## Interpreting These Numbers
+
+Look at the mean canopy heights across different scans and years:
+
+**Questions to consider:** - What is the typical mean canopy height? Does it match your pre-analysis estimate? - Is there variation between different sensors (NEON vs GLiHT vs 3DEP)? - Do the values change over time, or are they relatively stable? - The winter scan (3DEP) - how does it compare to summer scans?
+
+**Write down your answers:** - **Mean canopy height:** \_\_\_\_\_ meters - **Range of variation:** \_\_\_\_\_ to \_\_\_\_\_ meters - **Maximum tree height observed:** \_\_\_\_\_ meters (you can calculate this with `global(chms, "max", na.rm = TRUE)`)
+:::
+
 ### Temporal Comparison
 
 We notice that there is some variation. Luckily (and this is rare), we have acquisitions from different institutions over similar time periods, so we can compare changes in time.
@@ -244,6 +254,18 @@ ggplot(data = as.data.table(hdiff_regrowing_peryear)) +
   xlab("Annual height growth (m / year)") +
   ylab("Frequency")
 ```
+
+::: callout-note
+## Interpreting Growth Rates (2m threshold)
+
+Look at your calculated growth rates:
+
+**Questions:** - What is the mean annual growth rate you calculated? - What is the maximum growth rate observed? - Does the distribution look realistic? - Compare with your pre-analysis estimate - how close were you?
+
+**Ecological context:** - Temperate deciduous trees typically grow 0.3-0.8 m/year when young (\< 5m tall) - Growth rates \> 1.5 m/year are suspicious and may indicate measurement artifacts - Think about: what percentage of pixels show "reasonable" vs "unreasonable" growth?
+
+**Record your values:** - **Mean growth rate (2m threshold, 5 years):** \_\_\_\_\_ m/year - **Does this seem realistic?** Yes / No / Uncertain
+:::
 
 Now what if we take a different threshold?
 
@@ -606,6 +628,6 @@ This tutorial demonstrates the challenges and opportunities of using multi-tempo
 
 *This tutorial was designed to encourage critical thinking about ALS-based change detection. The emphasis is on understanding limitations and uncertainties, not just applying methods.*
 
----
+------------------------------------------------------------------------
 
 ![](logos.png)

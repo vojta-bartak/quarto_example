@@ -214,7 +214,7 @@ create_phase_difference_diagram <- function() {
 # ============================================================================
 
 # Create left image (phasor + wave combined vertically)
-phasor_plot <- create_phasor_diagram()
+(phasor_plot <- create_phasor_diagram())
 wave_plot <- create_sine_wave()
 
 left_image <- phasor_plot / wave_plot + 
